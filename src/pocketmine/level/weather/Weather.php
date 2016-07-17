@@ -15,7 +15,7 @@
  * (at your option) any later version.
  *
  * @author iTX Technologies
- * @link https://mcper.cn
+ * @link https://itxtech.org
  *
  */
 
@@ -57,12 +57,12 @@ class Weather{
 		$this->temporalVector = new Vector3(0, 0, 0);
 	}
 
-	public function canCalculate() {
-		return (bool)$this->canCalculate;
+	public function canCalculate() : bool{
+		return $this->canCalculate;
 	}
 
-	public function setCanCalculate($canCalc){
-		$this->canCalculate = (bool)$canCalc;
+	public function setCanCalculate(bool $canCalc){
+		$this->canCalculate = $canCalc;
 	}
 
 	public function calcWeather($currentTick){
@@ -117,7 +117,7 @@ class Weather{
 		$this->lastUpdate = $currentTick;
 	}
 
-	public function setWeather($wea,$duration = 12000){
+	public function setWeather(int $wea, int $duration = 12000){
 		$this->level->getServer()->getPluginManager()->callEvent($ev = new WeatherChangeEvent($this->level, $wea, $duration));
 		if(!$ev->isCancelled()){
 			$this->weatherNow = $ev->getWeather();;
@@ -128,7 +128,7 @@ class Weather{
 		}
 	}
 
-	public function getRandomWeatherData(){
+	public function getRandomWeatherData() : array{
 		return $this->randomWeatherData;
 	}
 
@@ -136,7 +136,7 @@ class Weather{
 		$this->randomWeatherData = $randomWeatherData;
 	}
 
-	public function getWeather(){
+	public function getWeather() : int{
 		return $this->weatherNow;
 	}
 
@@ -168,7 +168,7 @@ class Weather{
 	/**
 	 * @return bool
 	 */
-	public function isSunny() {
+	public function isSunny() : bool{
 		if($this->getWeather() == self::SUNNY){
 			return true;
 		}else{
@@ -179,7 +179,7 @@ class Weather{
 	/**
 	 * @return bool
 	 */
-	public function isRainy() {
+	public function isRainy() : bool{
 		if($this->getWeather() == self::RAINY){
 			return true;
 		}else{
@@ -190,7 +190,7 @@ class Weather{
 	/**
 	 * @return bool
 	 */
-	public function isRainyThunder() {
+	public function isRainyThunder() : bool{
 		if($this->getWeather() == self::RAINY_THUNDER){
 			return true;
 		}else{
@@ -201,7 +201,7 @@ class Weather{
 	/**
 	 * @return bool
 	 */
-	public function isThunder() {
+	public function isThunder() : bool{
 		if($this->getWeather() == self::THUNDER){
 			return true;
 		}else{
@@ -209,7 +209,7 @@ class Weather{
 		}
 	}
 
-	public function getStrength() {
+	public function getStrength() : array{
 		return [$this->strength1, $this->strength2];
 	}
 
@@ -220,9 +220,9 @@ class Weather{
 		$pk2 = new LevelEventPacket;
 		$pk2->evid = LevelEventPacket::EVENT_STOP_THUNDER;
 		$pk2->data = $this->strength2;
+		$p->dataPacket($pk1);
+		$p->dataPacket($pk2);
 		if($p->weatherData[0] != $this->weatherNow){
-			$p->dataPacket($pk1);
-			$p->dataPacket($pk2);
 			if($this->weatherNow == 1){
 				$pk = new LevelEventPacket;
 				$pk->evid = LevelEventPacket::EVENT_START_RAIN;
@@ -247,7 +247,7 @@ class Weather{
 		}
 	}
 
-	public function changeWeather($wea, $strength1, $strength2){
+	public function changeWeather(int $wea, int $strength1, int $strength2){
 		$pk1 = new LevelEventPacket;
 		$pk1->evid = LevelEventPacket::EVENT_STOP_RAIN;
 		$pk1->data = $this->strength1;
@@ -284,4 +284,3 @@ class Weather{
 	}
 
 }
-	
