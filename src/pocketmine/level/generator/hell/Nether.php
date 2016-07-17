@@ -38,7 +38,7 @@ use pocketmine\level\generator\populator\NetherGrowStone;
 use pocketmine\level\generator\populator\NetherOre;
 use pocketmine\level\generator\populator\Populator;
 
-use pocketmine\math\Vector3 as Vector3;
+use pocketmine\math\Vector3;
 use pocketmine\utils\Random;
 
 class Nether extends Generator{
