@@ -72,9 +72,9 @@ namespace pocketmine {
 	use pocketmine\utils\Utils;
 	use pocketmine\wizard\Installer;
 
-	const VERSION = "git";
+	const VERSION = "0.4";
 	const API_VERSION = "2.0.0";
-	const CODENAME = "Kyrios";
+	const CODENAME = "apollo";
 	const MINECRAFT_VERSION = "v0.15.0 alpha";
 	const MINECRAFT_VERSION_NETWORK = "0.15.0";
 	const GENISYS_API_VERSION = '1.8.0';
