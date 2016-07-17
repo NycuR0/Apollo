@@ -113,8 +113,6 @@ class Normal2 extends Normal{
 					return Biome::MOUNTAINS;
 				}elseif($temperature < 0.70){
 					return Biome::SMALL_MOUNTAINS;
-				}elseif($temperature <= 2.0){
-					return Biome::MESA;
 				}else{
 					return Biome::RIVER;
 				}
@@ -183,7 +181,7 @@ class Normal2 extends Normal{
 				$genyHeight = $this->seaFloorHeight + $landHeightGenerate;
 				$genyHeight += $mountainGenerate;
 				//prepare for generate ocean, desert, and land
-				if($genyHeight < $this->beathStartHeight){
+				if($genyHeight < $this->beachStartHeight){
 					if($genyHeight < $this->beathStartHeight - 5){
 						$genyHeight += (int) ($this->seaFloorGenerateRange * $seaFloorNoise[$genx][$genz]);
 					}
@@ -194,7 +192,7 @@ class Normal2 extends Normal{
 					$canRiver = false;
 				}else if($genyHeight <= $this->beathStopHeight && $genyHeight >= $this->beathStartHeight){
 					//todo: there is no beach biome, use desert temporarily
-					$biome = Biome::getBiome(Biome::BEACH);
+					$biome = Biome::getBiome(Biome::DESERT);
 				}else{
 					$biome = $this->pickBiome($chunkX * 16 + $genx, $chunkZ * 16 + $genz);
 					if($canBaseGround){
