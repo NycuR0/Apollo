@@ -1,24 +1,24 @@
 <?php
 namespace pocketmine\tile;
 
-use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\IntTag;
-use pocketmine\nbt\tag\StringTag;
-use pocketmine\inventory\EnchantInventory;
+use pocketmine\inventory\HopperInventory;
 use pocketmine\inventory\InventoryHolder;
-use pocketmine\nbt\tag\ListTag;
-use pocketmine\nbt\NBT;
-use pocketmine\level\format\FullChunk;
 use pocketmine\item\Item;
+use pocketmine\level\format\FullChunk;
+use pocketmine\nbt\NBT;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\ListTag;
+use pocketmine\nbt\tag\StringTag;
+use pocketmine\nbt\tag\IntTag;
 
-class EnchantTable extends Spawnable implements InventoryHolder, Container, Nameable{
+class Hopper extends Spawnable implements InventoryHolder, Container, Nameable{
 
-	/** @var DispenserInventory */
+	/** @var HopperInventory */
 	protected $inventory;
 
 	public function __construct(FullChunk $chunk, CompoundTag $nbt){
 		parent::__construct($chunk, $nbt);
-		$this->inventory = new EnchantInventory($this);
+		$this->inventory = new HopperInventory($this);
 
 		if(!isset($this->namedtag->Items) or !($this->namedtag->Items instanceof ListTag)){
 			$this->namedtag->Items = new ListTag("Items", []);
@@ -28,7 +28,7 @@ class EnchantTable extends Spawnable implements InventoryHolder, Container, Name
 		for($i = 0; $i < $this->getSize(); ++$i){
 			$this->inventory->setItem($i, $this->getItem($i));
 		}
-
+		
 		$this->scheduleUpdate();
 	}
 
@@ -53,7 +53,7 @@ class EnchantTable extends Spawnable implements InventoryHolder, Container, Name
 	 * @return int
 	 */
 	public function getSize(){
-		return 9;
+		return 5;
 	}
 
 	/**
@@ -63,8 +63,8 @@ class EnchantTable extends Spawnable implements InventoryHolder, Container, Name
 	 */
 	protected function getSlotIndex($index){
 		foreach($this->namedtag->Items as $i => $slot){
-			if($slot["Slot"] === $index){
-				return $i;
+			if((int) $slot["Slot"] === (int) $index){
+				return (int) $i;
 			}
 		}
 
@@ -119,14 +119,14 @@ class EnchantTable extends Spawnable implements InventoryHolder, Container, Name
 	}
 
 	/**
-	 * @return EnchantInventory
+	 * @return HopperInventory
 	 */
 	public function getInventory(){
 		return $this->inventory;
 	}
 
 	public function getName(){
-		return isset($this->namedtag->CustomName) ? $this->namedtag->CustomName->getValue() : "Enchanting Table";
+		return isset($this->namedtag->CustomName) ? $this->namedtag->CustomName->getValue() : "Hopper";
 	}
 
 	public function hasName(){
@@ -144,10 +144,10 @@ class EnchantTable extends Spawnable implements InventoryHolder, Container, Name
 
 	public function getSpawnCompound(){
 		$c = new CompoundTag("", [
-				new StringTag("id", Tile::ENCHANT_TABLE),
-				new IntTag("x", (int) $this->x),
-				new IntTag("y", (int) $this->y),
-				new IntTag("z", (int) $this->z)
+			new StringTag("id", Tile::HOPPER),
+			new IntTag("x", (int) $this->x),
+			new IntTag("y", (int) $this->y),
+			new IntTag("z", (int) $this->z)
 		]);
 
 		if($this->hasName()){

@@ -1,24 +1,4 @@
 <?php
-
-/*
- *
- *  ____            _        _   __  __ _                  __  __ ____  
- * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \ 
- * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
- * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/ 
- * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_| 
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * @author PocketMine Team
- * @link http://www.pocketmine.net/
- * 
- *
-*/
-
 /**
  * All the Tile classes and related classes
  */
@@ -37,17 +17,20 @@ use pocketmine\utils\ChunkException;
 abstract class Tile extends Position{
 	const SIGN = "Sign";
 	const CHEST = "Chest";
+	const CAULDRON = "Cauldron";
 	const FURNACE = "Furnace";
 	const FLOWER_POT = "FlowerPot";
 	const MOB_SPAWNER = "MobSpawner";
 	const SKULL = "Skull";
 	const BREWING_STAND = "BrewingStand";
 	const ENCHANT_TABLE = "EnchantTable";
+	const HOPPER = "Hopper";
 	const ITEM_FRAME = "ItemFrame";
 	const DISPENSER = "Dispenser";
 	const DROPPER = "Dropper";
 	const DAY_LIGHT_DETECTOR = "DLDetector";
-	const CAULDRON = "Cauldron";
+	const NOTEBLOCK = "Music";
+	const PISTON = "Piston";
 
 	public static $tileCount = 1;
 
@@ -115,9 +98,7 @@ abstract class Tile extends Position{
 	}
 
 	public function __construct(FullChunk $chunk, CompoundTag $nbt){
-		if($chunk === null or $chunk->getProvider() === null){
-			throw new ChunkException("Invalid garbage Chunk given to Tile");
-		}
+		assert($chunk !== null and $chunk->getProvider() !== null);
 
 		$this->timings = Timings::getTileEntityTimings($this);
 
@@ -181,7 +162,7 @@ abstract class Tile extends Position{
 		}
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return $this->name;
 	}
 

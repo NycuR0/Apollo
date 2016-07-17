@@ -1,24 +1,5 @@
 <?php
 
-/*
- *
- *  _____   _____   __   _   _   _____  __    __  _____
- * /  ___| | ____| |  \ | | | | /  ___/ \ \  / / /  ___/
- * | |     | |__   |   \| | | | | |___   \ \/ /  | |___
- * | |  _  |  __|  | |\   | | | \___  \   \  /   \___  \
- * | |_| | | |___  | | \  | | |  ___| |   / /     ___| |
- * \_____/ |_____| |_|  \_| |_| /_____/  /_/     /_____/
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * @author iTX Technologies
- * @link https://itxtech.org
- *
- */
-
 namespace pocketmine\tile;
 
 use pocketmine\inventory\BrewingInventory;
@@ -53,8 +34,7 @@ class BrewingStand extends Spawnable implements InventoryHolder, Container, Name
 		Item::GHAST_TEAR => 0,
 		Item::BLAZE_POWDER => 0,
 		Item::GOLDEN_CARROT => 0,
-		//Item::RAW_FISH => Fish::FISH_PUFFERFISH,
-		Item::PUFFER_FISH,
+		Item::PUFFERFISH => 0,
 		Item::RABBIT_FOOT => 0,
 
 		Item::GUNPOWDER => 0,
@@ -82,7 +62,7 @@ class BrewingStand extends Spawnable implements InventoryHolder, Container, Name
 		}*/
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return $this->hasName() ? $this->namedtag->CustomName->getValue() : "Brewing Stand";
 	}
 
@@ -222,7 +202,7 @@ class BrewingStand extends Spawnable implements InventoryHolder, Container, Name
 		$ingredient = $this->inventory->getIngredient();
 		$canBrew = false;
 
-		for($i = 1; $i <= 3; $i++){//查瓶子
+		for($i = 1; $i <= 3; $i++){
 			if($this->inventory->getItem($i)->getId() === Item::POTION or
 				$this->inventory->getItem($i)->getId() === Item::SPLASH_POTION
 			){
@@ -230,14 +210,14 @@ class BrewingStand extends Spawnable implements InventoryHolder, Container, Name
 			}
 		}
 
-		if($ingredient->getId() !== Item::AIR and $ingredient->getCount() > 0){//有原料
-			if($canBrew){//查原料
+		if($ingredient->getId() !== Item::AIR and $ingredient->getCount() > 0){
+			if($canBrew){
 				if(!$this->checkIngredient($ingredient)){
 					$canBrew = false;
 				}
 			}
 
-			if($canBrew){//查能不能炼
+			if($canBrew){
 				for($i = 1; $i <= 3; $i++){
 					$potion = $this->inventory->getItem($i);
 					$recipe = Server::getInstance()->getCraftingManager()->matchBrewingRecipe($ingredient, $potion);

@@ -1,27 +1,6 @@
 <?php
-
-/*
- *
- *  _____   _____   __   _   _   _____  __    __  _____
- * /  ___| | ____| |  \ | | | | /  ___/ \ \  / / /  ___/
- * | |     | |__   |   \| | | | | |___   \ \/ /  | |___
- * | |  _  |  __|  | |\   | | | \___  \   \  /   \___  \
- * | |_| | | |___  | | \  | | |  ___| |   / /     ___| |
- * \_____/ |_____| |_|  \_| |_| /_____/  /_/     /_____/
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * @author iTX Technologies
- * @link https://itxtech.org
- *
- */
-
 namespace pocketmine\tile;
 
-use pocketmine\block\Block;
 use pocketmine\inventory\DropperInventory;
 use pocketmine\inventory\InventoryHolder;
 use pocketmine\item\Item;
@@ -33,19 +12,15 @@ use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\ShortTag;
 use pocketmine\entity\Item as ItemEntity;
-
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\ListTag;
-use pocketmine\nbt\tag\IntTag;
-
 use pocketmine\nbt\tag\StringTag;
+use pocketmine\nbt\tag\IntTag;
 
 class Dropper extends Spawnable implements InventoryHolder, Container, Nameable{
 
 	/** @var DropperInventory */
 	protected $inventory;
-
-	protected $nextUpdate = 0;
 
 	public function __construct(FullChunk $chunk, CompoundTag $nbt){
 		parent::__construct($chunk, $nbt);
@@ -59,16 +34,12 @@ class Dropper extends Spawnable implements InventoryHolder, Container, Nameable{
 		for($i = 0; $i < $this->getSize(); ++$i){
 			$this->inventory->setItem($i, $this->getItem($i));
 		}
-
+		
 		$this->scheduleUpdate();
 	}
 
 	public function close(){
 		if($this->closed === false){
-			foreach($this->getInventory()->getViewers() as $player){
-				$player->removeWindow($this->getInventory());
-			}
-
 			foreach($this->getInventory()->getViewers() as $player){
 				$player->removeWindow($this->getInventory());
 			}
@@ -160,7 +131,7 @@ class Dropper extends Spawnable implements InventoryHolder, Container, Nameable{
 		return $this->inventory;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return isset($this->namedtag->CustomName) ? $this->namedtag->CustomName->getValue() : "Dropper";
 	}
 
@@ -198,48 +169,22 @@ class Dropper extends Spawnable implements InventoryHolder, Container, Nameable{
 	}
 
 	public function activate(){
-		$itemIndex = [];
-		for($i = 0; $i < $this->getSize(); $i++){
-			$item = $this->getInventory()->getItem($i);
-			if($item->getId() != Item::AIR){
-				$itemIndex[] = [$i, $item];
-			}
+		$itemArr = [];
+		for($i = 0; $i < $this->getInventory()->getSize(); $i++){
+			$slot = $this->getInventory()->getItem($i);
+			if($slot instanceof Item && $slot->getId() != 0) $itemArr[] = $slot;
 		}
-		$max = count($itemIndex) - 1;
-		if($max < 0) $itemArr = null;
-		elseif($max == 0) $itemArr = $itemIndex[0];
-		else $itemArr = $itemIndex[mt_rand(0, $max)];
 
-		if(is_array($itemArr)){
+		if(!empty($itemArr)){
 			/** @var Item $item */
-			$item = $itemArr[1];
-			$item->setCount($item->getCount() - 1);
-			$this->getInventory()->setItem($itemArr[0], $item->getCount() > 0 ? $item : Item::get(Item::AIR));
+			$itema = $itemArr[array_rand($itemArr)];
+			$item = Item::get($itema->getId(), $itema->getDamage(), 1, $itema->getCompoundTag());
+			$this->getInventory()->removeItem($item);
 			$motion = $this->getMotion();
 			$needItem = Item::get($item->getId(), $item->getDamage());
-			$block = $this->getLevel()->getBlock($this->add($motion[0], $motion[1], $motion[2]));
-			switch($block->getId()){
-				case Block::CHEST:
-				case Block::TRAPPED_CHEST:
-				case Block::DROPPER:
-				case Block::DISPENSER:
-				case Block::BREWING_STAND_BLOCK:
-				case Block::FURNACE:
-					$t = $this->getLevel()->getTile($block);
-					/** @var Chest|Dispenser|Dropper|BrewingStand|Furnace $t */
-					if($t instanceof Tile){
-						if($t->getInventory()->canAddItem($needItem)){
-							$t->getInventory()->addItem($needItem);
-							return;
-						}
-					}
-			}
-
-			$itemTag = NBT::putItemHelper($needItem);
-			$itemTag->setName("Item");
-
-
-			$nbt = new CompoundTag("", [
+			$item = NBT::putItemHelper($needItem);
+			$item->setName("Item");
+				$nbt = new CompoundTag("", [
 				"Pos" => new ListTag("Pos", [
 					new DoubleTag("", $this->x + $motion[0] * 2 + 0.5),
 					new DoubleTag("", $this->y + ($motion[1] > 0 ? $motion[1] : 0.5)),
@@ -255,18 +200,13 @@ class Dropper extends Spawnable implements InventoryHolder, Container, Nameable{
 					new FloatTag("", 0)
 				]),
 				"Health" => new ShortTag("Health", 5),
-				"Item" => $itemTag,
+				"Item" => $item,
 				"PickupDelay" => new ShortTag("PickupDelay", 10)
 			]);
-
 			$f = 0.3;
 			$itemEntity = new ItemEntity($this->chunk, $nbt, $this);
 			$itemEntity->setMotion($itemEntity->getMotion()->multiply($f));
 			$itemEntity->spawnToAll();
-
-			for($i = 1; $i < 10; $i++){
-				$this->getLevel()->addParticle(new SmokeParticle($this->add($motion[0] * $i * 0.3 + 0.5, $motion[1] == 0 ? 0.5 : $motion[1] * $i * 0.3, $motion[2] * $i * 0.3 + 0.5)));
-			}
 		}
 	}
 
