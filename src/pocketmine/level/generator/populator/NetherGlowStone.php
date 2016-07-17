@@ -21,52 +21,38 @@
 
 namespace pocketmine\level\generator\populator;
 
-use pocketmine\block\Block;
+use pocketmine\block\Glowstone;
 use pocketmine\level\ChunkManager;
+use pocketmine\level\generator\object\NetherOreTop as ObjectOre;
+use pocketmine\level\generator\object\OreType;
 use pocketmine\utils\Random;
 
-class LilyPad extends Populator{
+class NetherGlowStone extends Populator{
+
 	/** @var ChunkManager */
 	private $level;
-	private $randomAmount;
-	private $baseAmount;
-
-	public function setRandomAmount($amount){
-		$this->randomAmount = $amount;
-	}
-
-	public function setBaseAmount($amount){
-		$this->baseAmount = $amount;
-	}
 
 	public function populate(ChunkManager $level, $chunkX, $chunkZ, Random $random){
 		$this->level = $level;
-		$amount = $random->nextRange(0, $this->randomAmount + 1) + $this->baseAmount;
-		for($i = 0; $i < $amount; ++$i){
-			$x = $random->nextRange($chunkX * 16, $chunkX * 16 + 15);
-			$z = $random->nextRange($chunkZ * 16, $chunkZ * 16 + 15);
+		$type = new OreType(new Glowstone(), 1, 20, 128, 10);
+		$ore = new ObjectOre($random, $type);
+		for($i = 0; $i < $ore->type->clusterCount; ++$i){
+			$x = $random->nextRange($chunkX << 4, ($chunkX << 4) + 15);
+			$z = $random->nextRange($chunkZ << 4, ($chunkZ << 4) + 15);
 			$y = $this->getHighestWorkableBlock($x, $z);
-
-			if($y !== -1 and $this->canLilyPadStay($x, $y, $z)){
-				$this->level->setBlockIdAt($x, $y, $z, Block::WATER_LILY);
-				$this->level->setBlockDataAt($x, $y, $z, 1);
-			}
+			$ore->placeObject($level, $x, $y, $z);
 		}
-	}
-
-	private function canLilyPadStay($x, $y, $z){
-		$b = $this->level->getBlockIdAt($x, $y, $z);
-		return ($b === Block::AIR or $b === Block::SNOW_LAYER) and $this->level->getBlockIdAt($x, $y - 1, $z) === Block::STILL_WATER;
 	}
 
 	private function getHighestWorkableBlock($x, $z){
 		for($y = 127; $y >= 0; --$y){
 			$b = $this->level->getBlockIdAt($x, $y, $z);
-			if($b !== Block::AIR and $b !== Block::LEAVES and $b !== Block::LEAVES2 and $b !== Block::SNOW_LAYER){
+			if($b == 0){
 				break;
 			}
 		}
 
 		return $y === 0 ? -1 : ++$y;
 	}
+
 }

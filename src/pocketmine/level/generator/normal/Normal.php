@@ -1,5 +1,31 @@
 <?php
+
+/*
+ *
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
+ * This program is a third party build by ImagicalMine.
+ *
+ * PocketMine is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author ImagicalMine Team
+ * @link http://forums.imagicalcorp.ml/
+ *
+ *
+*/
+
 namespace pocketmine\level\generator\normal;
+
 use pocketmine\block\Block;
 use pocketmine\block\CoalOre;
 use pocketmine\block\DiamondOre;
@@ -26,25 +52,26 @@ use pocketmine\level\generator\populator\Tree;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3 as Vector3;
 use pocketmine\utils\Random;
+
 class Normal extends Generator{
 	const NAME = "Normal";
 
 	/** @var Populator[] */
-	private $populators = [];
+	protected $populators = [];
 	/** @var ChunkManager */
-	private $level;
+	protected $level;
 	/** @var Random */
-	private $random;
-	private $waterHeight = 62;
-	private $bedrockDepth = 5;
+	protected $random;
+	protected $waterHeight = 62;
+	protected $bedrockDepth = 5;
 
 	/** @var Populator[] */
-	private $generationPopulators = [];
+	protected $generationPopulators = [];
 	/** @var Simplex */
-	private $noiseBase;
+	protected $noiseBase;
 
 	/** @var BiomeSelector */
-	private $selector;
+	protected $selector;
 
 	private static $GAUSSIAN_KERNEL = null;
 	private static $SMOOTH_SIZE = 2;
@@ -72,11 +99,11 @@ class Normal extends Generator{
 		}
 	}
 
-	public function getName() {
+	public function getName() : string{
 		return self::NAME;
 	}
 
-	public function getWaterHeight() {
+	public function getWaterHeight() : int{
 		return $this->waterHeight;
 	}
 
@@ -107,9 +134,13 @@ class Normal extends Generator{
 		$this->random->setSeed($this->level->getSeed());
 		$this->selector = new BiomeSelector($this->random, function($temperature, $rainfall){
 			if($rainfall < 0.25){
-			return Biome::SWAMP;
-				}elseif($temperature < 0.25){
+				if($temperature < 0.7){
 					return Biome::OCEAN;
+				}elseif($temperature < 0.85){
+					return Biome::RIVER;
+				}else{
+					return Biome::SWAMP;
+				}
 			}elseif($rainfall < 0.60){
 				if($temperature < 0.25){
 					return Biome::ICE_PLAINS;
@@ -131,6 +162,8 @@ class Normal extends Generator{
 					return Biome::MOUNTAINS;
 				}elseif($temperature < 0.70){
 					return Biome::SMALL_MOUNTAINS;
+				}else{
+					return Biome::RIVER;
 				}
 			}
 		}, Biome::getBiome(Biome::OCEAN));
@@ -146,7 +179,6 @@ class Normal extends Generator{
 		$this->selector->addBiome(Biome::getBiome(Biome::ICE_PLAINS));
 		$this->selector->addBiome(Biome::getBiome(Biome::SMALL_MOUNTAINS));
 		$this->selector->addBiome(Biome::getBiome(Biome::BIRCH_FOREST));
-		$this->selector->addBiome(Biome::getBiome(Biome::EXTREME_HILLS));
 
 		$this->selector->recalculate();
 
@@ -267,7 +299,7 @@ class Normal extends Generator{
 	}
 
 	public function getSpawn(){
-		return new Vector3(0, 128, 0);
+		return new Vector3(127.5, 128, 127.5);
 	}
 
 }

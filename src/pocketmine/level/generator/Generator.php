@@ -240,7 +240,7 @@ abstract class Generator{
 		return $noiseArray;
 	}
 
-	public function getWaterHeight() {
+	public function getWaterHeight() : int{
 		return 0;
 	}
 

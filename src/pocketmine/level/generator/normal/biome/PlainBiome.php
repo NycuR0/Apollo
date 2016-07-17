@@ -28,7 +28,6 @@ use pocketmine\block\Block;
 use pocketmine\block\Flower as FlowerBlock;
 use pocketmine\level\generator\populator\Flower;
 use pocketmine\level\generator\populator\Sugarcane;
-use pocketmine\level\generator\populator\TallSugarcane;
 
 class PlainBiome extends GrassyBiome{
 
@@ -37,8 +36,6 @@ class PlainBiome extends GrassyBiome{
 
 		$sugarcane = new Sugarcane();
 		$sugarcane->setBaseAmount(6);
-		$tallSugarcane = new TallSugarcane();
-		$tallSugarcane->setBaseAmount(60);
 		$tallGrass = new TallGrass();
 		$tallGrass->setBaseAmount(25);
 		$waterPit = new WaterPit();
@@ -58,7 +55,6 @@ class PlainBiome extends GrassyBiome{
 		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_OXEYE_DAISY]);
 
 		$this->addPopulator($sugarcane);
-		$this->addPopulator($tallSugarcane);
 		$this->addPopulator($tallGrass);
 		$this->addPopulator($flower);
 		$this->addPopulator($waterPit);
@@ -70,7 +66,7 @@ class PlainBiome extends GrassyBiome{
 		$this->rainfall = 0.4;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Plains";
 	}
 }
