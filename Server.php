@@ -87,6 +87,7 @@ use pocketmine\level\generator\Flat;
 use pocketmine\level\generator\Generator;
 use pocketmine\level\generator\hell\Nether;
 use pocketmine\level\generator\normal\Normal;
+use pocketmine\level\generator\normal\Normal2;
 use pocketmine\level\Level;
 use pocketmine\metadata\EntityMetadataStore;
 use pocketmine\metadata\LevelMetadataStore;
@@ -321,7 +322,7 @@ class Server{
 	 * @return string
 	 */
 	public function getName(){
-		return "ClearSky";
+		return "Apollo";
 	}
 
 	/**
