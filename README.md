@@ -5,10 +5,6 @@ Note: You may **not** copy our generator without NycuRO's permission. Other than
 
 **TravisCI Build Status** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=master)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
 
-
-
-
-
 ## Features
 
 - Worlds: Generator has been improved and has more biomes than Genisys and PocketMine
@@ -58,11 +54,6 @@ Apollo is a perfect software for your server with :
  ....
 
 Attention! All version have new biomes added and more changes in biomes :)
-
-
-## Help Us Develop!
- We arn't a team of advanced coders, so other coders like you can help us improve our MCPE Server Software by creating a pull request or create request for collaborator ;)
- 
  
 ## TODO :
 
@@ -70,17 +61,7 @@ Attention! All version have new biomes added and more changes in biomes :)
 
  If you have epic ideas, create an issue and tell us the idea!
  
- 
 ## Information
 
 - Need to communicate with us? Join our [Telegram](https://telegram.me/joinchat/Ca8L9T9P01PtR1bOEwtxuw) group!
 - We are a edited version of Genisys. We have edited their generators to our version and have improved the performance
-- Apollo is currently PHP7,good luck all! :D
-- 
-##Test servers
-
-server naam: nethercube
-
-ip: nethercube.tk
-
-port: 19132
