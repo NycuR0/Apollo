@@ -80,5 +80,7 @@ Attention! All version have new biomes added and more changes in biomes :)
 ##Test servers
 
 server naam: nethercube
+
 ip: nethercube.tk
+
 port: 19132
