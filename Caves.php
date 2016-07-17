@@ -23,7 +23,7 @@ use pocketmine\level\ChunkManager;
 use pocketmine\level\generator\biome\Biome;
 use pocketmine\level\generator\Generator;
 use pocketmine\level\generator\noise\Simplex;
-use pocketmine\level\generator\normal\biome\WateryBiome;
+use pocketmine\level\generator\normal\biome\OceanBiome;
 use pocketmine\utils\Random;
 class Caves extends Populator{
 	/** @var Simplex */
@@ -44,7 +44,7 @@ class Caves extends Populator{
 				$biome = Biome::getBiome($chunk->getBiomeId($x, $z));
 				$hasWater = false;
 				$highest = true;
-				if($biome instanceof WateryBiome){
+				if($biome instanceof OceanBiome){
 					$hasWater = true;
 					$highest = false;
 				}
