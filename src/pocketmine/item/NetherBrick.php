@@ -21,17 +21,10 @@
 
 namespace pocketmine\item;
 
-
-class IronSword extends Tool{
+class NetherBrick extends Item{
 	public function __construct($meta = 0, $count = 1){
-		parent::__construct(self::IRON_SWORD, $meta, $count, "Iron Sword");
+		parent::__construct(self::NETHER_BRICK, $meta, $count, "Nether Brick");
 	}
 
-	public function isSword(){
-		return Tool::TIER_IRON;
-	}
-
-	public function getAttackDamage(){
-		return 7;
-	}
 }
+

@@ -22,16 +22,16 @@
 namespace pocketmine\item;
 
 
-class IronSword extends Tool{
+class StonePickaxe extends Tool{
 	public function __construct($meta = 0, $count = 1){
-		parent::__construct(self::IRON_SWORD, $meta, $count, "Iron Sword");
+		parent::__construct(self::STONE_PICKAXE, $meta, $count, "Stone Pickaxe");
 	}
 
-	public function isSword(){
-		return Tool::TIER_IRON;
+	public function isPickaxe(){
+		return Tool::TIER_STONE;
 	}
 
 	public function getAttackDamage(){
-		return 7;
+		return 4;
 	}
 }

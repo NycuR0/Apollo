@@ -21,17 +21,11 @@
 
 namespace pocketmine\item;
 
+use pocketmine\block\Block;
 
-class IronSword extends Tool{
+class Potato extends Item{
 	public function __construct($meta = 0, $count = 1){
-		parent::__construct(self::IRON_SWORD, $meta, $count, "Iron Sword");
-	}
-
-	public function isSword(){
-		return Tool::TIER_IRON;
-	}
-
-	public function getAttackDamage(){
-		return 7;
+		$this->block = Block::get(Item::POTATO_BLOCK);
+		parent::__construct(self::POTATO, 0, $count, "Potato");
 	}
 }

@@ -22,16 +22,13 @@
 namespace pocketmine\item;
 
 
-class IronSword extends Tool{
+class Snowball extends Item{
 	public function __construct($meta = 0, $count = 1){
-		parent::__construct(self::IRON_SWORD, $meta, $count, "Iron Sword");
+		parent::__construct(self::SNOWBALL, 0, $count, "Snowball");
 	}
 
-	public function isSword(){
-		return Tool::TIER_IRON;
+	public function getMaxStackSize() : int {
+		return 16;
 	}
 
-	public function getAttackDamage(){
-		return 7;
-	}
 }

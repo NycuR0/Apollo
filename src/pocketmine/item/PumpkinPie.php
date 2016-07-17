@@ -21,17 +21,17 @@
 
 namespace pocketmine\item;
 
-
-class IronSword extends Tool{
+class PumpkinPie extends Food{
 	public function __construct($meta = 0, $count = 1){
-		parent::__construct(self::IRON_SWORD, $meta, $count, "Iron Sword");
+		parent::__construct(self::PUMPKIN_PIE, $meta, $count, "Pumpkin Pie");
 	}
 
-	public function isSword(){
-		return Tool::TIER_IRON;
+	public function getFoodRestore() : int{
+		return 8;
 	}
 
-	public function getAttackDamage(){
-		return 7;
+	public function getSaturationRestore() : float{
+		return 4.8;
 	}
 }
+
