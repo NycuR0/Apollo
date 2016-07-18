@@ -212,6 +212,7 @@ class Item implements ItemIds{
 			self::$list[self::QUARTZ] = Quartz::class;
 			self::$list[self::BREWING_STAND] = BrewingStand::class;
 			self::$list[self::CAMERA] = Camera::class;
+			self::$list[self::IRON_DOOR_BLOCK] = IronDoor::class;
 			self::$list[self::BEETROOT] = Beetroot::class;
 			self::$list[self::FLOWER_POT] = FlowerPot::class;
 			self::$list[self::SKULL] = Skull::class;
