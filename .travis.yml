@@ -1,24 +1,16 @@
-#Travis CI
+sudo: false
 
 language: php
-
 php:
- - 7.0.8
-
-branches:
- - master
+ - 7.0
 
 before_script:
  - phpenv config-rm xdebug.ini
  - mkdir plugins
- - wget -O plugins/DevTools.phar https://github.com/PocketMine/DevTools/releases/download/v1.11.0/DevTools_v1.11.0.phar
  - pecl install channel://pecl.php.net/pthreads-3.1.6
  - pecl install channel://pecl.php.net/weakref-0.3.2
  - echo | pecl install channel://pecl.php.net/yaml-2.0.0RC7
- - git clone https://github.com/caspervanneck/CI-Test
+ - chmod +x travis.sh
 
 script:
- - php CI-Test/Travis.php
- 
-notifications:
- email: false
+ - ./travis.sh
