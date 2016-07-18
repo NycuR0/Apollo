@@ -458,7 +458,6 @@ class Server{
 		return \pocketmine\MINECRAFT_VERSION;
 	}
 
-
 	/**
 	 * @return string
 	 */
