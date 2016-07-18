@@ -148,3 +148,25 @@ ai:
  creeper-explode-destroy-block: true
  #Choose if allow mob auto generate
  mobgenerate: true
+
+synapse:
+ #If you want to use Synapse API or connect to a synapse server, enable this
+ enabled: false
+ server-ip: 127.0.0.1
+ server-port: 10305
+ #If this client is the lobby or the main server
+ is-main-server: true
+ server-password: 32bitlongkey
+ #Description of this client is the identifier of this client
+ description: "A Synapse client"
+ #Disable RakLib means that players can only join via Synapse
+ disable-rak: false
+
+enchantment:
+ #Choose if anvil is allowed
+ enable-anvil: true
+ #Choose if EnchantingTable is allowed
+ enable-enchanting-table: true
+ #Choose if to count bookshelves, may cause server lag.
+ #If this option is false, server will use a random count (0~15)
+ count-bookshelf: false
