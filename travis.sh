@@ -1,12 +1,6 @@
 #!/bin/bash
-echo Running lint...
-shopt -s globstar
-for file in **/*.php; do
-    OUTPUT=`php -l "$file"`
-    [ $? -ne 0 ] && echo -n "$OUTPUT" && exit 1
-done
-echo Lint done successfully.
-echo -e "version\nms\nstop\n" | php src/pocketmine/PocketMine.php --no-wizard | grep -v "\[Apollo\] Adding "
+find . -name "*.php" -print0 | xargs -0 -n1 php -l || exit 1
+echo -e "ms\nstop\n\n" | php src/pocketmine/PocketMine.php --no-wizard
 if ls plugins/Apollo/Apollo*.phar >/dev/null 2>&1; then
-    echo Server packaged successfully.
-else
+    echo "Apollo.phar successfully created!"
+fi
