@@ -187,9 +187,6 @@ class Server{
 	/** @var Server */
 	private static $instance = null;
 
-	/** @var \Threaded */
-	private static $sleeper = null;
-
 	/** @var BanList */
 	private $banByName = null;
 
@@ -344,6 +341,7 @@ class Server{
 	public $netherLevel = null;
 	public $weatherRandomDurationMin = 6000;
 	public $weatherRandomDurationMax = 12000;
+	public $lookup = [];
 	public $hungerHealth = 10;
 	public $lightningTime = 200;
 	public $lightningFire = false;
@@ -363,7 +361,7 @@ class Server{
 	public $dserverAllPlayers = 0;
 	public $redstoneEnabled = false;
 	public $allowFrequencyPulse = true;
-	public $anvilEnabled = false;
+	public $anviletEnabled = false;
 	public $pulseFrequency = 20;
 	public $playerMsgType = self::PLAYER_MSG_TYPE_MESSAGE;
 	public $playerLoginMsg = "";
@@ -381,20 +379,14 @@ class Server{
 	public $allowSplashPotion = true;
 	public $fireSpread = false;
 	public $advancedCommandSelector = false;
-	public $synapseConfig = [];
-	public $enchantingTableEnabled = true;
-	public $countBookshelf = false;
 
 	/** @var CraftingDataPacket */
 	private $recipeList = null;
 
-	/** @var Synapse */
-	private $synapse = null;
-
 	/**
 	 * @return string
 	 */
-	public function getName() : string{
+	public function getName(){
 		return "Apollo";
 	}
 
