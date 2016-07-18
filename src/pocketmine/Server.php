@@ -391,10 +391,10 @@ class Server{
 	/** @var Synapse */
 	private $synapse = null;
 
-	/**
+/**
 	 * @return string
 	 */
-	public function getName(){
+	public function getName() : string{
 		return "Apollo";
 	}
 
@@ -1816,11 +1816,10 @@ class Server{
 
 
 			$this->aboutstring = "\n
-		   Â§5PocketMine-iTX Â§3Genisys Â§fis a fork of PocketMine-MP, made by Â§5iTX Technologies LLCÂ§f.
+		   Â§3Apollo Â§fis a fork of PocketMine-MP, made by Â§5NycuRO§f.
 		   Â§fVersion: Â§6" . $this->getPocketMineVersion() . "
 		   Â§fTarget client Version: Â§d" . \pocketmine\MINECRAFT_VERSION . "
-		   Â§fLatest source code is available at https://github.com/iTXTech/Genisys
-		   Â§fDonate link: http://pl.zxda.net/plugins/203.html
+		   Â§fLatest source code is available at https://github.com/NycuRO/Apollo
 		\n";
 
 			$this->about();
