@@ -27,14 +27,14 @@ use pocketmine\Player;
 
 class IronDoor extends Door{
 
-	protected $id = self::IRON_DOOR_BLOCK;
+	protected $id = self::IRON_DOOR;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 
 	public function getName() : string{
-		return "Iron Door Block";
+		return "Iron Door";
 	}
 
 	public function getToolType(){
