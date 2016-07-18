@@ -45,7 +45,7 @@ Apollo is a perfect software for your server with :
  - Dispenser and Dropper
  - Colorful Sheep
  - Splash Potions 
- - Nether [more more changes and performance ]
+ - Nether [ more more changes and performance ]
 
 
 ## Upcoming Update
