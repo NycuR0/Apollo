@@ -1,26 +1,5 @@
 <?php
-
-/*
- *
- *  ____            _        _   __  __ _                  __  __ ____
- * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \
- * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
- * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/
- * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_|
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * @author PocketMine Team
- * @link http://www.pocketmine.net/
- *
- *
-*/
-
 namespace pocketmine\level\generator\biome;
-
 use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\level\generator\normal\biome\SwampBiome;
@@ -33,14 +12,14 @@ use pocketmine\level\generator\normal\biome\PlainBiome;
 use pocketmine\level\generator\normal\biome\RiverBiome;
 use pocketmine\level\generator\normal\biome\SmallMountainsBiome;
 use pocketmine\level\generator\normal\biome\TaigaBiome;
+use pocketmine\level\generator\normal\biome\MesaBiome;
+//use pocketmine\level\generator\normal\biome\ExtremeHillsBiome as ES;
+use pocketmine\level\generator\normal\biome\FrozenRiverBiome;
 use pocketmine\level\generator\hell\HellBiome;
 use pocketmine\level\generator\populator\Populator;
 use pocketmine\utils\Random;
-
 use pocketmine\level\generator\populator\Flower;
-
 abstract class Biome{
-
 	const OCEAN = 0;
 	const PLAINS = 1;
 	const DESERT = 2;
@@ -49,18 +28,76 @@ abstract class Biome{
 	const TAIGA = 5;
 	const SWAMP = 6;
 	const RIVER = 7;
-
 	const HELL = 8;
-
+	const FROZEN_RIVER = 11;
 	const ICE_PLAINS = 12;
-
-
 	const SMALL_MOUNTAINS = 20;
-
-
 	const BIRCH_FOREST = 27;
-
-
+	const EXTREME_HILLS = 34;
+	const MESA = 37;
+	/*
+    SWAMPLAND,-> added (6)
+    FOREST, -> added (4)
+    TAIGA, -> added (5)
+    DESERT, -> added (2)
+    PLAINS, -> added (1)
+    HELL, -> added (8)
+    SKY, -> idk is this.. :/
+    OCEAN, -> added (0)
+    RIVER, -> added (7)
+    EXTREME_HILLS, -> in construction (34)
+    FROZEN_OCEAN, -> not exit in mcpe
+    FROZEN_RIVER, -> in construction (11)
+    ICE_PLAINS,
+    ICE_MOUNTAINS,
+    MUSHROOM_ISLAND,
+    MUSHROOM_SHORE,
+    BEACH,
+    DESERT_HILLS,
+    FOREST_HILLS,
+    TAIGA_HILLS,
+    SMALL_MOUNTAINS,
+    JUNGLE,
+    JUNGLE_HILLS,
+    JUNGLE_EDGE,
+    DEEP_OCEAN,
+    STONE_BEACH,
+    COLD_BEACH,
+    BIRCH_FOREST,
+    BIRCH_FOREST_HILLS,
+    ROOFED_FOREST,
+    COLD_TAIGA,
+    COLD_TAIGA_HILLS,
+    MEGA_TAIGA,
+    MEGA_TAIGA_HILLS,
+    EXTREME_HILLS_PLUS,
+    SAVANNA,
+    SAVANNA_PLATEAU,
+    MESA, -> in construction (37)
+    MESA_PLATEAU_FOREST,
+    MESA_PLATEAU,
+    SUNFLOWER_PLAINS,
+    DESERT_MOUNTAINS,
+    FLOWER_FOREST,
+    TAIGA_MOUNTAINS,
+    SWAMPLAND_MOUNTAINS,
+    ICE_PLAINS_SPIKES,
+    JUNGLE_MOUNTAINS,
+    JUNGLE_EDGE_MOUNTAINS,
+    COLD_TAIGA_MOUNTAINS,
+    SAVANNA_MOUNTAINS,
+    SAVANNA_PLATEAU_MOUNTAINS,
+    MESA_BRYCE,
+    MESA_PLATEAU_FOREST_MOUNTAINS,
+    MESA_PLATEAU_MOUNTAINS,
+    BIRCH_FOREST_MOUNTAINS,
+    BIRCH_FOREST_HILLS_MOUNTAINS,
+    ROOFED_FOREST_MOUNTAINS,
+    MEGA_SPRUCE_TAIGA,
+    EXTREME_HILLS_MOUNTAINS,
+    EXTREME_HILLS_PLUS_MOUNTAINS,
+    MEGA_SPRUCE_TAIGA_HILLS,
+    */
 	const MAX_BIOMES = 256;
 
 	/** @var Biome[] */
@@ -106,16 +143,15 @@ abstract class Biome{
 		self::register(self::DESERT, new DesertBiome());
 		self::register(self::MOUNTAINS, new MountainsBiome());
 		self::register(self::FOREST, new ForestBiome());
+		self::register(self::MESA, new MesaBiome());
+		self::register(self::FROZEN_RIVER, new FrozenRiverBiome());
+		//self::register(self::EXTREME_HILLS, new ES());
 		self::register(self::TAIGA, new TaigaBiome());
 		self::register(self::SWAMP, new SwampBiome());
 		self::register(self::RIVER, new RiverBiome());
-
 		self::register(self::ICE_PLAINS, new IcePlainsBiome());
-
-
 		self::register(self::SMALL_MOUNTAINS, new SmallMountainsBiome());
 		self::register(self::HELL, new HellBiome());
-
 		self::register(self::BIRCH_FOREST, new ForestBiome(ForestBiome::TYPE_BIRCH));
 	}
 
