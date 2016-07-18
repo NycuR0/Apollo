@@ -1847,20 +1847,20 @@ class Server{
 				unset($this->propertyCache["settings.language"]);
 			}
 
-			$this->logger->info("Loading genisys.yml...");
+			$this->logger->info("Loading apollo.yml...");
 
 			$lang = $this->getProperty("settings.language", BaseLang::FALLBACK_LANGUAGE);
-			if(file_exists($this->filePath . "src/pocketmine/resources/genisys_$lang.yml")){
-				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/genisys_$lang.yml");
+			if(file_exists($this->filePath . "src/pocketmine/resources/apollo_$lang.yml")){
+				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/apollo_$lang.yml");
 			}else{
-				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/genisys_eng.yml");
+				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/apollo_eng.yml");
 			}
 
-			if(!file_exists($this->dataPath . "genisys.yml")){
-				@file_put_contents($this->dataPath . "genisys.yml", $content);
+			if(!file_exists($this->dataPath . "apollo.yml")){
+				@file_put_contents($this->dataPath . "apollo.yml", $content);
 			}
 			$internelConfig = new Config($file, Config::YAML, []);
-			$this->advancedConfig = new Config($this->dataPath . "genisys.yml", Config::YAML, []);
+			$this->advancedConfig = new Config($this->dataPath . "apollo.yml", Config::YAML, []);
 			$cfgVer = $this->getAdvancedProperty("config.version", 0, $internelConfig);
 			$advVer = $this->getAdvancedProperty("config.version", 0);
 
