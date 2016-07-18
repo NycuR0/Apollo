@@ -187,6 +187,9 @@ class Server{
 	/** @var Server */
 	private static $instance = null;
 
+	/** @var \Threaded */
+	private static $sleeper = null;
+
 	/** @var BanList */
 	private $banByName = null;
 
@@ -341,7 +344,6 @@ class Server{
 	public $netherLevel = null;
 	public $weatherRandomDurationMin = 6000;
 	public $weatherRandomDurationMax = 12000;
-	public $lookup = [];
 	public $hungerHealth = 10;
 	public $lightningTime = 200;
 	public $lightningFire = false;
@@ -361,7 +363,7 @@ class Server{
 	public $dserverAllPlayers = 0;
 	public $redstoneEnabled = false;
 	public $allowFrequencyPulse = true;
-	public $anviletEnabled = false;
+	public $anvilEnabled = false;
 	public $pulseFrequency = 20;
 	public $playerMsgType = self::PLAYER_MSG_TYPE_MESSAGE;
 	public $playerLoginMsg = "";
@@ -379,9 +381,15 @@ class Server{
 	public $allowSplashPotion = true;
 	public $fireSpread = false;
 	public $advancedCommandSelector = false;
+	public $synapseConfig = [];
+	public $enchantingTableEnabled = true;
+	public $countBookshelf = false;
 
 	/** @var CraftingDataPacket */
 	private $recipeList = null;
+
+	/** @var Synapse */
+	private $synapse = null;
 
 	/**
 	 * @return string
@@ -1644,8 +1652,8 @@ class Server{
 
 	public function loadAdvancedConfig(){
 		$this->playerMsgType = $this->getAdvancedProperty("server.player-msg-type", self::PLAYER_MSG_TYPE_MESSAGE);
-		$this->playerLoginMsg = $this->getAdvancedProperty("server.login-msg", "§3@player joined the game");
-		$this->playerLogoutMsg = $this->getAdvancedProperty("server.logout-msg", "§3@player left the game");
+		$this->playerLoginMsg = $this->getAdvancedProperty("server.login-msg", "Â§3@player joined the game");
+		$this->playerLogoutMsg = $this->getAdvancedProperty("server.logout-msg", "Â§3@player left the game");
 		$this->weatherEnabled = $this->getAdvancedProperty("level.weather", true);
 		$this->foodEnabled = $this->getAdvancedProperty("player.hunger", true);
 		$this->expEnabled = $this->getAdvancedProperty("player.experience", true);
@@ -1808,11 +1816,11 @@ class Server{
 
 
 			$this->aboutstring = "\n
-		   §5PocketMine-iTX §3Genisys §fis a fork of PocketMine-MP, made by §5iTX Technologies LLC§f.
-		   §fVersion: §6" . $this->getPocketMineVersion() . "
-		   §fTarget client Version: §d" . \pocketmine\MINECRAFT_VERSION . "
-		   §fLatest source code is available at https://github.com/iTXTech/Genisys
-		   §fDonate link: http://pl.zxda.net/plugins/203.html
+		   Â§5PocketMine-iTX Â§3Genisys Â§fis a fork of PocketMine-MP, made by Â§5iTX Technologies LLCÂ§f.
+		   Â§fVersion: Â§6" . $this->getPocketMineVersion() . "
+		   Â§fTarget client Version: Â§d" . \pocketmine\MINECRAFT_VERSION . "
+		   Â§fLatest source code is available at https://github.com/iTXTech/Genisys
+		   Â§fDonate link: http://pl.zxda.net/plugins/203.html
 		\n";
 
 			$this->about();
@@ -2091,7 +2099,7 @@ class Server{
 
 			if($this->netherEnabled){
 				if(!$this->loadLevel($this->netherName)){
-					//$this->logger->info("正在生成地狱 ".$this->netherName);
+					//$this->logger->info("æ­£åœ¨ç”Ÿæˆåœ°ç‹± ".$this->netherName);
 					$this->generateLevel($this->netherName, time(), Generator::getGenerator("nether"));
 				}
 				$this->netherLevel = $this->getLevelByName($this->netherName);
