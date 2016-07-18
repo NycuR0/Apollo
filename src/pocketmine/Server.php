@@ -437,7 +437,7 @@ class Server{
 		return $uptime;
 	}
 
-	/**
+		/**
 	 * @return string
 	 */
 	public function getPocketMineVersion(){
@@ -457,6 +457,7 @@ class Server{
 	public function getVersion(){
 		return \pocketmine\MINECRAFT_VERSION;
 	}
+
 
 	/**
 	 * @return string
