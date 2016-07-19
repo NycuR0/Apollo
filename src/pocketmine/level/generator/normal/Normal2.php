@@ -57,7 +57,7 @@ class Normal2 extends Normal{
 
 	private $heightOffset;
 
-	private $seaHeight = 62;
+	private $seaHeight = 64;
 	private $seaFloorHeight = 48;
 	private $beathStartHeight = 60;
 	private $beathStopHeight = 64;
