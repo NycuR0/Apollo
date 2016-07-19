@@ -1,22 +1,8 @@
 #!/bin/bash
-
-# This is the start.sh file for Apollo
-# Please input ./start.sh to start server
-
-# Variable define
 DIR="$(cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
-
-# Change Directory
 cd "$DIR"
 
-# Loop starting
-# Don't edit this if you don't know what this does!
-
 DO_LOOP="no"
-
-##########################################
-# DO NOT EDIT ANYTHING BEYOND THIS LINE! #
-##########################################
 
 while getopts "p:f:l" OPTION 2> /dev/null; do
 	case ${OPTION} in
@@ -39,23 +25,21 @@ if [ "$PHP_BINARY" == "" ]; then
 	if [ -f ./bin/php7/bin/php ]; then
 		export PHPRC=""
 		PHP_BINARY="./bin/php7/bin/php"
-	elif type php 2>/dev/null; then
+	elif [ type php 2>/dev/null ]; then
 		PHP_BINARY=$(type -p php)
 	else
-		echo "[ERROR] Couldn't find a working PHP binary, please use the installer or download from README."
+		echo "Couldn't find a working PHP binary, please use the installer."
 		exit 1
 	fi
 fi
 
 if [ "$POCKETMINE_FILE" == "" ]; then
-	if [ -f ./Apollo*.phar ]; then
-	    	POCKETMINE_FILE="./Apollo*.phar"
-	elif [ -f ./PocketMine-MP.phar ]; then
-		POCKETMINE_FILE="./PocketMine-MP.phar"
+	if [ -f ./ClearSky.phar ]; then
+		POCKETMINE_FILE="./Apollo.phar"
 	elif [ -f ./src/pocketmine/PocketMine.php ]; then
 		POCKETMINE_FILE="./src/pocketmine/PocketMine.php"
 	else
-		echo "[ERROR] Couldn't find a valid Apollo installation."
+		echo "Couldn't find a valid Apollo installation"
 		exit 1
 	fi
 fi
@@ -73,5 +57,5 @@ while [ "$LOOPS" -eq 0 ] || [ "$DO_LOOP" == "yes" ]; do
 done
 
 if [ ${LOOPS} -gt 1 ]; then
-	echo "[INFO] Restarted $LOOPS times"
+	echo "Restarted $LOOPS times"
 fi
