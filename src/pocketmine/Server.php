@@ -1816,7 +1816,7 @@ class Server{
 
 
 			$this->aboutstring = "\n
-		  §3Apollo §fis a fork of PocketMine-MP, made by §5NycuROÂ§f.
+		  §3Apollo §fis a fork of PocketMine-MP, made by §5NycuRO§f.
 		  §fVersion: §6" . $this->getPocketMineVersion() . "
 		  §fTarget client Version: §d" . \pocketmine\MINECRAFT_VERSION . "
 		  §fLatest source code is available at https://github.com/NycuRO/Apollo
@@ -1847,7 +1847,7 @@ class Server{
 				unset($this->propertyCache["settings.language"]);
 			}
 
-			$this->logger->info("Loading apollo.yml...");
+			$this->logger->info("Loading Apollo.yml...");
 
 			$lang = $this->getProperty("settings.language", BaseLang::FALLBACK_LANGUAGE);
 			if(file_exists($this->filePath . "src/pocketmine/resources/apollo_$lang.yml")){
