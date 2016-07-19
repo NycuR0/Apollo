@@ -391,11 +391,11 @@ class Server{
 	/** @var Synapse */
 	private $synapse = null;
 
-/**
+	/**
 	 * @return string
 	 */
 	public function getName() : string{
-		return "Apollo";
+		return "Genisys";
 	}
 
 	/**
@@ -437,7 +437,7 @@ class Server{
 		return $uptime;
 	}
 
-		/**
+	/**
 	 * @return string
 	 */
 	public function getPocketMineVersion(){
@@ -1814,11 +1814,14 @@ class Server{
 			$version = new VersionString($this->getPocketMineVersion());
 			$this->version = $version;
 
+
 			$this->aboutstring = "\n
-		   	   Â§9Apollo Â§fis a fork of PocketMine-MP.
+		   Â§5PocketMine-iTX Â§3Genisys Â§fis a fork of PocketMine-MP, made by Â§5iTX Technologies LLCÂ§f.
 		   Â§fVersion: Â§6" . $this->getPocketMineVersion() . "
-		   Â§fClient Version: Â§d". \pocketmine\MINECRAFT_VERSION ."
-		   Â§fYou can get the latest code on https://github.com/NycuRO/Apollo
+		   Â§fTarget client Version: Â§d" . \pocketmine\MINECRAFT_VERSION . "
+		   Â§fLatest source code is available at https://github.com/iTXTech/Genisys
+		   Â§fDonate link: http://pl.zxda.net/plugins/203.html
+		\n";
 
 			$this->about();
 
@@ -1845,20 +1848,20 @@ class Server{
 				unset($this->propertyCache["settings.language"]);
 			}
 
-			$this->logger->info("Loading apollo.yml...");
+			$this->logger->info("Loading genisys.yml...");
 
 			$lang = $this->getProperty("settings.language", BaseLang::FALLBACK_LANGUAGE);
-			if(file_exists($this->filePath . "src/pocketmine/resources/apollo_$lang.yml")){
-				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/apollo_$lang.yml");
+			if(file_exists($this->filePath . "src/pocketmine/resources/genisys_$lang.yml")){
+				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/genisys_$lang.yml");
 			}else{
-				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/apollo_eng.yml");
+				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/genisys_eng.yml");
 			}
 
-			if(!file_exists($this->dataPath . "apollo.yml")){
-				@file_put_contents($this->dataPath . "apollo.yml", $content);
+			if(!file_exists($this->dataPath . "genisys.yml")){
+				@file_put_contents($this->dataPath . "genisys.yml", $content);
 			}
 			$internelConfig = new Config($file, Config::YAML, []);
-			$this->advancedConfig = new Config($this->dataPath . "apollo.yml", Config::YAML, []);
+			$this->advancedConfig = new Config($this->dataPath . "genisys.yml", Config::YAML, []);
 			$cfgVer = $this->getAdvancedProperty("config.version", 0, $internelConfig);
 			$advVer = $this->getAdvancedProperty("config.version", 0);
 
@@ -2119,7 +2122,7 @@ class Server{
 			}
 
 			if($cfgVer != $advVer){
-				$this->logger->notice("Your apollo.yml needs update");
+				$this->logger->notice("Your genisys.yml needs update");
 				$this->logger->notice("Current Version: $advVer   Latest Version: $cfgVer");
 			}
 
