@@ -53,6 +53,7 @@ Apollo is a perfect software for your server with :
 
 1.0 beta - Add all biomes
  ....
+ 
  1.1 more performens end tweaks
 
 Attention! All version have new biomes added and more changes in biomes :)
