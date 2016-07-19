@@ -1816,11 +1816,10 @@ class Server{
 
 
 			$this->aboutstring = "\n
-		   Â§3Apollo Â§fis a fork of PocketMine-MP, made by Â§5NycuRO§f.
+		   	   Â§9Apollo Â§fis a fork of PocketMine-MP.
 		   Â§fVersion: Â§6" . $this->getPocketMineVersion() . "
-		   Â§fTarget client Version: Â§d" . \pocketmine\MINECRAFT_VERSION . "
-		   Â§fLatest source code is available at https://github.com/NycuRO/Apollo
-		\n";
+		   Â§fClient Version: Â§d". \pocketmine\MINECRAFT_VERSION ."
+		   Â§fYou can get the latest code on https://github.com/NycuRO/Apollo
 
 			$this->about();
 
@@ -2121,7 +2120,7 @@ class Server{
 			}
 
 			if($cfgVer != $advVer){
-				$this->logger->notice("Your genisys.yml needs update");
+				$this->logger->notice("Your apollo.yml needs update");
 				$this->logger->notice("Current Version: $advVer   Latest Version: $cfgVer");
 			}
 
