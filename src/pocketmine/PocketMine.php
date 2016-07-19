@@ -72,7 +72,7 @@ namespace pocketmine {
 	use pocketmine\utils\Utils;
 	use pocketmine\wizard\Installer;
 
-	const VERSION = "0.10";
+	const VERSION = "0.5";
 	const API_VERSION = "2.0.0";
 	const CODENAME = "NycuRO";
 	const MINECRAFT_VERSION = "v0.15.0 alpha";
@@ -116,7 +116,7 @@ namespace pocketmine {
 	$autoloader->register(true);
 
 
-	set_time_limit(0); //Who set it to 30 seconds?!?!
+	set_time_limit(0);
 
 	gc_enable();
 	error_reporting(-1);
