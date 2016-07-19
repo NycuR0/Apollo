@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  *  ____            _        _   __  __ _                  __  __ ____  
@@ -18,56 +17,45 @@
  * 
  *
 */
-
 namespace pocketmine\block;
-
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
-
 class DoublePlant extends Flowable{
-	
-	const TYPE_SUNFLOWER = 0;
-	const TYPE_SYRINGA = 1;
-	const TYPE_DOUBLE_GRASS = 2;
-	const TYPE_DOUBLE_FERN = 3;
-	const TYPE_DOUBLE_ROSE = 4;
-	const TYPE_PAEONIA = 5;
-	
 	protected $id = self::DOUBLE_PLANT;
-
+	
+	const SUNFLOWER = 0;
+	const LILAC = 1;
+	const DOUBLE_TALLGRASS = 2;
+	const LARGE_FERN = 3;
+	const ROSE_BUSH = 4;
+	const PEONY = 5;
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
-
 	public function canBeReplaced(){
 		return true;
 	}
-
 	public function getName() : string{
 		static $names = [
-			self::TYPE_SUNFLOWER => "Sunflower",
-			self::TYPE_SYRINGA => "Lilac",
-			self::TYPE_DOUBLE_GRASS => "Double Tallgrass",
-			self::TYPE_DOUBLE_FERN => "Large Fern",
-			self::TYPE_DOUBLE_ROSE => "Rose Bush",
-			self::TYPE_PAEONIA => "Peony"
+			0 => "Sunflower",
+			1 => "Lilac",
+			2 => "Double Tallgrass",
+			3 => "Large Fern",
+			4 => "Rose Bush",
+			5 => "Peony"
 		];
 		return $names[$this->meta & 0x07];
 	}
-
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			if($this->getSide(0)->isTransparent() === true && !$this->getSide(0) instanceof DoublePlant){ //Replace with common break method
 				$this->getLevel()->setBlock($this, new Air(), false, false);
-
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
 		}
-
 		return false;
 	}
-
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		$up = $this->getSide(1);
@@ -78,7 +66,6 @@ class DoublePlant extends Flowable{
 		}
 		return false;
 	}
-
 	public function onBreak(Item $item){
 		$up = $this->getSide(1);
 		$down = $this->getSide(0);
@@ -96,7 +83,6 @@ class DoublePlant extends Flowable{
 			}
 		}
 	}
-
 	public function getDrops(Item $item) : array{
 		if(($this->meta & 0x08) !== 0x08){
 			return [[Item::DOUBLE_PLANT, $this->meta, 1]];
