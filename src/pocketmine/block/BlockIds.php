@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  *  _____   _____   __   _   _   _____  __    __  _____
@@ -18,9 +17,7 @@
  * @link https://itxtech.org
  *
  */
-
 namespace pocketmine\block;
-
 interface BlockIds{
 	
 	const AIR = 0;
@@ -60,7 +57,6 @@ interface BlockIds{
 	const PISTON = 33;
 	const PISTON_HEAD = 34;
 	const WOOL = 35;
-
 	const DANDELION = 37;
 	const POPPY = 38; const ROSE = 38; const RED_FLOWER = 38;
 	const BROWN_MUSHROOM = 39;
@@ -108,7 +104,6 @@ interface BlockIds{
 	const CACTUS = 81;
 	const CLAY_BLOCK = 82;
 	const REEDS = 83; const SUGARCANE_BLOCK = 83;
-
 	const FENCE = 85;
 	const PUMPKIN = 86;
 	const NETHERRACK = 87;
@@ -143,10 +138,8 @@ interface BlockIds{
 	const ENCHANTING_TABLE = 116; const ENCHANT_TABLE = 116; const ENCHANTMENT_TABLE = 116;
 	const BREWING_STAND_BLOCK = 117;
 	const CAULDRON_BLOCK = 118;
-
 	const END_PORTAL_FRAME = 120; const END_PORTAL = 120;
 	const END_STONE = 121;
-
 	const REDSTONE_LAMP = 123; const INACTIVE_REDSTONE_LAMP = 123;
 	const LIT_REDSTONE_LAMP = 124; const ACTIVE_REDSTONE_LAMP = 124;
 	const DROPPER = 125;
@@ -154,14 +147,12 @@ interface BlockIds{
 	const COCOA_BLOCK = 127; const COCOA_PODS = 127;
 	const SANDSTONE_STAIRS = 128;
 	const EMERALD_ORE = 129;
-
 	const TRIPWIRE_HOOK = 131;
 	const TRIPWIRE = 132;
 	const EMERALD_BLOCK = 133;
 	const SPRUCE_WOOD_STAIRS = 134; const SPRUCE_WOODEN_STAIRS = 134;
 	const BIRCH_WOOD_STAIRS = 135; const BIRCH_WOODEN_STAIRS = 135;
 	const JUNGLE_WOOD_STAIRS = 136; const JUNGLE_WOODEN_STAIRS = 136;
-
 	const COBBLESTONE_WALL = 139; const COBBLE_WALL = 139; const STONE_WALL = 139;
 	const FLOWER_POT_BLOCK = 140;
 	const CARROT_BLOCK = 141;
@@ -183,33 +174,28 @@ interface BlockIds{
 	const DOUBLE_WOOD_SLAB = 157; const DOUBLE_WOODEN_SLAB = 157; const DOUBLE_WOOD_SLABS = 157; const DOUBLE_WOODEN_SLABS = 157;
 	const WOOD_SLAB = 158; const WOODEN_SLAB = 158; const WOOD_SLABS = 158; const WOODEN_SLABS = 158;
 	const STAINED_CLAY = 159; const STAINED_HARDENED_CLAY = 159;
-	
 	const LEAVES2 = 161;
 	const WOOD2 = 162; const TRUNK2 = 162; const LOG2 = 162;
 	const ACACIA_WOOD_STAIRS = 163; const ACACIA_WOODEN_STAIRS = 163;
 	const DARK_OAK_WOOD_STAIRS = 164; const DARK_OAK_WOODEN_STAIRS = 164;
 	const SLIME_BLOCK = 165;
-	
 	const IRON_TRAPDOOR = 167;
-	
 	const HAY_BALE = 170;
 	const CARPET = 171;
 	const HARDENED_CLAY = 172;
 	const COAL_BLOCK = 173;
 	const PACKED_ICE = 174;
 	const DOUBLE_PLANT = 175;
-	
 	const INVERTED_DAYLIGHT_SENSOR = 178; const DAYLIGHT_SENSOR_INVERTED = 178;
 	const RED_SANDSTONE = 179;
 	const RED_SANDSTONE_STAIRS = 180;
 	const DOUBLE_RED_SANDSTONE_SLAB = 181;
 	const RED_SANDSTONE_SLAB = 182;
-	const SPRUCE_FENCE_GATE = 183; const FENCE_GATE_SPRUCE = 183;
+	const SPRUCE_FENCE_GATE = 183; 	const FENCE_GATE_SPRUCE = 183;
 	const BIRCH_FENCE_GATE = 184; const FENCE_GATE_BIRCH = 184;
 	const JUNGLE_FENCE_GATE = 185; const FENCE_GATE_JUNGLE = 185;
 	const DARK_OAK_FENCE_GATE = 186; const FENCE_GATE_DARK_OAK = 186;
 	const ACACIA_FENCE_GATE = 187; const FENCE_GATE_ACACIA = 187;
-	
 	const SPRUCE_DOOR_BLOCK = 193;
 	const BIRCH_DOOR_BLOCK = 194;
 	const JUNGLE_DOOR_BLOCK = 195;
@@ -217,7 +203,6 @@ interface BlockIds{
 	const DARK_OAK_DOOR_BLOCK = 197;
 	const GRASS_PATH = 198;
 	const ITEM_FRAME_BLOCK = 199;
-	
 	const PODZOL = 243;
 	const BEETROOT_BLOCK = 244;
 	const STONECUTTER = 245;
