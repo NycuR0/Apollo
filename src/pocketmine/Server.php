@@ -391,11 +391,11 @@ class Server{
 	/** @var Synapse */
 	private $synapse = null;
 
-	/**
+/**
 	 * @return string
 	 */
 	public function getName() : string{
-		return "Genisys";
+		return "Apollo";
 	}
 
 	/**
@@ -437,7 +437,7 @@ class Server{
 		return $uptime;
 	}
 
-	/**
+		/**
 	 * @return string
 	 */
 	public function getPocketMineVersion(){
@@ -1652,8 +1652,8 @@ class Server{
 
 	public function loadAdvancedConfig(){
 		$this->playerMsgType = $this->getAdvancedProperty("server.player-msg-type", self::PLAYER_MSG_TYPE_MESSAGE);
-		$this->playerLoginMsg = $this->getAdvancedProperty("server.login-msg", "Â§3@player joined the game");
-		$this->playerLogoutMsg = $this->getAdvancedProperty("server.logout-msg", "Â§3@player left the game");
+		$this->playerLoginMsg = $this->getAdvancedProperty("server.login-msg", "Ã‚Â§3@player joined the game");
+		$this->playerLogoutMsg = $this->getAdvancedProperty("server.logout-msg", "Ã‚Â§3@player left the game");
 		$this->weatherEnabled = $this->getAdvancedProperty("level.weather", true);
 		$this->foodEnabled = $this->getAdvancedProperty("player.hunger", true);
 		$this->expEnabled = $this->getAdvancedProperty("player.experience", true);
@@ -1816,11 +1816,10 @@ class Server{
 
 
 			$this->aboutstring = "\n
-		   Â§5PocketMine-iTX Â§3Genisys Â§fis a fork of PocketMine-MP, made by Â§5iTX Technologies LLCÂ§f.
-		   Â§fVersion: Â§6" . $this->getPocketMineVersion() . "
-		   Â§fTarget client Version: Â§d" . \pocketmine\MINECRAFT_VERSION . "
-		   Â§fLatest source code is available at https://github.com/iTXTech/Genisys
-		   Â§fDonate link: http://pl.zxda.net/plugins/203.html
+		   Ã‚Â§3Apollo Ã‚Â§fis a fork of PocketMine-MP, made by Ã‚Â§5NycuROÂ§f.
+		   Ã‚Â§fVersion: Ã‚Â§6" . $this->getPocketMineVersion() . "
+		   Ã‚Â§fTarget client Version: Ã‚Â§d" . \pocketmine\MINECRAFT_VERSION . "
+		   Ã‚Â§fLatest source code is available at https://github.com/NycuRO/Apollo
 		\n";
 
 			$this->about();
@@ -1848,20 +1847,20 @@ class Server{
 				unset($this->propertyCache["settings.language"]);
 			}
 
-			$this->logger->info("Loading genisys.yml...");
+			$this->logger->info("Loading apollo.yml...");
 
 			$lang = $this->getProperty("settings.language", BaseLang::FALLBACK_LANGUAGE);
-			if(file_exists($this->filePath . "src/pocketmine/resources/genisys_$lang.yml")){
-				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/genisys_$lang.yml");
+			if(file_exists($this->filePath . "src/pocketmine/resources/apollo_$lang.yml")){
+				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/apollo_$lang.yml");
 			}else{
-				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/genisys_eng.yml");
+				$content = file_get_contents($file = $this->filePath . "src/pocketmine/resources/apollo_eng.yml");
 			}
 
-			if(!file_exists($this->dataPath . "genisys.yml")){
-				@file_put_contents($this->dataPath . "genisys.yml", $content);
+			if(!file_exists($this->dataPath . "apollo.yml")){
+				@file_put_contents($this->dataPath . "apollo.yml", $content);
 			}
 			$internelConfig = new Config($file, Config::YAML, []);
-			$this->advancedConfig = new Config($this->dataPath . "genisys.yml", Config::YAML, []);
+			$this->advancedConfig = new Config($this->dataPath . "apollo.yml", Config::YAML, []);
 			$cfgVer = $this->getAdvancedProperty("config.version", 0, $internelConfig);
 			$advVer = $this->getAdvancedProperty("config.version", 0);
 
@@ -2099,7 +2098,7 @@ class Server{
 
 			if($this->netherEnabled){
 				if(!$this->loadLevel($this->netherName)){
-					//$this->logger->info("æ­£åœ¨ç”Ÿæˆåœ°ç‹± ".$this->netherName);
+					//$this->logger->info("Ã¦Â­Â£Ã¥Å“Â¨Ã§â€Å¸Ã¦Ë†ÂÃ¥Å“Â°Ã§â€¹Â± ".$this->netherName);
 					$this->generateLevel($this->netherName, time(), Generator::getGenerator("nether"));
 				}
 				$this->netherLevel = $this->getLevelByName($this->netherName);
