@@ -1,9 +1,11 @@
-# Apollo - Stable
+# Apollo - Stable (PHP7)
 Apollo is a Minecraft: PE Server Software with an improved Generator and a lot more features. 
 
 Note: You may **not** copy our generator without NycuRO's permission. Other than that, everything is open-source and may be edited.
 
 **TravisCI Build Status** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=master)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
+
+**CircleCI Build Status** [![Build Status](https://circleci.com/gh/NycuRO/Apollo.svg?style=shield)](https://circleci.com/gh/NycuRO/Apollo "CircleCI Build Status")
 
 ## Features
 
@@ -65,4 +67,3 @@ Attention! All version have new biomes added and more changes in biomes :)
 
 - Need to communicate with us? Join our [Telegram](https://telegram.me/joinchat/Ca8L9T9P01PtR1bOEwtxuw) group!
 - We are a edited version of Genisys. We have edited their generators to our version and have improved the performance
-- Apollo have PHP7 and works very fine! Have fun all :D
