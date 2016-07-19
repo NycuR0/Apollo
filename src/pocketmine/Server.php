@@ -1816,10 +1816,10 @@ class Server{
 
 
 			$this->aboutstring = "\n
-		   Â§3Apollo Â§fis a fork of PocketMine-MP, made by Â§5NycuROÂ§f.
-		   Â§fVersion: Â§6" . $this->getPocketMineVersion() . "
-		   Â§fTarget client Version: Â§d" . \pocketmine\MINECRAFT_VERSION . "
-		   Â§fLatest source code is available at https://github.com/NycuRO/Apollo
+		  §3Apollo §fis a fork of PocketMine-MP, made by §5NycuROÂ§f.
+		  §fVersion: §6" . $this->getPocketMineVersion() . "
+		  §fTarget client Version: §d" . \pocketmine\MINECRAFT_VERSION . "
+		  §fLatest source code is available at https://github.com/NycuRO/Apollo
 		\n";
 
 			$this->about();
