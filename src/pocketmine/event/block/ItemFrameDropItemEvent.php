@@ -15,7 +15,7 @@
  * (at your option) any later version.
  *
  * @author iTX Technologies
- * @link https://itxtech.org
+ * @link https://mcper.cn
  *
  */
 
@@ -24,28 +24,19 @@ namespace pocketmine\event\block;
 use pocketmine\block\Block;
 use pocketmine\event\Cancellable;
 use pocketmine\item\Item;
-use pocketmine\Player;
 use pocketmine\tile\ItemFrame;
 
 class ItemFrameDropItemEvent extends BlockEvent implements Cancellable{
 	public static $handlerList = null;
-
-	/** @var  Player */
-	private $player;
 	/** @var  Item */
 	private $item;
 	/** @var  ItemFrame */
 	private $itemFrame;
 
-	public function __construct(Player $player, Block $block, ItemFrame $itemFrame, Item $item){
-		$this->player = $player;
+	public function __construct(Block $block, ItemFrame $itemFrame, Item $item){
 		$this->block = $block;
 		$this->itemFrame = $itemFrame;
 		$this->item = $item;
-	}
-
-	public function getPlayer(){
-		return $this->player;
 	}
 
 	public function getItemFrame(){
