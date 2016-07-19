@@ -12,9 +12,9 @@ settings:
  #When server shut down, the players will get kicked and this is what will show on there screen.
  shutdown-message: "Server closed"
  #Allow listing plugins via Query
- query-plugins: false
+ query-plugins: true
  #Show a console message when a plugin uses deprecated API methods
- deprecated-verbose: false
+ deprecated-verbose: true
  #Enable plugin and core profiling by default
  enable-profiling: false
  #Will only add results when tick measurement is below or equal to given value (default 20)
@@ -23,7 +23,7 @@ settings:
  #Used for plugin asynchronous tasks, world generation, compression and web communication.
  #Set this approximately to your number of cores.
  #If set to auto, it'll try to detect the number of cores (or use 2)
- async-workers: 2
+ async-workers: 4
 
 memory:
  #Global soft memory limit in megabytes. Set to 0 to disable
@@ -53,17 +53,17 @@ memory:
   period: 36000
 
   #Fire asynchronous tasks to collect garbage from workers
-  collect-async-worker: false
+  collect-async-worker: true
 
   #Trigger on low memory
   low-memory-trigger: true
 
  max-chunks:
   #Limit of chunks to load per player, overrides chunk-sending.max-chunks
-  trigger-limit: 56
+  trigger-limit: 28
 
   #Do chunk garbage collection on trigger
-  trigger-chunk-collect: false
+  trigger-chunk-collect: true
 
   #Trigger on low memory
   low-memory-trigger: true
@@ -76,9 +76,9 @@ memory:
 network:
  #Threshold for batching packets, in bytes. Only these packets will be compressed
  #Set to 0 to compress everything, -1 to disable.
- batch-threshold: 56
+ batch-threshold: 256
  #Compression level used when sending batched packets. Higher = Uses More CPU, Less = More Bandwidth Usage
- compression-level: 1
+ compression-level: 2
  #Use AsyncTasks for compression. Adds half/one tick delay, less CPU load on main thread
  async-compression: true
  #Experimental, only for Windows. Tries to use UPnP to automatically port forward
@@ -97,7 +97,7 @@ level-settings:
  #NOTE: This is currently not implemented
  convert-format: false
  #Automatically change levels tick rate to maintain 20 ticks per second
- auto-tick-rate: true
+ auto-tick-rate: false
  auto-tick-rate-limit: 20
  #Sets the base tick rate (1 = 20 ticks per second, 2 = 10 ticks per second, etc.)
  base-tick-rate: 1
@@ -106,28 +106,28 @@ level-settings:
 
 chunk-sending:
  #Amount of chunks sent to players per tick
- per-tick: 56
+ per-tick: 1
  #Amount of chunks sent around each player
- max-chunks: 56
+ max-chunks: 32
  #Amount of chunks that need to be sent before spawning the player
- spawn-threshold: 56
+ spawn-threshold: 28
  #Save a serialized copy of the chunk in memory for faster sending
  #Useful in mostly-static worlds where lots of players join at the same time
  cache-chunks: true
 
 chunk-ticking:
  #Max amount of chunks processed each tick
- per-tick: 5
+ per-tick: 16
  #Radius of chunks around a player to tick
- tick-radius: 5
+ tick-radius: 3
  light-updates: false
  clear-tick-list: true
 
 chunk-generation:
  #Max. amount of chunks in the waiting queue to be generated
- queue-size: 8
+ queue-size: 2
  #Max. amount of chunks in the waiting queue to be populated
- population-queue-size: 8
+ population-queue-size: 2
 
 ticks-per:
  animal-spawns: 400
