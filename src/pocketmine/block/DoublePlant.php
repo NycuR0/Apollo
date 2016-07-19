@@ -26,15 +26,15 @@ use pocketmine\level\Level;
 use pocketmine\Player;
 
 class DoublePlant extends Flowable{
-
-	protected $id = self::DOUBLE_PLANT;
 	
-	const SUNFLOWER = 0;
-	const LILAC = 1;
-	const DOUBLE_TALLGRASS = 2;
-	const LARGE_FERN = 3;
-	const ROSE_BUSH = 4;
-	const PEONY = 5;
+	const TYPE_SUNFLOWER = 0;
+	const TYPE_SYRINGA = 1;
+	const TYPE_DOUBLE_GRASS = 2;
+	const TYPE_DOUBLE_FERN = 3;
+	const TYPE_DOUBLE_ROSE = 4;
+	const TYPE_PAEONIA = 5;
+	
+	protected $id = self::DOUBLE_PLANT;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
@@ -46,12 +46,12 @@ class DoublePlant extends Flowable{
 
 	public function getName() : string{
 		static $names = [
-			0 => "Sunflower",
-			1 => "Lilac",
-			2 => "Double Tallgrass",
-			3 => "Large Fern",
-			4 => "Rose Bush",
-			5 => "Peony"
+			self::TYPE_SUNFLOWER => "Sunflower",
+			self::TYPE_SYRINGA => "Lilac",
+			self::TYPE_DOUBLE_GRASS => "Double Tallgrass",
+			self::TYPE_DOUBLE_FERN => "Large Fern",
+			self::TYPE_DOUBLE_ROSE => "Rose Bush",
+			self::TYPE_PAEONIA => "Peony"
 		];
 		return $names[$this->meta & 0x07];
 	}
