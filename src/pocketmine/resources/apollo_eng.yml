@@ -2,7 +2,7 @@
 
 #Version of this file
 config:
- version: 14
+ version: 15
 
 #ATENTION! IF WEATHER IS FALSE ,NOT ALL BIOMES IS GENERATED!
 level:
