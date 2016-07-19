@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  *  ____            _        _   __  __ _                  __  __ ____  
@@ -17,11 +18,15 @@
  * 
  *
 */
+
 namespace pocketmine\block;
+
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
+
 class DoublePlant extends Flowable{
+
 	protected $id = self::DOUBLE_PLANT;
 	
 	const SUNFLOWER = 0;
@@ -30,12 +35,15 @@ class DoublePlant extends Flowable{
 	const LARGE_FERN = 3;
 	const ROSE_BUSH = 4;
 	const PEONY = 5;
+
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
+
 	public function canBeReplaced(){
 		return true;
 	}
+
 	public function getName() : string{
 		static $names = [
 			0 => "Sunflower",
@@ -47,15 +55,19 @@ class DoublePlant extends Flowable{
 		];
 		return $names[$this->meta & 0x07];
 	}
+
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			if($this->getSide(0)->isTransparent() === true && !$this->getSide(0) instanceof DoublePlant){ //Replace with common break method
 				$this->getLevel()->setBlock($this, new Air(), false, false);
+
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
 		}
+
 		return false;
 	}
+
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		$up = $this->getSide(1);
@@ -66,6 +78,7 @@ class DoublePlant extends Flowable{
 		}
 		return false;
 	}
+
 	public function onBreak(Item $item){
 		$up = $this->getSide(1);
 		$down = $this->getSide(0);
@@ -83,6 +96,7 @@ class DoublePlant extends Flowable{
 			}
 		}
 	}
+
 	public function getDrops(Item $item) : array{
 		if(($this->meta & 0x08) !== 0x08){
 			return [[Item::DOUBLE_PLANT, $this->meta, 1]];
