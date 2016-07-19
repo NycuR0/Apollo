@@ -26,10 +26,7 @@ use pocketmine\event\Cancellable;
 use pocketmine\item\Item;
 use pocketmine\Player;
 
-/**
- * Called when a player places a block
- */
-class BlockPlaceEvent extends BlockEvent implements Cancellable{
+class BlockBreakEvent extends BlockEvent implements Cancellable{
 	public static $handlerList = null;
 
 	/** @var \pocketmine\Player */
@@ -38,36 +35,54 @@ class BlockPlaceEvent extends BlockEvent implements Cancellable{
 	/** @var \pocketmine\item\Item */
 	protected $item;
 
+	/** @var bool */
+	protected $instaBreak = false;
+	protected $blockDrops = [];
 
-	protected $blockReplace;
-	protected $blockAgainst;
-
-	public function __construct(Player $player, Block $blockPlace, Block $blockReplace, Block $blockAgainst, Item $item){
-		$this->block = $blockPlace;
-		$this->blockReplace = $blockReplace;
-		$this->blockAgainst = $blockAgainst;
+	public function __construct(Player $player, Block $block, Item $item, $instaBreak = false){
+		$this->block = $block;
 		$this->item = $item;
 		$this->player = $player;
+		$this->instaBreak = (bool)$instaBreak;
+		$drops = $player->isSurvival() ? $block->getDrops($item) : [];
+		if($drops != null && is_numeric($drops[0]))
+			$this->blockDrops[] = Item::get($drops[0], $drops[1], $drops[2]);
+		else
+			foreach($drops as $i){
+				$this->blockDrops[] = Item::get($i[0], $i[1], $i[2]);
+			}
 	}
 
 	public function getPlayer(){
 		return $this->player;
 	}
 
-	/**
-	 * Gets the item in hand
-	 *
-	 * @return mixed
-	 */
 	public function getItem(){
 		return $this->item;
 	}
 
-	public function getBlockReplaced(){
-		return $this->blockReplace;
+	public function getInstaBreak(){
+		return $this->instaBreak;
 	}
 
-	public function getBlockAgainst(){
-		return $this->blockAgainst;
+	/**
+	 * @return Item[]
+	 */
+	public function getDrops(){
+		return $this->blockDrops;
+	}
+
+	/**
+	 * @param Item[] $drops
+	 */
+	public function setDrops(array $drops){
+		$this->blockDrops = $drops;
+	}
+
+	/**
+	 * @param boolean $instaBreak
+	 */
+	public function setInstaBreak($instaBreak){
+		$this->instaBreak = (bool)$instaBreak;
 	}
 }
