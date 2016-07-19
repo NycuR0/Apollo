@@ -1814,7 +1814,6 @@ class Server{
 			$version = new VersionString($this->getPocketMineVersion());
 			$this->version = $version;
 
-
 			$this->aboutstring = "\n
 		   	   Â§9Apollo Â§fis a fork of PocketMine-MP.
 		   Â§fVersion: Â§6" . $this->getPocketMineVersion() . "
