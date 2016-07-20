@@ -405,13 +405,6 @@ class Server{
 		return $this->isRunning === true;
 	}
 	
-		/**
-	 * @return bool
-	 */
-	public function getApiVersion(){		
- -		return \pocketmine\API_VERSION;		
- -	}
- 
 	/**
 	 * @return string
 	 * Returns a formatted string of how long the server has been running for
@@ -463,6 +456,28 @@ class Server{
 	 */
 	public function getVersion(){
 		return \pocketmine\MINECRAFT_VERSION;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getApiVersion(){
+		return \pocketmine\API_VERSION;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getiTXApiVersion(){
+		return \pocketmine\GENISYS_API_VERSION;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getGeniApiVersion(){
+		return \pocketmine\GENISYS_API_VERSION;
 	}
 
 	/**
