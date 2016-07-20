@@ -461,28 +461,6 @@ class Server{
 	/**
 	 * @return string
 	 */
-	public function getApiVersion(){
-		return \pocketmine\API_VERSION;
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function getiTXApiVersion(){
-		return \pocketmine\GENISYS_API_VERSION;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getGeniApiVersion(){
-		return \pocketmine\GENISYS_API_VERSION;
-	}
-
-	/**
-	 * @return string
-	 */
 	public function getFilePath(){
 		return $this->filePath;
 	}
