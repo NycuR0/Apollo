@@ -47,4 +47,16 @@ Temporary Items
 .apdisk
 
 bin
+crashdumps
+players
+plugins
+worlds
 server.log
+apollo.yml
+white-list.txt
+banned-cids.txt
+server.properties
+pocketmine.yml
+ops.txt
+banned-players.txt
+banned-ips.txt
