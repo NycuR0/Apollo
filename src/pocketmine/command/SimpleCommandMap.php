@@ -84,6 +84,7 @@ use pocketmine\command\defaults\BanipbynameCommand;
 use pocketmine\command\defaults\BanCidCommand;
 use pocketmine\command\defaults\PardonCidCommand;
 use pocketmine\command\defaults\WeatherCommand;
+use pocketmine\command\defaults\UpdateServerCommand;
 
 class SimpleCommandMap implements CommandMap{
 
@@ -115,6 +116,7 @@ class SimpleCommandMap implements CommandMap{
 		//$this->register("pocketmine", new MakeServerCommand("makeserver"));
 		$this->register("pocketmine", new ExtractPluginCommand("ep"));
 		$this->register("pocketmine", new MakePluginCommand("mp"));
+		$this->register("pocketmine", new UpdateServerCommand("updateserver"));
 
 		$this->register("pocketmine", new LoadPluginCommand("loadplugin"));
 
