@@ -17,17 +17,6 @@ level:
  #Setze dies auf "true", damit Feuer sich ausbreiten kann
  fire-spread: false
  
- #old api neue api loader beenden
-#setings gesetzt wahr, wenn Sie laden alte oder neue api Stab
-unverträglich-Plugins:
-Plugin-zu-neu:
-#LOAD Plugins, deren Haupt API-Version ist zu neu
-Haupt: false
-#LOAD Plugins, deren geringe API-Version ist zu neu
-Moll: false
-#LOAD Plugins, deren Haupt API-Version ist zu alt
-Plugin-zu-alt: false
-
 player:
  #Setze dies auf "true", damit das Hungersystem aktiviert wird
  hunger: true
@@ -54,7 +43,7 @@ nether:
  #The name of nether's level
  level-name: "nether"
  
- server:
+server:
  #Pregenerate the experience data，0=disabled
  experience-cache: 65535
  #Choose if spawning iron golem is allowed
