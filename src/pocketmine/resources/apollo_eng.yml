@@ -36,7 +36,7 @@ player:
  #Choose if keep experience when a player died
  keep-experience: false
  #If players get crash when join, set this below 10. disable=-1
- chunk-radius: 10
+ chunk-radius: 1
 
 nether:
  #Choose if the nether's allowed,the level of nether will generate automatically
