@@ -17,16 +17,6 @@ level:
  lightning-fire: false
  #Set if enable fire spread
  fire-spread: false
- #old api end new api loader
- #setings set true if you wand load old or new api
-  incompatible-plugins:
-  plugin-too-new:
-   #Load plugins whose major API version is too new
-   major: false
-   #Load plugins whose minor API version is too new
-   minor: false
-  #Load plugins whose major API version is too old
-  plugin-too-old: false
   
 player:
  #the switch of hunger system
