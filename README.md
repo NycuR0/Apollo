@@ -1,13 +1,13 @@
 # Apollo - Stable (PHP7)
 Apollo is a Minecraft: PE Server Software with an improved Generator and a lot more features. 
 
-Note: You may **not** copy our generator , updater and AI ( mobs support ) without NycuRO's permission. Other than that, everything is open-source and may be edited.
+Note: You may **not** copy our generator without NycuRO's permission. Other than that, everything is open-source and may be edited.
 
 **TravisCI Build Status: Master Branch** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=master)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
 
 **TravisCI Build Status: Biomes Branch** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=biomes)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
 
-**TravisCI Build Status: Port PureEntity Branch** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=beter-ai-than-pureentitys-from-steadfast)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
+**TravisCI Build Status: Port PureEntity Branch** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=apollo-pureentitys-master)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
 
 **CircleCI Build Status** [![Build Status](https://circleci.com/gh/NycuRO/Apollo.svg?style=shield)](https://circleci.com/gh/NycuRO/Apollo "CircleCI Build Status")
 
