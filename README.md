@@ -3,8 +3,9 @@ Apollo is a Minecraft: PE Server Software with an improved Generator and a lot m
 
 Note: You may **not** copy our generator without NycuRO's permission. Other than that, everything is open-source and may be edited.
 
-**TravisCI Build Status: Master** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=master)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
-**TravisCI Build Status: Biomes** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=biomes)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
+**TravisCI Build Status: Master Branch** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=master)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
+
+**TravisCI Build Status: Biomes Branch** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=biomes)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
 
 **CircleCI Build Status** [![Build Status](https://circleci.com/gh/NycuRO/Apollo.svg?style=shield)](https://circleci.com/gh/NycuRO/Apollo "CircleCI Build Status")
 
