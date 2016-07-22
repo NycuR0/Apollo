@@ -15,7 +15,7 @@ class UpdateServerCommand extends VanillaCommand{
 			"%pocketmine.command.updateserver.usage",
 			["serverupdate"]
 		);
-		$this->setPermission("pocketmine.command.updateserver");
+		$this->setPermission('pocketmine.command.updateserver');
 	}
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
@@ -24,7 +24,7 @@ class UpdateServerCommand extends VanillaCommand{
 		$raw = json_decode(Utils::getURL('https://circleci.com/api/v1/project/NycuRO/Apollo/tree/'.$branch.'?circle-token:token&limit=1&offset=1&filter=successfull'), true);
 		$buildinfo = $raw[0];
 		if(file_exists('Apollo#'.$buildinfo['build_num'].'.phar')){
-			$sender->sendMessage(TF::Red.'Server is already up to date!');
+			$sender->sendMessage(TF::RED."%pocketmine.command.updateserver.noupdate");
 		}else{
 		    foreach(glob("Apollo*.phar") as $file){
 			    unlink($file);
@@ -32,16 +32,18 @@ class UpdateServerCommand extends VanillaCommand{
 			$rawartifactdata = json_decode(Utils::getURL('https://circleci.com/api/v1/project/NycuRO/Apollo/'.$buildinfo['build_num'].'/artifacts?circle-token=:token&branch=:branch&filter=:filter', true));
 			$artifactdata = get_object_vars($rawartifactdata[0]);
 			if($rawartifactdata == 'NULL'){
-				$sender->sendMessage(TF::RED.'Could not update the server (1)');
+				$sender->sendMessage(TF::RED."%pocketmine.command.updateserver.invalidbranch");
 			}else{
 		        file_put_contents('Apollo#'.$buildinfo['build_num'].'.phar', Utils::getURL($artifactdata['url']));
 			    if(file_exists('Apollo#'.$buildinfo['build_num'].'.phar') && filesize('Apollo#'.$buildinfo['build_num'].'.phar') > 0){
-			        $sender->sendMessage(TF::GREEN.'Successfully downloaded Apollo#'.$buildinfo['build_num'].'.phar!');
-				    $sender->sendMessage(TF::RED.'Server restart needed');
+			        $sender->sendMessage(TF::GREEN."%pocketmine.command.updateserver.success", [
+					    $buildinfo['build_num']
+					]);
+				    $sender->sendMessage(TF::RED."%pocketmine.command.updateserver.restart");
 				    sleep(2);
 			 	    $sender->getServer()->Shutdown();
 			    }else{
-				    $sender->sendMessage(TF::RED.'Could not update the server (2)');
+				    $sender->sendMessage(TF::RED."%pocketmine.command.updateserver.error");
 			    }
 			}
 	    }
