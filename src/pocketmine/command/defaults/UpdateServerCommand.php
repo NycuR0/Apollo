@@ -24,7 +24,7 @@ class UpdateServerCommand extends VanillaCommand{
 		$raw = json_decode(Utils::getURL('https://circleci.com/api/v1/project/NycuRO/Apollo/tree/'.$branch.'?circle-token:token&limit=1&offset=1&filter=successfull'), true);
 		$buildinfo = $raw[0];
 		if(file_exists('Apollo#'.$buildinfo['build_num'].'.phar')){
-			$sender->sendMessage(TF::RED."%pocketmine.command.updateserver.noupdate");
+			$sender->sendMessage(new TranslationContainer(TF::RED."%pocketmine.command.updateserver.noupdate"));
 		}else{
 		    foreach(glob("Apollo*.phar") as $file){
 			    unlink($file);
@@ -32,18 +32,18 @@ class UpdateServerCommand extends VanillaCommand{
 			$rawartifactdata = json_decode(Utils::getURL('https://circleci.com/api/v1/project/NycuRO/Apollo/'.$buildinfo['build_num'].'/artifacts?circle-token=:token&branch=:branch&filter=:filter', true));
 			$artifactdata = get_object_vars($rawartifactdata[0]);
 			if($rawartifactdata == 'NULL'){
-				$sender->sendMessage(TF::RED."%pocketmine.command.updateserver.invalidbranch");
+				$sender->sendMessage(new TranslationContainer(TF::RED."%pocketmine.command.updateserver.invalidbranch"));
 			}else{
 		        file_put_contents('Apollo#'.$buildinfo['build_num'].'.phar', Utils::getURL($artifactdata['url']));
 			    if(file_exists('Apollo#'.$buildinfo['build_num'].'.phar') && filesize('Apollo#'.$buildinfo['build_num'].'.phar') > 0){
-			        $sender->sendMessage(TF::GREEN."%pocketmine.command.updateserver.success", [
+			        $sender->sendMessage(new TranslationContainer(TF::GREEN."%pocketmine.command.updateserver.success", [
 					    $buildinfo['build_num']
-					]);
-				    $sender->sendMessage(TF::RED."%pocketmine.command.updateserver.restart");
+					]));
+				    $sender->sendMessage(new TranslationContainer(TF::RED."%pocketmine.command.updateserver.restart"));
 				    sleep(2);
 			 	    $sender->getServer()->Shutdown();
 			    }else{
-				    $sender->sendMessage(TF::RED."%pocketmine.command.updateserver.error");
+				    $sender->sendMessage(new TranslationContainer(TF::RED."%pocketmine.command.updateserver.error"));
 			    }
 			}
 	    }
