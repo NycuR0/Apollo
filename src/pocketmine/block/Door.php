@@ -209,10 +209,13 @@ abstract class Door extends Transparent implements ElectricalAppliance{
 
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if($this->getSide(Vector3::SIDE_DOWN)->getId() === self::AIR and $this->getSide(Vector3::SIDE_UP) instanceof Door){ //Replace with common break method
-				$this->getLevel()->setBlock($this, new Air(), false);
-				if($this->getSide(1) instanceof Door){
-					$this->getLevel()->setBlock($this->getSide(Vector3::SIDE_UP), new Air(), false);
+			if($this->getSide(Vector3::SIDE_DOWN)->getId() === self::AIR and $this->getSide(Vector3::SIDE_UP) instanceof Door){ //Block underneath the door was broken
+			
+				$this->getLevel()->setBlock($this, new Air(), false, false);
+				$this->getLevel()->setBlock($this->getSide(Vector3::SIDE_UP), new Air(), false);
+				
+				foreach($this->getDrops(Item::get(Item::DIAMOND_PICKAXE)) as $drop){
+					$this->getLevel()->dropItem($this, Item::get($drop[0], $drop[1], $drop[2]));
 				}
 
 				return Level::BLOCK_UPDATE_NORMAL;
