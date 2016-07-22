@@ -1,9 +1,9 @@
 <?php
 
-namespace milk\pureentities\entity;
+namespace pocketmine\entity;
 
-use milk\pureentities\entity\animal\Animal;
-use milk\pureentities\entity\monster\flying\Blaze;
+use pocketmine\entity;
+use pocketmine\entity\blaze;
 use pocketmine\math\Math;
 use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
