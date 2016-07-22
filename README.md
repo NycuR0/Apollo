@@ -7,7 +7,7 @@ Note: You may **not** copy our generator without NycuRO's permission. Other than
 
 **TravisCI Build Status: Biomes Branch** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=biomes)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
 
-**TravisCI Build Status: Port PureEntity Branch** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=port-pureentits)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
+**TravisCI Build Status: Port PureEntity Branch** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=beter-ai-than-pureentitys-from-steadfast)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
 
 **CircleCI Build Status** [![Build Status](https://circleci.com/gh/NycuRO/Apollo.svg?style=shield)](https://circleci.com/gh/NycuRO/Apollo "CircleCI Build Status")
 
