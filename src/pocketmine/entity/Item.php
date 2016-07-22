@@ -22,13 +22,14 @@
 namespace pocketmine\entity;
 
 use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\event\entity\EntityRegainHealthEvent;
+
 use pocketmine\event\entity\ItemDespawnEvent;
 use pocketmine\event\entity\ItemSpawnEvent;
 use pocketmine\item\Item as ItemItem;
-use pocketmine\math\Vector3;
-use pocketmine\nbt\tag\ByteTag;
-use pocketmine\nbt\tag\Compound;
+
+use pocketmine\nbt\NBT;
+
+
 use pocketmine\nbt\tag\ShortTag;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\network\Network;
@@ -48,8 +49,7 @@ class Item extends Entity{
 	public $length = 0.25;
 	public $height = 0.25;
 	protected $gravity = 0.04;
-//	protected $drag = 0.02;
-	protected $drag = 0.15;
+	protected $drag = 0.02;
 
 	public $canCollide = false;
 
@@ -70,12 +70,19 @@ class Item extends Entity{
 		if(isset($this->namedtag->Thrower)){
 			$this->thrower = $this->namedtag["Thrower"];
 		}
-		$this->item = ItemItem::get($this->namedtag->Item["id"], $this->namedtag->Item["Damage"], $this->namedtag->Item["Count"]);
+		if(!isset($this->namedtag->Item)){
+			$this->close();
+			return;
+		}
+		$this->item = NBT::getItemHelper($this->namedtag->Item);
+		if($this->item->getId() <= 0){
+			$this->close();
+			return;
+		}
 
 
 		$this->server->getPluginManager()->callEvent(new ItemSpawnEvent($this));
 	}
-
 
 	public function attack($damage, EntityDamageEvent $source){
 		if(
@@ -92,42 +99,55 @@ class Item extends Entity{
 		if($this->closed){
 			return false;
 		}
+		
+		$this->age++;
+		
+		$tickDiff = $currentTick - $this->lastUpdate;
+		if($tickDiff <= 0 and !$this->justCreated){
+			return true;
+		}
 
-		$tickDiff = max(1, $currentTick - $this->lastUpdate);
 		$this->lastUpdate = $currentTick;
 
 		$this->timings->startTiming();
 
 		$hasUpdate = $this->entityBaseTick($tickDiff);
 
-		if(!$this->dead){
+		if($this->isAlive()){
 
 			if($this->pickupDelay > 0 and $this->pickupDelay < 32767){ //Infinite delay
 				$this->pickupDelay -= $tickDiff;
+				if($this->pickupDelay < 0){
+					$this->pickupDelay = 0;
+				}
 			}
 
 			$this->motionY -= $this->gravity;
 
-			$this->keepMovement = $this->checkObstruction($this->x, ($this->boundingBox->minY + $this->boundingBox->maxY) / 2, $this->z);
+			if($this->checkObstruction($this->x, $this->y, $this->z)){
+				$hasUpdate = true;
+			}
+
 			$this->move($this->motionX, $this->motionY, $this->motionZ);
 
 			$friction = 1 - $this->drag;
 
-			if($this->onGround and ($this->motionX != 0 or $this->motionZ != 0)){
-				$friction = $this->getLevel()->getBlock(new Vector3($this->getFloorX(), $this->getFloorY() - 1, $this->getFloorZ()))->getFrictionFactor() * $friction;
+			if($this->onGround and (abs($this->motionX) > 0.00001 or abs($this->motionZ) > 0.00001)){
+				$friction = $this->getLevel()->getBlock($this->temporalVector->setComponents((int) floor($this->x), (int) floor($this->y - 1), (int) floor($this->z) - 1))->getFrictionFactor() * $friction;
 			}
 
 			$this->motionX *= $friction;
 			$this->motionY *= 1 - $this->drag;
 			$this->motionZ *= $friction;
 
-			$this->updateMovement();
-
 			if($this->onGround){
 				$this->motionY *= -0.5;
 			}
 
-			if($this->age > 6000){
+			if($currentTick % 5 ==0)
+				$this->updateMovement();
+
+			if($this->age > 2000){
 				$this->server->getPluginManager()->callEvent($ev = new ItemDespawnEvent($this));
 				if($ev->isCancelled()){
 					$this->age = 0;
@@ -140,17 +160,13 @@ class Item extends Entity{
 		}
 
 		$this->timings->stopTiming();
-		
-		return $hasUpdate or !$this->onGround or $this->motionX != 0 or $this->motionY != 0 or $this->motionZ != 0;
+
+		return $hasUpdate or !$this->onGround or abs($this->motionX) > 0.00001 or abs($this->motionY) > 0.00001 or abs($this->motionZ) > 0.00001;
 	}
 
 	public function saveNBT(){
 		parent::saveNBT();
-		$this->namedtag->Item = new Compound("Item", [
-			"id" => new ShortTag("id", $this->item->getId()),
-			"Damage" => new ShortTag("Damage", $this->item->getDamage()),
-			"Count" => new ByteTag("Count", $this->item->getCount())
-		]);
+		$this->namedtag->Item = NBT::putItemHelper($this->item);
 		$this->namedtag->Health = new ShortTag("Health", $this->getHealth());
 		$this->namedtag->Age = new ShortTag("Age", $this->age);
 		$this->namedtag->PickupDelay = new ShortTag("PickupDelay", $this->pickupDelay);
@@ -227,39 +243,8 @@ class Item extends Entity{
 		$pk->item = $this->getItem();
 		$player->dataPacket($pk);
 
-//		$this->sendData($player);
+		$this->sendData($player);
 
 		parent::spawnTo($player);
 	}
-
-	
-	protected function updateMovement(){	
-		$diffPositionX =  abs($this->x - $this->lastX);
-		$diffPositionY =  abs($this->y - $this->lastY);
-		$diffPositionZ =  abs($this->z - $this->lastZ);		
-		
-		$diffMotionX = abs($this->motionX - $this->lastMotionX);
-		$diffMotionY = abs($this->motionY - $this->lastMotionY);
-		$diffMotionZ = abs($this->motionZ - $this->lastMotionZ);
-		
-
-		if($diffPositionX > 0.2 || $diffPositionZ > 0.2 || ($diffPositionX > 0.01 && $diffPositionZ > 0.01 && $diffPositionY > 0.2)){
-			$this->lastX = $this->x;
-			$this->lastY = $this->y;
-			$this->lastZ = $this->z;
-			$this->lastYaw = $this->yaw;
-			$this->lastPitch = $this->pitch;
-			
-			$this->level->addEntityMovement($this->getViewers(), $this->id, $this->x, $this->y + $this->getEyeHeight(), $this->z, $this->yaw, $this->pitch, $this->yaw);
-		}
-
-		if($diffMotionX > 0.05 || $diffMotionZ > 0.05 || ($diffMotionX > 0.001 && $diffMotionZ > 0.001 && $diffMotionY > 0.05 )){ 
-			$this->lastMotionX = $this->motionX;
-			$this->lastMotionY = $this->motionY;
-			$this->lastMotionZ = $this->motionZ;
-			
-			$this->level->addEntityMotion($this->getViewers(), $this->id, $this->motionX, $this->motionY, $this->motionZ);
-		}
-	}
-	
 }
