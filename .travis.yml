@@ -5,6 +5,7 @@ php:
 
 branches:
  - master
+ - biomes
 
 before_script:
  - phpenv config-rm xdebug.ini
