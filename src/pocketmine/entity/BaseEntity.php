@@ -2,8 +2,8 @@
 
 namespace milk\pureentities\entity;
 
-use milk\pureentities\entity\monster\flying\Blaze;
-use milk\pureentities\entity\monster\Monster;
+use pocketmine\entity\Blaze;
+use pocketmine\entity\Monster;
 use pocketmine\entity\Creature;
 use pocketmine\entity\Entity;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
