@@ -8,12 +8,12 @@ branches:
  - biomes
 
 before_script:
- - phpenv config-rm xdebug.ini
- - mkdir plugins
- - pecl install channel://pecl.php.net/pthreads-3.1.6
- - pecl install channel://pecl.php.net/weakref-0.3.2
- - echo | pecl install channel://pecl.php.net/yaml-2.0.0RC7
- - chmod +x travis.sh
+- phpenv config-rm xdebug.ini
+- mkdir plugins
+- pecl install channel://pecl.php.net/pthreads-3.1.6
+- pecl install channel://pecl.php.net/weakref-0.3.2
+- echo | pecl install channel://pecl.php.net/yaml-2.0.0RC7
+- chmod +x travis.sh
  
- script:
- - ./travis.sh
+script:
+- ./travis.sh
