@@ -15,4 +15,4 @@ before_script:
  - chmod +x travis.sh
 
 script:
- - ./travis.sh
+ - ./travis.sh //STOP EDIT TRAVIS 
