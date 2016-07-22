@@ -1,44 +1,78 @@
 <?php
 
-/**
- * OpenGenisys Project
- *
- * @author PeratX
- */
+namespace milk\pureentities\entity\monster\walking;
 
-namespace pocketmine\entity;
+use milk\pureentities\entity\monster\WalkingMonster;
+use pocketmine\entity\Entity;
+use pocketmine\nbt\tag\IntTag;
+use pocketmine\event\entity\EntityDamageEvent;
+use pocketmine\event\entity\EntityDamageByEntityEvent;
+use pocketmine\entity\Creature;
 
-use pocketmine\network\protocol\AddEntityPacket;
-use pocketmine\Player;
+class Wolf extends WalkingMonster{
+    const NETWORK_ID = 14;
 
-class Wolf extends Animal{
-	const NETWORK_ID = 14;
+    private $angry = 0;
 
-	public $width = 0.3;
-	public $length = 0.9;
-	public $height = 1.8;
+    public $width = 0.72;
+    public $height = 0.9;
 
-	public $dropExp = [1, 3];
-	
-	public function getName() : string{
-		return "Wolf";
-	}
-	
-	public function spawnTo(Player $player){
-		$pk = new AddEntityPacket();
-		$pk->eid = $this->getId();
-		$pk->type = Wolf::NETWORK_ID;
-		$pk->x = $this->x;
-		$pk->y = $this->y;
-		$pk->z = $this->z;
-		$pk->speedX = $this->motionX;
-		$pk->speedY = $this->motionY;
-		$pk->speedZ = $this->motionZ;
-		$pk->yaw = $this->yaw;
-		$pk->pitch = $this->pitch;
-		$pk->metadata = $this->dataProperties;
-		$player->dataPacket($pk);
+    public function getSpeed() : float{
+        return 1.2;
+    }
 
-		parent::spawnTo($player);
-	}
+    public function initEntity(){
+        parent::initEntity();
+
+        if(isset($this->namedtag->Angry)){
+            $this->angry = (int) $this->namedtag["Angry"];
+        }
+
+        $this->setMaxHealth(8);
+        $this->fireProof = true;
+        $this->setDamage([0, 3, 4, 6]);
+    }
+
+    public function saveNBT(){
+        parent::saveNBT();
+        $this->namedtag->Angry = new IntTag("Angry", $this->angry);
+    }
+
+    public function getName(){
+        return "Wolf";
+    }
+
+    public function isAngry() : bool{
+        return $this->angry > 0;
+    }
+
+    public function setAngry(int $val){
+        $this->angry = $val;
+    }
+
+    public function attack($damage, EntityDamageEvent $source){
+        parent::attack($damage, $source);
+
+        if(!$source->isCancelled()){
+            $this->setAngry(1000);
+        }
+    }
+
+    public function targetOption(Creature $creature, float $distance) : bool{
+        return $this->isAngry() && parent::targetOption($creature, $distance);
+    }
+
+    public function attackEntity(Entity $player){
+        if($this->attackDelay > 10 && $this->distanceSquared($player) < 1.6){
+            $this->attackDelay = 0;
+
+            $ev = new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_ENTITY_ATTACK, $this->getDamage());
+            $player->attack($ev->getFinalDamage(), $ev);
+        }
+    }
+
+    public function getDrops(){
+        return [];
+    }
+
 }

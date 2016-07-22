@@ -1,132 +1,160 @@
 <?php
 
-namespace pocketmine\entity;
+namespace milk\pureentities\entity;
 
-use pocketmine\math\Math;
-use pocketmine\math\Vector3;
-use pocketmine\block\Air;
+use milk\pureentities\entity\animal\Animal;
+use milk\pureentities\entity\monster\walking\PigZombie;
 use pocketmine\block\Liquid;
-use pocketmine\Player;
-use pocketmine\entity\monster\Monster;
-use pocketmine\block\Water;
+use pocketmine\block\Slab;
+use pocketmine\block\Stair;
+use pocketmine\math\Math;
+use pocketmine\math\Vector2;
+use pocketmine\math\Vector3;
+use pocketmine\entity\Creature;
 
-abstract class WalkingEntity extends BaseEntity {
+abstract class WalkingEntity extends BaseEntity{
 
-	protected $agrDistance = 16;
+    protected function checkTarget(){
+        if($this->isKnockback()){
+            return;
+        }
 
-	protected function checkTarget($update = false) {
-		if ($this->isKnockback() && !$update && $this->baseTarget instanceof Player && $this->baseTarge->isAlive() && sqrt($this->distanceSquared($player)) < $this->agrDistance) {
-			return;
-		}
-		if ($update) {
-			$this->moveTime = 0;
-		}
-		if ($this instanceof Monster && !$this->isFriendly()) {
-			$near = PHP_INT_MAX;
-			foreach ($this->getLevel()->getServer()->getOnlinePlayers() as $player) {
-				if ($player->isAlive()) {
-					$distance = sqrt($this->distanceSquared($player));
-					if ($distance >= $near) {
-						continue;
-					}
-					$target = $player;
-					$near = $distance;
-				}
-			}
+        $target = $this->baseTarget;
+        if(!$target instanceof Creature or !$this->targetOption($target, $this->distanceSquared($target))){
+            $near = PHP_INT_MAX;
+            foreach ($this->getLevel()->getEntities() as $creature){
+                if($creature === $this || !($creature instanceof Creature) || $creature instanceof Animal){
+                    continue;
+                }
 
-			if ($near <= $this->agrDistance) {
-				$this->baseTarget = $target;
-				$this->moveTime = 0;
-				return;
-			}
-		}
+                if($creature instanceof BaseEntity && $creature->isFriendly() == $this->isFriendly()){
+                    continue;
+                }
 
-		if ($this->moveTime <= 0 || !($this->baseTarget instanceof Vector3)) {
-			$i = 0;
-			while($i < 10) {
-				$x = mt_rand(20, 100);
-				$z = mt_rand(20, 100);
-				$this->moveTime = mt_rand(300, 1200);
-				$this->baseTarget = new Vector3($this->getX() + (mt_rand(0, 1) ? $x : -$x), $this->getY(), $this->getZ() + (mt_rand(0, 1) ? $z : -$z));
-				$y =  $this->level->getHighestBlockAt($this->baseTarget->getX(), $this->baseTarget->getZ());
-				$this->baseTarget->y = $y;
-				$block = $this->level->getBlock($this->baseTarget);
-				if(!($block instanceof Water)){
-					break;
-				}
-				$i++;
-			}
-		}
-	}
+                $distance = $this->distanceSquared($creature);
+                if(
+                    $distance <= 100
+                    && $this instanceof PigZombie && $this->isAngry()
+                    && $creature instanceof PigZombie && !$creature->isAngry()
+                ){
+                    $creature->setAngry(1000);
+                }
 
-	public function updateMove() {
-		if (!$this->isMovement()) {
-			return null;
-		}
+                if($distance > $near or !$this->targetOption($creature, $distance)){
+                    continue;
+                }
+                $near = $distance;
 
-		if ($this->isKnockback() || $this->sprintTime > 0) {
-			$target = null;
-			if($this->sprintTime > 0){
-				$this->yaw = -atan2($this->motionX, $this->motionZ) * 180 / M_PI;
-			}
-		} else {
-			$this->checkTarget();
-			if ($this->baseTarget instanceof Vector3) {
-				$x = $this->baseTarget->x - $this->x;
-				$z = $this->baseTarget->z - $this->z;
-				if ($x ** 2 + $z ** 2 < 0.7) {
-					$this->motionX = 0;
-					$this->motionZ = 0;
-				} else {
-					$diff = abs($x) + abs($z);
-					$this->motionX = $this->getSpeed() * 0.15 * ($x / $diff);
-					$this->motionZ = $this->getSpeed() * 0.15 * ($z / $diff);
-				}
-				$this->yaw = -atan2($this->motionX, $this->motionZ) * 180 / M_PI;
-				if ($this->baseTarget instanceof Player) {
-					$y = $this->baseTarget->y - $this->y;
-					$this->pitch = $y == 0 ? 0 : rad2deg(-atan2($y, sqrt($x ** 2 + $z ** 2)));
-				}
-			}
+                $this->moveTime = 0;
+                $this->baseTarget = $creature;
+            }
+        }
 
-			$target = $this->baseTarget;
-		}
-		$isJump = false;
-		$dx = $this->motionX;
-		$dz = $this->motionZ;
+        if($this->baseTarget instanceof Creature && $this->baseTarget->isAlive()){
+            return;
+        }
 
-		$newX = Math::floorFloat($this->x + $dx);
-		$newZ = Math::floorFloat($this->z + $dz);
+        if($this->moveTime <= 0 or !($this->baseTarget instanceof Vector3)){
+            $x = mt_rand(20, 100);
+            $z = mt_rand(20, 100);
+            $this->moveTime = mt_rand(300, 1200);
+            $this->baseTarget = $this->add(mt_rand(0, 1) ? $x : -$x, 0, mt_rand(0, 1) ? $z : -$z);
+        }
+    }
 
-		$block = $this->level->getBlock(new Vector3($newX, Math::floorFloat($this->y), $newZ));
-		if (!($block instanceof Air) && !($block instanceof Liquid) && !$block->canBeFlowedInto()) {
-			$block = $this->level->getBlock(new Vector3($newX, Math::floorFloat($this->y + 1), $newZ));
-			if (!($block instanceof Air) && !($block instanceof Liquid) && !$block->canBeFlowedInto()) {
-				$this->motionY = 0;
-				$this->checkTarget(true);
-				return;
-			} else {
-				$isJump = true;
-				$this->motionY = 1.1;
-				$this->y += 1;
-			}
-		} else {
-			$block = $this->level->getBlock(new Vector3($newX, Math::floorFloat($this->y - 1), $newZ));
-			if (!($block instanceof Air) && !($block instanceof Liquid)) {
-				$blockY = Math::floorFloat($this->y);
-				if ($this->y - $this->gravity * 4 > $blockY) {
-					$this->motionY = -$this->gravity * 4;
-				} else {
-					$this->motionY = ($this->y - $blockY) > 0 ? ($this->y - $blockY) : 0;
-				}
-			} else {
-				$this->motionY -= $this->gravity * 4;
-			}
-		}
-		$dy = $this->motionY;
-		$this->move($dx, $dy, $dz);
-		$this->updateMovement();
-		return $target;
-	}
+    /**
+     * @param int $dx
+     * @param int $dz
+     *
+     * @return bool
+     */
+    protected function checkJump($dx, $dz){
+        if(!$this->onGround){
+            return false;
+        }
+
+        if($this->motionY == $this->gravity * 2){
+            return $this->level->getBlock(new Vector3(Math::floorFloat($this->x), (int) $this->y, Math::floorFloat($this->z))) instanceof Liquid;
+        }else if($this->level->getBlock(new Vector3(Math::floorFloat($this->x), (int) ($this->y + 0.8), Math::floorFloat($this->z))) instanceof Liquid){
+            $this->motionY = $this->gravity * 2;
+            return true;
+        }
+
+        if($this->stayTime > 0){
+            return false;
+        }
+
+        $block = $this->level->getBlock($this->add($dx, 0, $dz));
+        if($block instanceof Slab || $block instanceof Stair){
+            $this->motionY = 0.5;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param int $tickDiff
+     *
+     * @return null|Vector3
+     */
+    public function updateMove($tickDiff){
+        if(!$this->isMovement()){
+            return null;
+        }
+
+        if($this->isKnockback()){
+            $this->move($this->motionX * $tickDiff, $this->motionY, $this->motionZ * $tickDiff);
+            $this->motionY -= 0.2 * $tickDiff;
+            $this->updateMovement();
+            return null;
+        }
+        
+        $before = $this->baseTarget;
+        $this->checkTarget();
+        if($this->baseTarget instanceof Creature or $before !== $this->baseTarget){
+            $x = $this->baseTarget->x - $this->x;
+            $y = $this->baseTarget->y - $this->y;
+            $z = $this->baseTarget->z - $this->z;
+
+            $diff = abs($x) + abs($z);
+            if($x ** 2 + $z ** 2 < 0.7){
+                $this->motionX = 0;
+                $this->motionZ = 0;
+            }else{
+                $this->motionX = $this->getSpeed() * 0.15 * ($x / $diff);
+                $this->motionZ = $this->getSpeed() * 0.15 * ($z / $diff);
+            }
+            $this->yaw = -atan2($x / $diff, $z / $diff) * 180 / M_PI;
+            $this->pitch = $y == 0 ? 0 : rad2deg(-atan2($y, sqrt($x ** 2 + $z ** 2)));
+        }
+
+        $dx = $this->motionX * $tickDiff;
+        $dz = $this->motionZ * $tickDiff;
+        $isJump = $this->checkJump($dx, $dz);
+        if($this->stayTime > 0){
+            $this->stayTime -= $tickDiff;
+            $this->move(0, $this->motionY * $tickDiff, 0);
+        }else{
+            $be = new Vector2($this->x + $dx, $this->z + $dz);
+            $this->move($dx, $this->motionY * $tickDiff, $dz);
+            $af = new Vector2($this->x, $this->z);
+
+            if(($be->x != $af->x || $be->y != $af->y) && !$isJump){
+                $this->moveTime -= 90 * $tickDiff;
+            }
+        }
+
+        if(!$isJump){
+            if($this->onGround){
+                $this->motionY = 0;
+            }elseif($this->motionY > -$this->gravity * 4){
+                $this->motionY = -$this->gravity * 4;
+            }else{
+                $this->motionY -= $this->gravity;
+            }
+        }
+        $this->updateMovement();
+        return $this->baseTarget;
+    }
 
 }

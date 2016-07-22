@@ -1,44 +1,44 @@
 <?php
 
-/**
- * OpenGenisys Project
- *
- * @author PeratX
- */
+namespace milk\pureentities\entity\monster\walking;
 
-namespace pocketmine\entity;
+use milk\pureentities\entity\monster\WalkingMonster;
+use pocketmine\entity\Entity;
+use pocketmine\event\entity\EntityDamageByEntityEvent;
+use pocketmine\event\entity\EntityDamageEvent;
+use pocketmine\item\Item;
 
-use pocketmine\network\protocol\AddEntityPacket;
-use pocketmine\Player;
+class CaveSpider extends WalkingMonster{
+    const NETWORK_ID = 40;
 
-class CaveSpider extends Monster{
-	const NETWORK_ID = 40;
+    public $width = 0.9;
+    public $height = 0.8;
 
-	public $width = 1;
-	public $length = 1;
-	public $height = 0.5;
+    public function getSpeed() : float{
+        return 1.3;
+    }
 
-	public $dropExp = [5, 5];
+    public function initEntity(){
+        parent::initEntity();
 
-	public function getName() : string{
-		return "Cave Spider";
-	}
-	
-	public function spawnTo(Player $player){
-		$pk = new AddEntityPacket();
-		$pk->eid = $this->getId();
-		$pk->type = CaveSpider::NETWORK_ID;
-		$pk->x = $this->x;
-		$pk->y = $this->y;
-		$pk->z = $this->z;
-		$pk->speedX = $this->motionX;
-		$pk->speedY = $this->motionY;
-		$pk->speedZ = $this->motionZ;
-		$pk->yaw = $this->yaw;
-		$pk->pitch = $this->pitch;
-		$pk->metadata = $this->dataProperties;
-		$player->dataPacket($pk);
+        $this->setMaxHealth(12);
+        $this->setDamage([0, 2, 3, 3]);
+    }
 
-		parent::spawnTo($player);
-	}
+    public function getName(){
+        return "CaveSpider";
+    }
+
+    public function attackEntity(Entity $player){
+        if($this->attackDelay > 10 && $this->distanceSquared($player) < 1.32){
+            $this->attackDelay = 0;
+            $ev = new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_ENTITY_ATTACK, $this->getDamage());
+            $player->attack($ev->getFinalDamage(), $ev);
+        }
+    }
+
+    public function getDrops(){
+        return $this->lastDamageCause instanceof EntityDamageByEntityEvent ? [Item::get(Item::STRING, 0, mt_rand(0, 2))] : [];
+    }
+
 }

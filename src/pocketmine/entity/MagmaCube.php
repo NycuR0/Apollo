@@ -1,31 +1,31 @@
 <?php
 
-namespace milk\pureentities\entity\monster\walking;
+namespace milk\pureentities\entity\monster\jumping;
 
-use milk\pureentities\entity\monster\WalkingMonster;
+use milk\pureentities\entity\monster\JumpingMonster;
 use pocketmine\entity\Entity;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\item\Item;
 
-class Enderman extends WalkingMonster{
-    const NETWORK_ID = 38;
+class MagmaCube extends JumpingMonster{
+    const NETWORK_ID = 42;
 
-    public $width = 0.72;
-    public $height = 2.8;
+    public $width = 1.2;
+    public $height = 1.2;
 
     public function getSpeed() : float{
-        return 1.21;
+        return 0.8;
     }
 
     public function initEntity(){
         parent::initEntity();
 
-        $this->setDamage([0, 4, 7, 10]);
+        $this->fireProof = true;
+        $this->setDamage([0, 3, 4, 6]);
     }
 
     public function getName(){
-        return "Enderman";
+        return "MagmaCube";
     }
 
     public function attackEntity(Entity $player){
@@ -37,9 +37,6 @@ class Enderman extends WalkingMonster{
     }
 
     public function getDrops(){
-        if($this->lastDamageCause instanceof EntityDamageByEntityEvent){
-            return [Item::get(Item::END_STONE, 0, 1)];
-        }
         return [];
     }
 
