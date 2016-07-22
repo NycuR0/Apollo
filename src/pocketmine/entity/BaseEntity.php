@@ -1,6 +1,6 @@
 <?php
 
-namespace milk\pureentities\entity;
+namespace pocketmine\entity;
 
 use pocketmine\entity\Blaze;
 use pocketmine\entity\Monster;
