@@ -6,6 +6,7 @@ php:
 branches:
  - master
  - biomes
+ - port-pureentits
 
 before_script:
  - phpenv config-rm xdebug.ini
