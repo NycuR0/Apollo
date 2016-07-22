@@ -142,3 +142,7 @@ enchantment:
  #Choose if to count bookshelves, may cause server lag.
  #If this option is false, server will use a random count (0~15)
  count-bookshelf: false
+ 
+updater:
+ #Branch which will be used by the updater of /updateserver
+ branch: "master"
