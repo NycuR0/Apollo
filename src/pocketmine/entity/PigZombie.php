@@ -1,107 +1,86 @@
 <?php
 
-namespace milk\pureentities\entity\monster\walking;
+/*
+ *
+ *  ____            _        _   __  __ _                  __  __ ____  
+ * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \ 
+ * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
+ * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/ 
+ * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_| 
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author PocketMine Team
+ * @link http://www.pocketmine.net/
+ * 
+ *
+*/
 
-use milk\pureentities\entity\monster\WalkingMonster;
-use pocketmine\entity\Entity;
-use pocketmine\item\GoldSword;
-use pocketmine\nbt\tag\IntTag;
-use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\event\entity\EntityDamageByEntityEvent;
-use pocketmine\item\Item;
-use pocketmine\entity\Creature;
+namespace pocketmine\entity;
+
+use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\network\protocol\MobEquipmentPacket;
+use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\Player;
+use pocketmine\item\Item as ItemItem;
+use pocketmine\item\enchantment\Enchantment;
 
-class PigZombie extends WalkingMonster{
-    const NETWORK_ID = 36;
+class PigZombie extends Monster{
+	const NETWORK_ID = 36;
 
-    private $angry = 0;
+	public $width = 0.6;
+	public $length = 0.6;
+	public $height = 1.8;
 
-    public $width = 0.72;
-    public $height = 1.8;
-    public $eyeHeight = 1.62;
+	public $drag = 0.2;
+	public $gravity = 0.3;
 
-    public function getSpeed() : float{
-        return 1.15;
-    }
+	public $dropExp = [5, 5];
+	
+	public function getName() : string{
+		return "PigZombie";
+	}
+	
+	public function spawnTo(Player $player){
+		$pk = new AddEntityPacket();
+		$pk->eid = $this->getId();
+		$pk->type = PigZombie::NETWORK_ID;
+		$pk->x = $this->x;
+		$pk->y = $this->y;
+		$pk->z = $this->z;
+		$pk->speedX = $this->motionX;
+		$pk->speedY = $this->motionY;
+		$pk->speedZ = $this->motionZ;
+		$pk->yaw = $this->yaw;
+		$pk->pitch = $this->pitch;
+		$pk->metadata = $this->dataProperties;
+		$player->dataPacket($pk);
 
-    public function initEntity(){
-        parent::initEntity();
+		parent::spawnTo($player);
+		
+		$pk = new MobEquipmentPacket();
+		$pk->eid = $this->getId();
+		$pk->item = new ItemItem(283);
+		$pk->slot = 0;
+		$pk->selectedSlot = 0;
 
-        if(isset($this->namedtag->Angry)){
-            $this->angry = (int) $this->namedtag["Angry"];
-        }
+		$player->dataPacket($pk);
+	}
 
-        $this->fireProof = true;
-        $this->setDamage([0, 5, 9, 13]);
-    }
-
-    public function saveNBT(){
-        parent::saveNBT();
-        $this->namedtag->Angry = new IntTag("Angry", $this->angry);
-    }
-
-    public function getName(){
-        return "PigZombie";
-    }
-
-    public function isAngry() : bool{
-        return $this->angry > 0;
-    }
-
-    public function setAngry(int $val){
-        $this->angry = $val;
-    }
-
-    public function targetOption(Creature $creature, float $distance) : bool{
-        return $this->isAngry() && parent::targetOption($creature, $distance);
-    }
-
-    public function attack($damage, EntityDamageEvent $source){
-        parent::attack($damage, $source);
-
-        if(!$source->isCancelled()){
-            $this->setAngry(1000);
-        }
-    }
-
-    public function spawnTo(Player $player){
-        parent::spawnTo($player);
-
-        $pk = new MobEquipmentPacket();
-        $pk->eid = $this->getId();
-        $pk->item = new GoldSword();
-        $pk->slot = 10;
-        $pk->selectedSlot = 10;
-        $player->dataPacket($pk);
-    }
-
-    public function attackEntity(Entity $player){
-        if($this->attackDelay > 10 && $this->distanceSquared($player) < 1.44){
-            $this->attackDelay = 0;
-
-            $ev = new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_ENTITY_ATTACK, $this->getDamage());
-            $player->attack($ev->getFinalDamage(), $ev);
-        }
-    }
-
-    public function getDrops(){
-        $drops = [];
-        if($this->lastDamageCause instanceof EntityDamageByEntityEvent){
-            switch(mt_rand(0, 2)){
-                case 0:
-                    $drops[] = Item::get(Item::FLINT, 0, 1);
-                    break;
-                case 1:
-                    $drops[] = Item::get(Item::GUNPOWDER, 0, 1);
-                    break;
-                case 2:
-                    $drops[] = Item::get(Item::REDSTONE_DUST, 0, 1);
-                    break;
-            }
-        }
-        return $drops;
-    }
-
+	public function getDrops(){
+		$cause = $this->lastDamageCause;
+		$drops = [];
+		if($cause instanceof EntityDamageByEntityEvent and $cause->getDamager() instanceof Player){
+			$lootingL = $cause->getDamager()->getItemInHand()->getEnchantmentLevel(Enchantment::TYPE_WEAPON_LOOTING);
+			if(mt_rand(1, 200) <= (5 + 2 * $lootingL)){
+				$drops[] = ItemItem::get(ItemItem::GOLD_INGOT, 0, 1);
+			}
+			$drops[] = ItemItem::get(ItemItem::GOLD_NUGGET, 0, mt_rand(0, 1 + $lootingL));
+			$drops[] = ItemItem::get(ItemItem::ROTTEN_FLESH, 0, mt_rand(0, 1 + $lootingL));
+		}
+		return $drops;
+	}
 }

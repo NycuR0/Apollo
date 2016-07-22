@@ -1,46 +1,44 @@
 <?php
 
-namespace milk\pureentities\entity\monster\walking;
+/**
+ * OpenGenisys Project
+ *
+ * @author PeratX
+ */
 
-use milk\pureentities\entity\monster\WalkingMonster;
-use pocketmine\entity\Entity;
-use pocketmine\event\entity\EntityDamageByEntityEvent;
-use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\item\Item;
+namespace pocketmine\entity;
 
-class Enderman extends WalkingMonster{
-    const NETWORK_ID = 38;
+use pocketmine\network\protocol\AddEntityPacket;
+use pocketmine\Player;
 
-    public $width = 0.72;
-    public $height = 2.8;
+class Enderman extends Monster{
+	const NETWORK_ID = 38;
 
-    public function getSpeed() : float{
-        return 1.21;
-    }
+	public $width = 0.3;
+	public $length = 0.9;
+	public $height = 1.8;
 
-    public function initEntity(){
-        parent::initEntity();
+	public $dropExp = [5, 5];
+	
+	public function getName() : string{
+		return "Enderman";
+	}
+	
+	public function spawnTo(Player $player){
+		$pk = new AddEntityPacket();
+		$pk->eid = $this->getId();
+		$pk->type = Enderman::NETWORK_ID;
+		$pk->x = $this->x;
+		$pk->y = $this->y;
+		$pk->z = $this->z;
+		$pk->speedX = $this->motionX;
+		$pk->speedY = $this->motionY;
+		$pk->speedZ = $this->motionZ;
+		$pk->yaw = $this->yaw;
+		$pk->pitch = $this->pitch;
+		$pk->metadata = $this->dataProperties;
+		$player->dataPacket($pk);
 
-        $this->setDamage([0, 4, 7, 10]);
-    }
-
-    public function getName(){
-        return "Enderman";
-    }
-
-    public function attackEntity(Entity $player){
-        if($this->attackDelay > 10 && $this->distanceSquared($player) < 1){
-            $this->attackDelay = 0;
-            $ev = new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_ENTITY_ATTACK, $this->getDamage());
-            $player->attack($ev->getFinalDamage(), $ev);
-        }
-    }
-
-    public function getDrops(){
-        if($this->lastDamageCause instanceof EntityDamageByEntityEvent){
-            return [Item::get(Item::END_STONE, 0, 1)];
-        }
-        return [];
-    }
-
+		parent::spawnTo($player);
+	}
 }

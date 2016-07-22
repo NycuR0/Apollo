@@ -1,44 +1,53 @@
 <?php
 
-namespace milk\pureentities\entity\monster\walking;
+/*
+ *
+ *  ____            _        _   __  __ _                  __  __ ____  
+ * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \ 
+ * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
+ * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/ 
+ * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_| 
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author PocketMine Team
+ * @link http://www.pocketmine.net/
+ * 
+ *
+*/
 
-use milk\pureentities\entity\monster\WalkingMonster;
-use pocketmine\entity\Entity;
-use pocketmine\event\entity\EntityDamageByEntityEvent;
-use pocketmine\event\entity\EntityDamageEvent;
+namespace pocketmine\entity;
 
-class Silverfish extends WalkingMonster{
-    const NETWORK_ID = 39;
+use pocketmine\network\protocol\AddEntityPacket;
+use pocketmine\Player;
 
-    public $width = 0.4;
-    public $height = 0.2;
+class Silverfish extends Monster{
+	const NETWORK_ID = 39;
 
-    public function getSpeed() : float{
-        return 1.4;
-    }
+	public $dropExp = [5, 5];
+	
+	public function getName() : string{
+		return "Silverfish";
+	}
+	
+	public function spawnTo(Player $player){
+		$pk = new AddEntityPacket();
+		$pk->eid = $this->getId();
+		$pk->type = Silverfish::NETWORK_ID;
+		$pk->x = $this->x;
+		$pk->y = $this->y;
+		$pk->z = $this->z;
+		$pk->speedX = $this->motionX;
+		$pk->speedY = $this->motionY;
+		$pk->speedZ = $this->motionZ;
+		$pk->yaw = $this->yaw;
+		$pk->pitch = $this->pitch;
+		$pk->metadata = $this->dataProperties;
+		$player->dataPacket($pk);
 
-    public function initEntity(){
-        parent::initEntity();
-
-        $this->setMaxDamage(8);
-        $this->setDamage([0, 1, 1, 1]);
-    }
-
-    public function getName(){
-        return "Silverfish";
-    }
-
-    public function attackEntity(Entity $player){
-        if($this->attackDelay > 10 && $this->distanceSquared($player) < 1){
-            $this->attackDelay = 0;
-
-            $ev = new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_ENTITY_ATTACK, $this->getDamage());
-            $player->attack($ev->getFinalDamage(), $ev);
-        }
-    }
-
-    public function getDrops(){
-        return [];
-    }
-
+		parent::spawnTo($player);
+	}
 }
