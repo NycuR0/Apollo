@@ -118,31 +118,3 @@ dserver:
  retry-times: 3
  #the server list，Separate by ';'，e.g. 1.example.com:19132;2.example.com:19133
  server-list: ""
- 
-ai:
- #AI switch
- enable: false
- #Zombie'AI，0=disabled，1=AI 1.0ver，2=new AI(Faultiness)
- zombie: 1
- #PigZombie's AI
- pigzombie: true
- #the AI of cow and mushroom cow
- cow: true
- #Chicken's AI
- chicken: true
- #Sheep's AI
- sheep: true
- #Pigs' AI
- pig: true
- #Skeleton's AI
- skeleton: true
- #Creeper's AI
- creeper: true
- #Iron golem's AI
- iron-golem: true
- #Snow golem's AI
- snow-golem: true
- #Destory blocks if creeper exploded
- creeper-explode-destroy-block: false
- #Choose if allow mob auto generate
- mobgenerate: false
