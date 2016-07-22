@@ -9,17 +9,17 @@ if exist bin\php\php.exe (
 	set PHP_BINARY=php
 )
 
-if exist Apollo*.phar (
-	set POCKETMINE_FILE=Apollo*.phar
+if exist Apollo#*.phar (
+	set POCKETMINE_FILE=Apollo#*.phar
 ) else (
-    if exist PocketMine-MP.phar (
-        set POCKETMINE_FILE=PocketMine-MP.phar
+    if exist Apollo*.phar (
+        set POCKETMINE_FILE=Apollo*.phar
 	) else (
 	    if exist src\pocketmine\PocketMine.php (
 	        set POCKETMINE_FILE=src\pocketmine\PocketMine.php
         ) else (
-            if exist Genisys.phar (
-                set POCKETMINE_FILE=Apollo.phar
+            if exist PocketMine-MP.phar.phar (
+                set POCKETMINE_FILE=PocketMine-MP.phar
             ) else (
 		        echo "[ERROR] Couldn't find a valid Apollo installation."
 		        pause
