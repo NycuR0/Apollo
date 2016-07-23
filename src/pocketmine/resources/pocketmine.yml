@@ -133,9 +133,7 @@ chunk-ticking:
  #Max amount of chunks processed each tick
  tick-radius: 2
  #Radius of chunks around a player to tick
- disabled-randomly-ticking-blocks: []
- #Use id's, for example [2,59] disables grass growth and wheat growth
- light-updates: true
+ light-updates: false
  #Whether to do light-updates or not
  clear-tick-list: true
  
