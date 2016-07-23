@@ -34,7 +34,7 @@ settings:
 
 I/O:
  #These settings do enormly affect disk or console performance!
- title-usage: true
+ title-usage: false
  #Show server usage in title
  log-to-file: true
  #Log console to file(server.log)
@@ -57,7 +57,7 @@ memory:
  #Only if memory.continuous-trigger is enabled. Specifies the rate in memory.check-rate steps
 
  garbage-collection:
-  period: 18000
+  period: 36000
   #Period in ticks to fire the garbage collector manually (default 30 minutes), set to 0 to disable
   #This only affect the main thread. Other threads should fire their own collections
   collect-async-worker: true
@@ -81,7 +81,7 @@ network:
  batch-threshold: 56
  #Threshold for batching packets. Only these packets will be compressed
  #Set to 0 to compress everything, -1 to disable.
- compression-level: 1
+ compression-level: 4
  #Compression level used when sending batched packets. Higher = more CPU, less bandwidth usage
  async-compression: true
  #Use AsyncTasks for compression. Adds half/one tick delay, less CPU load on main thread
