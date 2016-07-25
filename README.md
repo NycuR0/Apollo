@@ -11,7 +11,7 @@ Note: You may **not** copy our generator and updater without NycuRO's permission
 
 ## Features
 
-- Worlds: Generator has been improved and has more biomes than Genisys and PocketMine
+- Worlds: Generator has been improved and more biomes
 - Little to no lag at all!
 
 Apollo is a perfect software for your server with :
@@ -54,7 +54,7 @@ Apollo is a perfect software for your server with :
 
 ## Upcoming Update
 
-1.0dev - Add more biomes is added ( NOT ALL )
+1.0dev - Add more biomes is added ( NOT ALL ) -> RELEASED
 
 1.0beta - Finish all biomes is added ( NOT ALL )
 
