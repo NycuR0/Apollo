@@ -33,6 +33,12 @@ class PlainBiome extends GrassyBiome{
 		$flower->setRandomAmount(5);
 		$flower->addType([Block::DANDELION, 0]);
 		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_POPPY]);
+		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_AZURE_BLUET]);
+		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_RED_TULIP]);
+		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_ORANGE_TULIP]);
+		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_WHITE_TULIP]);
+		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_PINK_TULIP]);
+		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_OXEYE_DAISY]);
 		$this->addPopulator($flower);
 
 		$this->addPopulator($sugarcane);
