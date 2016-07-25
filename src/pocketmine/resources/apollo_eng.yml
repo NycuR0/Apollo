@@ -12,11 +12,11 @@ level:
  weather-random-duration-min: 6000
  weather-random-duration-max: 12000
  #Random lightning interval，default as 10s, 0 = disable
- lightning-time: 10
+ lightning-time: 0
  #Set if enable lightning with fire
- lightning-fire: false
+ lightning-fire: true
  #Set if enable fire spread
- fire-spread: false
+ fire-spread: true
  
 player:
  #the switch of hunger system
@@ -70,7 +70,7 @@ server:
  creative-items-from-json: false
  #Choose if minecart is free moving, follow rails or disable
  #-1=disable, 0=free moving, 1=follow rails,not work momentanly.
- minecart-moving-type: -1
+ minecart-moving-type: 1
  #Choose if enable movement check (no more pull back). If you like performance,set true
  check-movement: true
  #Set if enable limited creative (cannot drop item, cannot interact Chests and so on)
@@ -123,7 +123,7 @@ dserver:
  
  ai:
  #AI switch
- enable: false
+ enable: true
  #Zombie'AI，0=disabled，1=AI 1.0ver，2=new AI(Faultiness)
  zombie: 1
  #PigZombie's AI
@@ -145,9 +145,9 @@ dserver:
  #Snow golem's AI
  snow-golem: true
  #Destory blocks if creeper exploded
- creeper-explode-destroy-block: false
+ creeper-explode-destroy-block: true
  #Choose if allow mob auto generate
- mobgenerate: false
+ mobgenerate: true
  
 synapse:
  #If you want to use Synapse API or connect to a synapse server, enable this
@@ -169,7 +169,7 @@ enchantment:
  enable-enchanting-table: true
  #Choose if to count bookshelves, may cause server lag.
  #If this option is false, server will use a random count (0~15)
- count-bookshelf: false
+ count-bookshelf: true
  
 updater:
  #Branch which will be used by the updater of /updateserver
