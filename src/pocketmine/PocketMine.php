@@ -72,14 +72,13 @@ namespace pocketmine {
 	use pocketmine\utils\Utils;
 	use pocketmine\wizard\Installer;
 
-/* nycuro change here ,not all */
-
-	const VERSION = "0.10";
+	const VERSION = "1.0dev";
 	const API_VERSION = "2.0.0";
-	const CODENAME = "NycuRO";
+	const CODENAME = "apollo";
 	const MINECRAFT_VERSION = "v0.15.0 alpha";
 	const MINECRAFT_VERSION_NETWORK = "0.15.0";
-	
+	const GENISYS_API_VERSION = '1.8.0';
+
 	/*
 	 * Startup code. Do not look at it, it may harm you.
 	 * Most of them are hacks to fix date-related bugs, or basic functions used after this
@@ -117,7 +116,7 @@ namespace pocketmine {
 	$autoloader->register(true);
 
 
-	set_time_limit(0);
+	set_time_limit(0); //Who set it to 30 seconds?!?!
 
 	gc_enable();
 	error_reporting(-1);
