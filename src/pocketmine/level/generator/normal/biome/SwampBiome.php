@@ -18,7 +18,7 @@ class SwampBiome extends GrassyBiome{
 		parent::__construct();
 
 		$flower = new Flower();
-		$flower->setBaseAmount(8);
+		$flower->setRandomAmount(3);
 		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_BLUE_ORCHID]);
 		$this->addPopulator($flower);
 
