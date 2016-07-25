@@ -23,8 +23,8 @@ class ForestBiome extends GrassyBiome{
 
 		$this->type = $type;
 
-		$trees = new Tree($type === self::TYPE_BIRCH ? Sapling::BIRCH : Sapling::OAK && Sapling::BIRCH);
-		$trees->setBaseAmount(7);
+		$trees = new Tree($type === self::TYPE_BIRCH ? Sapling::BIRCH : Sapling::OAK);
+		$trees->setBaseAmount(5);
 		$this->addPopulator($trees);
 		
 		$flower = new Flower();
@@ -35,6 +35,7 @@ class ForestBiome extends GrassyBiome{
 
 		$tallGrass = new TallGrass();
 		$tallGrass->setBaseAmount(5);
+		$tallGrass->setRandomAmount(5);
 
 		$this->addPopulator($tallGrass);
 
