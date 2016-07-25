@@ -465,21 +465,6 @@ class Server{
 		return \pocketmine\API_VERSION;
 	}
 
-
-	/**
-	 * @return string
-	 */
-	public function getiTXApiVersion(){
-		return \pocketmine\GENISYS_API_VERSION;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getGeniApiVersion(){
-		return \pocketmine\GENISYS_API_VERSION;
-	}
-
 	/**
 	 * @return string
 	 */
@@ -561,7 +546,7 @@ class Server{
 	 * @return string
 	 */
 	public function getLevelType(){
-		return $this->getConfigString("level-type", "DEFAULT");
+		return $this->getConfigString("level-type", "normal2"); //normal2 is default level for Apollo
 	}
 
 	/**
