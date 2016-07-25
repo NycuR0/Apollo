@@ -81,7 +81,7 @@ class Normal2 extends Normal{
 		$this->noiseRiver = new Simplex($this->random, 2, 1, 1 / 512);
 		$this->random->setSeed($this->level->getSeed());
 		$this->selector = new BiomeSelector($this->random, function($temperature, $rainfall){
-			if($temperature < 0.80){
+			if($temperature < 2.00){
 				return Biome::BEACH;
 			}else{
 				return Biome::PLAINS;
@@ -91,38 +91,38 @@ class Normal2 extends Normal{
 			}else{
 				return Biome::MESA;
 			}
-			if($temperature < 0.60){
+			if($temperature < 2.00){
 				return Biome::BIRCH_FOREST;
 			}
-			if($temperature < 0.70){
+			if($temperature < 2.00){
 				return Biome::FOREST;
 			}else{
 				return Biome::ROOFED_FOREST;
 			}
-			if($temperature < 0.00){
+			if($temperature < 2.00){
 				return Biome::FROZEN_OCEAN;
 			}else{
 				return Biome::FROZEN_RIVER;
 			}
-			if($temperature < 0.05 ){
+			if($temperature < 2.00 ){
 				return Biome::ICE_PLAINS;
 			}else{
 				return Biome::TAIGA;
 			}
-			if($temperature < 0.95 ){
+			if($temperature < 2.00 ){
 				return Biome::JUNGLE;
 			}else{
 				return Biome::MUSHROOM_ISLAND;
 			}
-			if($temperature < 0.40 ){
+			if($temperature < 2.00 ){
 				return Biome::SMALL_MOUNTAINS;
 			}
-			if($temperature < 0.50 ){
+			if($temperature < 2.00 ){
 				return Biome::OCEAN;
 			}else{
 				return Biome::RIVER;
 			}
-			if($temperature < 0.80 ){
+			if($temperature < 2.00 ){
 				return Biome::SWAMP;
 			}
 		}, Biome::getBiome(Biome::OCEAN));
