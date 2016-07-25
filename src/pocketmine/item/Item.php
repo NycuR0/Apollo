@@ -14,6 +14,7 @@
 namespace pocketmine\item;
 
 use pocketmine\block\Block;
+use pocketmine\block\DoublePlant;
 use pocketmine\block\Flower;
 use pocketmine\entity\CaveSpider;
 use pocketmine\entity\Entity;
