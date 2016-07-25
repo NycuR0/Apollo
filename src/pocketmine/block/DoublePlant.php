@@ -40,7 +40,7 @@ class DoublePlant extends Flowable{
 		return $this->meta = 2 && $this->meta = 3;
 	}
 	
-	public function __construct($meta = 0){
+	public function __construct($meta = 1){
 		$this->meta = $meta;
 	}
 
