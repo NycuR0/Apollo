@@ -36,12 +36,12 @@ class DoublePlant extends Flowable{
 	const ROSE_BUSH = 4;
 	const PEONY = 5;
 
+	public function canBeReplaced(){
+		return $this->meta = 2 && $this->meta = 3;
+	}
+	
 	public function __construct($meta = 0){
 		$this->meta = $meta;
-	}
-
-	public function canBeReplaced(){
-		return true;
 	}
 
 	public function getName() : string{
@@ -58,7 +58,7 @@ class DoublePlant extends Flowable{
 
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if($this->getSide(0)->isTransparent() === true && !$this->getSide(0) instanceof DoublePlant){ //Replace with common break method
+			if($this->getSide(0)->isTransparent() === true && !$this->getSide(1) instanceof DoublePlant){ //Replace with common break method
 				$this->getLevel()->setBlock($this, new Air(), false, false);
 
 				return Level::BLOCK_UPDATE_NORMAL;
