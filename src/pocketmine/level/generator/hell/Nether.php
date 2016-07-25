@@ -120,12 +120,12 @@ class Nether extends Generator{
 		$this->populators[] = $ores;
 		$this->populators[] = new NetherGlowStone();
 		$groundFire = new GroundFire();
-		$groundFire->setBaseAmount(1);
+		$groundFire->setBaseAmount(0);
 		$groundFire->setRandomAmount(1);
 		$this->populators[] = $groundFire;
 		$lava = new NetherLava();
 		$lava->setBaseAmount(0);
-		$lava->setRandomAmount(0);
+		$lava->setRandomAmount(3);
 		$this->populators[] = $lava;
 	}
 

@@ -179,6 +179,14 @@ class Normal extends Generator{
 		$this->selector->addBiome(Biome::getBiome(Biome::ICE_PLAINS));
 		$this->selector->addBiome(Biome::getBiome(Biome::SMALL_MOUNTAINS));
 		$this->selector->addBiome(Biome::getBiome(Biome::BIRCH_FOREST));
+		$this->selector->addBiome(Biome::getBiome(Biome::FROZEN_OCEAN));
+		$this->selector->addBiome(Biome::getBiome(Biome::ROOFED_FOREST));
+		$this->selector->addBiome(Biome::getBiome(Biome::SAVANNA));
+		$this->selector->addBiome(Biome::getBiome(Biome::FROZEN_RIVER));
+		$this->selector->addBiome(Biome::getBiome(Biome::MUSHROOM_ISLAND));
+		$this->selector->addBiome(Biome::getBiome(Biome::BEACH));
+		$this->selector->addBiome(Biome::getBiome(Biome::JUNGLE));
+		$this->selector->addBiome(Biome::getBiome(Biome::MESA));
 
 		$this->selector->recalculate();
 
