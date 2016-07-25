@@ -16,7 +16,7 @@ class RoofedForestBiome extends GrassyBiome{
 		$sugarcane->setBaseAmount(6);
 		$tallGrass = new TallGrass(9);
 		$tallGrass->setBaseAmount(1);
-		$trees = new Tree(Sapling::DARK_OAK && Sapling::OAK && Sapling::BIRCH);
+		$trees = new Tree(Sapling::DARK_OAK);
 		$tallGrass->setBaseAmount(9);
 		$flower = new Flower();
 		$flower->setBaseAmount(0);
