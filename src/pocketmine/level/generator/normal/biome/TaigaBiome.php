@@ -28,7 +28,7 @@ class TaigaBiome extends GrassyBiome{
 		$this->addPopulator($tallGrass);
 		
 		$pumpkin = new Pumpkin();
-		$pumpkin->setRandomAmount(3);
+		$pumpkin->setBaseAmount(1);
 		$this->addPopulator($pumpkin);
 		
 		$flower = new Flower();
