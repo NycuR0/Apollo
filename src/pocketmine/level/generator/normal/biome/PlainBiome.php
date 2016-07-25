@@ -13,6 +13,7 @@ use pocketmine\block\Block;
 use pocketmine\block\Flower as FlowerBlock;
 use pocketmine\level\generator\populator\Flower;
 use pocketmine\level\generator\populator\Sugarcane;
+use pocketmine\level\generator\populator\Pumpkin;
 
 class PlainBiome extends GrassyBiome{
 
@@ -27,6 +28,10 @@ class PlainBiome extends GrassyBiome{
 		$waterPit->setBaseAmount(10);
 		$populatorTallGrass = new PopulatorTallGrass();
 		$populatorTallGrass->setBaseAmount(25);
+		
+		$pumpkin = new Pumpkin();
+		$pumpkin->setRandomAmount(3);
+		$this->addPopulator($pumpkin);
 
 		$flower = new Flower();
 		$flower->setBaseAmount(0);
