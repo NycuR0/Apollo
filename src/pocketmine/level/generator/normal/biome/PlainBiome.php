@@ -30,7 +30,8 @@ class PlainBiome extends GrassyBiome{
 		$populatorTallGrass->setBaseAmount(25);
 		
 		$pumpkin = new Pumpkin();
-		$pumpkin->setBaseAmount(1);
+		$pumpkin->setBaseAmount(0);
+		$pumpkin->setRandomAmount(1);
 		$this->addPopulator($pumpkin);
 
 		$flower = new Flower();
