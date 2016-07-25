@@ -90,8 +90,6 @@ class Normal2 extends Normal{
 					return Biome::FROZEN_OCEAN;
 				}elseif($temperature < 2.00){
 					return Biome::MESA;
-				}else{
-					return Biome::BEACH;
 				}
 			}elseif($rainfall < 0.50){
 				if($temperature < 0.40){
@@ -114,8 +112,6 @@ class Normal2 extends Normal{
 					return Biome::JUNGLE;
 				}elseif($temperature < 0.05){
 					return Biome::TAIGA;
-				}else{
-					return Biome::ICE_PLAINS;
 				}
 			}elseif($rainfall < 0.40){
 				if($temperature < 0.80){
