@@ -10,6 +10,7 @@ use pocketmine\block\Sapling;
 use pocketmine\level\generator\populator\TallGrass;
 use pocketmine\level\generator\populator\Tree;
 use pocketmine\level\generator\populator\Flower;
+use pocketmine\level\generator\populator\Pumpkin;
 
 class ForestBiome extends GrassyBiome{
 
@@ -38,6 +39,10 @@ class ForestBiome extends GrassyBiome{
 		$tallGrass->setRandomAmount(5);
 
 		$this->addPopulator($tallGrass);
+		
+		$pumpkin = new Pumpkin();
+		$pumpkin->setRandomAmount(3);
+		$this->addPopulator($pumpkin);
 
 		$this->setElevation(63, 68);
 
