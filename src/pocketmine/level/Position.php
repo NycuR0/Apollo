@@ -1,4 +1,24 @@
 <?php
+
+/*
+ *
+ *  ____            _        _   __  __ _                  __  __ ____  
+ * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \ 
+ * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
+ * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/ 
+ * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_| 
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author PocketMine Team
+ * @link http://www.pocketmine.net/
+ * 
+ *
+*/
+
 namespace pocketmine\level;
 
 use pocketmine\math\Vector3;
@@ -56,6 +76,30 @@ class Position extends Vector3{
 	}
 
 	/**
+	 * Marks the level reference as strong so it won't be collected
+	 * by the garbage collector.
+	 *
+	 * @deprecated
+	 *
+	 * @return bool
+	 */
+	public function setStrong(){
+		return false;
+	}
+
+	/**
+	 * Marks the level reference as weak so it won't have effect against
+	 * the garbage collector decision.
+	 *
+	 * @deprecated
+	 *
+	 * @return bool
+	 */
+	public function setWeak(){
+		return false;
+	}
+
+	/**
 	 * Returns a side Vector
 	 *
 	 * @param int $side
@@ -66,7 +110,9 @@ class Position extends Vector3{
 	 * @throws LevelException
 	 */
 	public function getSide($side, $step = 1){
-		assert($this->isValid());
+		if(!$this->isValid()){
+			throw new LevelException("Undefined Level reference");
+		}
 
 		return Position::fromObject(parent::getSide($side, $step), $this->level);
 	}
@@ -86,6 +132,14 @@ class Position extends Vector3{
 		$this->x = $x;
 		$this->y = $y;
 		$this->z = $z;
+		return $this;
+	}
+
+	public function fromObjectAdd(Vector3 $pos, $x, $y, $z){
+		if($pos instanceof Position){
+			$this->level = $pos->level;
+		}
+		parent::fromObjectAdd($pos, $x, $y, $z);
 		return $this;
 	}
 
