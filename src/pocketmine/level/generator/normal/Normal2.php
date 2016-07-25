@@ -81,49 +81,50 @@ class Normal2 extends Normal{
 		$this->noiseRiver = new Simplex($this->random, 2, 1, 1 / 512);
 		$this->random->setSeed($this->level->getSeed());
 		$this->selector = new BiomeSelector($this->random, function($temperature, $rainfall){
-			if($temperature < 2.00){
-				return Biome::BEACH;
+if($rainfall < 0.25){
+				if($temperature < 0.7){
+					return Biome::OCEAN;
+				}elseif($temperature < 0.85){
+					return Biome::RIVER;
+				}elseif($temperature < 0.90){
+					return Biome::MUSHROOM_ISLAND;
+				}else{
+					return Biome::SWAMP;
+				}
+			}elseif($rainfall < 0.60){
+				if($temperature < 0.25){
+					return Biome::ICE_PLAINS;
+				}elseif($temperature < 0.75){
+					return Biome::PLAINS;
+				}else{
+					return Biome::DESERT;
+				}
+			}elseif($rainfall < 0.80){
+				if($temperature < 0.25){
+					return Biome::TAIGA;
+				}elseif($temperature < 0.75){
+					return Biome::FOREST;
+				}else{
+					return Biome::BIRCH_FOREST;
+				}
+			}elseif($rainfall < 0.70){
+				if($temperature < 0.90){
+					return Biome::ROOFED_FOREST;
+				}elseif($temperature < 0.95){
+					return Biome::JUNGLE;
+				}else{
+					return Biome::MESA;
+				}
 			}else{
-				return Biome::PLAINS;
-			}
-			if($temperature < 2.00){
-				return Biome::DESERT;
-			}else{
-				return Biome::MESA;
-			}
-			if($temperature < 2.00){
-				return Biome::BIRCH_FOREST;
-			}
-			if($temperature < 2.00){
-				return Biome::FOREST;
-			}else{
-				return Biome::ROOFED_FOREST;
-			}
-			if($temperature < 2.00){
-				return Biome::FROZEN_OCEAN;
-			}else{
-				return Biome::FROZEN_RIVER;
-			}
-			if($temperature < 2.00 ){
-				return Biome::ICE_PLAINS;
-			}else{
-				return Biome::TAIGA;
-			}
-			if($temperature < 2.00 ){
-				return Biome::JUNGLE;
-			}else{
-				return Biome::MUSHROOM_ISLAND;
-			}
-			if($temperature < 2.00 ){
-				return Biome::SMALL_MOUNTAINS;
-			}
-			if($temperature < 2.00 ){
-				return Biome::OCEAN;
-			}else{
-				return Biome::RIVER;
-			}
-			if($temperature < 2.00 ){
-				return Biome::SWAMP;
+				if($temperature < 0.25){
+					return Biome::FROZEN_RIVER;
+				}elseif($temperature <= 0.00){
+					return Biome::FROZEN_OCEAN;
+				}elseif($temperature <= 2.0){
+					return Biome::MESA;
+				}else{
+					return Biome::SAVANNA;
+				}
 			}
 		}, Biome::getBiome(Biome::OCEAN));
 
