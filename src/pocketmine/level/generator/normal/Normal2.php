@@ -85,7 +85,7 @@ class Normal2 extends Normal{
 				return Biome::BEACH;
 			}else{
 				return Biome::PLAINS;
-			}else{
+			}else if{
 				return Biome::SWAMP;
 			}
 			if($temperature < 2.00){
