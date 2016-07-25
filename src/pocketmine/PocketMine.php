@@ -74,7 +74,7 @@ namespace pocketmine {
 
 	const VERSION = "1.0dev";
 	const API_VERSION = "2.0.0";
-	const CODENAME = "Nycuro";
+	const CODENAME = "NycuRO";
 	const MINECRAFT_VERSION = "v0.15.0 alpha";
 	const MINECRAFT_VERSION_NETWORK = "0.15.0";
 
