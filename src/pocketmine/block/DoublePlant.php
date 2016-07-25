@@ -37,11 +37,11 @@ class DoublePlant extends Flowable{
 	const PEONY = 5;
 
 	public function canBeReplaced(){
-		return $this->meta = 2 && $this->meta = 3;
+		return true;
 	}
 	
-	public function __construct($meta = 1){
-		$this->meta = $meta;
+	public function __construct($meta){
+		return $this->meta = 2 && $this->meta = 3;
 	}
 
 	public function getName() : string{
