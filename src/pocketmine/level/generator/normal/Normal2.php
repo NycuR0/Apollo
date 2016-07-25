@@ -81,7 +81,7 @@ class Normal2 extends Normal{
 		$this->noiseRiver = new Simplex($this->random, 2, 1, 1 / 512);
 		$this->random->setSeed($this->level->getSeed());
 		$this->selector = new BiomeSelector($this->random, function($temperature, $rainfall){
-if($rainfall < 0.25){
+                        if($rainfall < 0.25){
 				if($temperature < 0.7){
 					return Biome::OCEAN;
 				}elseif($temperature < 0.85){
