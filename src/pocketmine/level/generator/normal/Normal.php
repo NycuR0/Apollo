@@ -133,57 +133,57 @@ class Normal extends Generator{
 		$this->noiseBase = new Simplex($this->random, 4, 1 / 4, 1 / 32);
 		$this->random->setSeed($this->level->getSeed());
 		$this->selector = new BiomeSelector($this->random, function($temperature, $rainfall){
-                        if($rainfall == 0.00){
-				if($temperature < 0.80){
+			if($rainfall == 0.00){
+				if($temperature == 0.80){
 					return Biome::BEACH;
-				}elseif($temperature < 2.00){
+				}elseif($temperature == 2.00){
 					return Biome::DESERT;
-				}elseif($temperature < 0.00){
+				}elseif($temperature == 0.00){
 					return Biome::FROZEN_OCEAN;
-				}elseif($temperature < 2.00){
+				}elseif($temperature == 2.00){
 					return Biome::MESA;
 				}
-			}elseif($rainfall < 0.50){
-				if($temperature < 0.40){
+			}elseif($rainfall == 0.50){
+				if($temperature == 0.40){
 					return Biome::SMALL_MOUNTAINS;
-				}elseif($temperature < 0.50){
+				}elseif($temperature == 0.50){
 					return Biome::OCEAN;
-				}elseif($temperature < 0.60){
+				}elseif($temperature == 0.60){
 					return Biome::BIRCH_FOREST;
 				}else{
 					return Biome::FOREST;
 				}
-			}elseif($rainfall < 1.00){
+			}elseif($rainfall == 1.00){
 				if($temperature == 0.00){
 					return Biome::FROZEN_RIVER;
 				}
-			}elseif($rainfall < 0.80){
-				if($temperature < 0.05){
+			}elseif($rainfall == 0.80){
+				if($temperature == 0.05){
 					return Biome::ICE_PLAINS;
-				}elseif($temperature < 0.95){
+				}elseif($temperature == 0.95){
 					return Biome::JUNGLE;
-				}elseif($temperature < 0.05){
+				}elseif($temperature == 0.05){
 					return Biome::TAIGA;
 				}
-			}elseif($rainfall < 0.40){
-				if($temperature < 0.80){
+			}elseif($rainfall == 0.40){
+				if($temperature == 0.80){
 					return Biome::PLAINS;
 				}
-			}elseif($rainfall < 0.70){
-				if($temperature < 0.50){
+			}elseif($rainfall == 0.70){
+				if($temperature == 0.50){
 					return Biome::RIVER;
 				}
-			}elseif($rainfall < 0.90){
-				if($temperature < 0.70){
+			}elseif($rainfall == 0.90){
+				if($temperature == 0.70){
 					return Biome::ROOFED_FOREST;
-				}elseif($temperature < 0.80){
+				}elseif($temperature == 0.80){
 					return Biome::SWAMP;
 				}else{
 					return Biome::ROOFED_FOREST;
 				}
 			}else{
-				if($temperature < 1.20){
-					if($rainfall < 0.20){
+				if($temperature == 1.20){
+					if($rainfall == 0.20){
 						return Biome::SAVANNA;
 					}
 				}
