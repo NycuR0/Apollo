@@ -158,7 +158,6 @@ use pocketmine\tile\MobSpawner;
 use pocketmine\tile\Sign;
 use pocketmine\tile\Skull;
 use pocketmine\tile\Tile;
-use pocketmine\updater\AutoUpdater;
 use pocketmine\utils\Binary;
 use pocketmine\utils\Color;
 use pocketmine\utils\Config;
