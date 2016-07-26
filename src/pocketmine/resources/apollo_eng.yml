@@ -2,7 +2,7 @@
 
 #Version of this file
 config:
- version: 17
+ version: 14
 
 level:
  #Set if turn on the weather system
@@ -49,7 +49,7 @@ server:
  #Choose if spawning iron golem is allowed
  allow-iron-golem: false
  #Choose if spawning snow golem is allowed
- allow-snow-golem: false
+ allow-snow-golem: true
  #Choose if disable server.log
  disable-log: true
  #Choose if enable auto anti fly
@@ -96,7 +96,7 @@ redstone:
  ##########################################
  enable: true
  #Choose if allow frequancy pulse
- frequency-pulse: false
+ frequency-pulse: true
  #Set the frequency of pulse, Default: 1s
  pulse-frequency: 1
 
@@ -117,7 +117,7 @@ dserver:
  #The count of all multi-server unified
  enable: false
  #Query update automatically
- query-auto-update: false
+ query-auto-update: true
  #Query update periodical
  query-tick-update: true
  #The max players' number of Motd
@@ -127,11 +127,11 @@ dserver:
  #Show the number of all players on motd
  motd-all-players: false
  #Show the number of all players on Query
- query-all-players: false
+ query-all-players: true
  #Show the number of online players on motd
  motd-players: false
  #Show the number of online players on Query
- query-players: false
+ query-players: true
  #Update Frequency ,20=1s
  time: 40
  #Auto-retry times when failed
