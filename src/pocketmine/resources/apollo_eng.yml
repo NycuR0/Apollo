@@ -166,3 +166,7 @@ ai:
  creeper-explode-destroy-block: true
  #Choose if allow mob auto generate
  mobgenerate: true
+
+updater:
+ #Branch which will be used by the updater of /updateserver
+ branch: "master"
