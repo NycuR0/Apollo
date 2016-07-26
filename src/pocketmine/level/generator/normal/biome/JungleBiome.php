@@ -48,4 +48,7 @@ class JungleBiome extends GrassyBiome{
 	public function getName() : string{
 		return "Jungle";
 	}
+	public function getColor(){
+		return 0x92bc59;
+	}
 }
