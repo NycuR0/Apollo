@@ -57,6 +57,6 @@ class TaigaBiome extends GrassyBiome{
 		return "Taiga";
 	}
 	public function getColor(){
-		return 0x82b493;
+		return 0x2c4205;
 	}
 }
