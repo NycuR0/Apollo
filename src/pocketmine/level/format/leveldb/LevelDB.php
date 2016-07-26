@@ -1,24 +1,4 @@
 <?php
-
-/*
- *
- *  ____            _        _   __  __ _                  __  __ ____
- * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \
- * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
- * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/
- * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_|
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * @author PocketMine Team
- * @link http://www.pocketmine.net/
- *
- *
-*/
-
 namespace pocketmine\level\format\leveldb;
 
 use pocketmine\level\format\FullChunk;
@@ -76,7 +56,7 @@ class LevelDB extends BaseLevelProvider{
 			$this->levelData->generatorOptions = new StringTag("generatorOptions", "");
 		}
 
-		$this->db = new \LevelDB($this->path . "/db", [
+		$this->db = new \LevelDB($this->path . "db", [
 			"compression" => LEVELDB_ZLIB_COMPRESSION
 		]);
 	}
@@ -184,6 +164,7 @@ class LevelDB extends BaseLevelProvider{
 			$this->unloadChunk($chunk->getX(), $chunk->getZ(), false);
 		}
 		$this->chunks = [];
+
 	}
 
 	public function getGenerator(){
@@ -214,7 +195,7 @@ class LevelDB extends BaseLevelProvider{
 		}
 
 		$this->level->timings->syncChunkLoadDataTimer->startTiming();
-		$chunk = $this->readChunk($chunkX, $chunkZ);
+		$chunk = $this->readChunk($chunkX, $chunkZ, $create);
 		if($chunk === null and $create){
 			$chunk = Chunk::getEmptyChunk($chunkX, $chunkZ, $this);
 		}
