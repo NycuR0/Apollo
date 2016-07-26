@@ -27,4 +27,7 @@ class SavannaBiome extends GrassyBiome{
 	public function getName() : string{
 		return "Savanna";
 	}
+	public function getColor(){
+		return 0xBFA243;
+	}
 }
