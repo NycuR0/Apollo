@@ -53,7 +53,7 @@ class PopulatorTallGrass extends Populator{
 			if($y !== -1 and $this->canTallGrassStay($x, $y, $z)){
 				$this->level->setBlockIdAt($x, $y, $z, Block::DOUBLE_PLANT, 2);
 				//$this->level->setBlockIdAt($x, $y, $z, 2);
-				$this->level->setBlockDataAt($x, $y, $z, Block::DOUBLE_PLANT, 10);
+				$this->level->setBlockDataAt($x, $y, $z, Block::DOUBLE_PLANT, 2);
 				//$this->level->setBlockDataAt($x, $y, $z, 10);
 			}
 		}
