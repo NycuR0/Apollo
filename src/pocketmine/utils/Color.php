@@ -53,7 +53,7 @@ class Color {
 
 	public static function init(){
 		if(self::$dyeColors === null){
-			self::$dyeColors = new \SplFixedArray(256);
+			self::$dyeColors = new \SplFixedArray(16);
 			self::$dyeColors[self::COLOR_DYE_BLACK] = Color::getRGB(30, 27, 27);
 			self::$dyeColors[self::COLOR_DYE_RED] = Color::getRGB(179, 49, 44);
 			self::$dyeColors[self::COLOR_DYE_GREEN] = Color::getRGB(61, 81, 26);
