@@ -369,7 +369,7 @@ class Server{
 	public $playerLoginMsg = "";
 	public $playerLogoutMsg = "";
 	public $antiFly = false;
-	public $asyncChunkRequest = true;
+	public $asyncChunkRequest = false;
 	public $recipesFromJson = false;
 	public $creativeItemsFromJson = false;
 	public $minecartMovingType = 1;
