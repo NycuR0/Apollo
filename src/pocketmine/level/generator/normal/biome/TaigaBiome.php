@@ -39,7 +39,7 @@ class TaigaBiome extends GrassyBiome{
 		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_POPPY]);
 		$this->addPopulator($flower);
 
-		$this->setElevation(62, 81);
+		$this->setElevation(62, 83);
 
 		$this->temperature = 0.05;
 		$this->rainfall = 0.80;
