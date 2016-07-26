@@ -350,7 +350,7 @@ class Server{
 	public $expCache = [];
 	public $expWriteAhead = 200;
 	public $aiConfig = [];
-	public $aiEnabled = false;
+	public $aiEnabled = true;
 	public $aiHolder = null;
 	public $inventoryNum = 36;
 	public $hungerTimer = 80;
@@ -372,18 +372,18 @@ class Server{
 	public $asyncChunkRequest = true;
 	public $recipesFromJson = false;
 	public $creativeItemsFromJson = false;
-	public $minecartMovingType = 0;
+	public $minecartMovingType = 1;
 	public $checkMovement = false;
 	public $keepExperience = false;
-	public $limitedCreative = true;
-	public $chunkRadius = -1;
+	public $limitedCreative = false;
+	public $chunkRadius = 1;
 	public $destroyBlockParticle = true;
 	public $allowSplashPotion = true;
 	public $fireSpread = false;
 	public $advancedCommandSelector = false;
 	public $synapseConfig = [];
 	public $enchantingTableEnabled = true;
-	public $countBookshelf = false;
+	public $countBookshelf = true;
 
 	/** @var CraftingDataPacket */
 	private $recipeList = null;
