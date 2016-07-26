@@ -130,5 +130,8 @@ class Vector2{
 	public function __toString(){
 		return "Vector2(x=" . $this->x . ",y=" . $this->y . ")";
 	}
+ 	public static function createRandomDirection(Random $random){
+		return VectorMath::getDirection2D($random->nextFloat() * 2 * pi());
+  	}
 
 }
