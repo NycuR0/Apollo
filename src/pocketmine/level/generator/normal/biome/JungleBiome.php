@@ -1,7 +1,7 @@
 <?php
 
 /*
-Not ready, need add cocoa beans. If you know how add,add please.
+Finish
 */
 
 namespace pocketmine\level\generator\normal\biome;
@@ -10,6 +10,7 @@ use pocketmine\level\generator\populator\Sugarcane;
 use pocketmine\level\generator\populator\TallGrass;
 use pocketmine\level\generator\populator\Tree;
 use pocketmine\level\generator\populator\Melon;
+use pocketmine\level\generator\populator\CocoaBeans;
 use pocketmine\block\Sapling;
 
 class JungleBiome extends GrassyBiome{
@@ -28,6 +29,11 @@ class JungleBiome extends GrassyBiome{
 		$melon->setBaseAmount(0);
 		$melon->setRandomAmount(1);
 		$this->addPopulator($melon);
+		
+		$cocoaBeans = new CocoaBeans();
+		$cocoaBeans->setBaseAmount(1);
+		$cocoaBeans->setRandomAmount(1);
+		$this->addPopulator($cocoaBeans);
 
 		$this->addPopulator($sugarcane);
 		$this->addPopulator($tallGrass);
