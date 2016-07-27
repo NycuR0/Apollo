@@ -26,6 +26,14 @@ settings:
  async-workers: 1
  #Enables use of non-production, development builds. WARNING: DO NOT enable this unless you are sure you know what you are doing.
  enable-testing: false
+ incompatible-plugins:
+  plugin-too-new:
+   #Load plugins whose major API version is too new
+   major: false
+   #Load plugins whose minor API version is too new
+   minor: false
+  #Load plugins whose major API version is too old
+  plugin-too-old: true
 
 memory:
  global-limit: 0
