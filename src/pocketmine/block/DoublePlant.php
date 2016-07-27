@@ -45,13 +45,14 @@ class DoublePlant extends Flowable{
                                 }
 			}else{
 				if($this->getDown(0)->isTransparent() || !$this->getSide(1) instanceof DoublePlant){ //Replace with common break method
-				   $this->getLevel()->useBreakOn($this);
-				   return Level::BLOCK_UPDATE_NORMAL;
+                                   $this->getLevel()->useBreakOn($this);
+                                   return Level::BLOCK_UPDATE_NORMAL;
+                                }
 			}
 		}
 		return 0;
 	}
-	/*public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getDown(0);
 		$up = $this->getSide(1);
 		if($down->getId() === self::GRASS or $down->getId() === self::DIRT){
@@ -60,5 +61,5 @@ class DoublePlant extends Flowable{
 			return true;
 		}
 		return false;
-	}*/
+	}
 }
