@@ -107,7 +107,7 @@ level-settings:
 chunk-sending:
  per-tick: 4
  #Limit of chunks to send per tick to player
- max-chunks: 192
+ max-chunks: 56
  #Limit of chunks to send per player
  spawn-threshold: 56
  #Chunks, that have to be loaded before the player spawns
@@ -125,9 +125,9 @@ chunk-ticking:
 
 chunk-generation:
  #Max. amount of chunks in the waiting queue to be generated
- queue-size: 8
+ queue-size: 2
  #Max. amount of chunks in the waiting queue to be populated
- population-queue-size: 8
+ population-queue-size: 2
 
 ticks-per:
  animal-spawns: 400
