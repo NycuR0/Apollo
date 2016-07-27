@@ -31,7 +31,7 @@ class DoublePlant extends Flowable{
 			2 => "Double Tallgrass",
 			3 => "Large Fern",
 			4 => "Rose Bush",
-			5 => "Peony"
+			5 => "Peony",
 		];
 		return $names[$this->meta & 0x07];
 	}
