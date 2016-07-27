@@ -62,10 +62,10 @@ class DoublePlant extends Flowable{
 			return true;
 		}
 		return false;
-	}*/
+	}
 	public function getDrops(Item $item){
 		return false;
-	}
+	}*/
         public function getColor(){
                 return BlockColor::FOLIAGE_BLOCK_COLOR;
         }
