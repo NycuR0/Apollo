@@ -31,7 +31,7 @@ class DoublePlant extends Flowable{
 			2 => "Double Tallgrass",
 			3 => "Large Fern",
 			4 => "Rose Bush",
-			5 => "Peony",
+			5 => "Peony"
 		];
 		return $names[$this->meta & 0x07];
 	}
@@ -39,13 +39,13 @@ class DoublePlant extends Flowable{
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			if(($this->meta & 0x08) == 8){
 			//top
-				if(!($this->getDown(0) instanceof DoublePlant)){
+				if(!($this->getSide(0) instanceof DoublePlant)){
                                    $this->getLevel()->useBreakOn($this);
                                    return Level::BLOCK_UPDATE_NORMAL;
                                 }
 			}else{
 			//botom
-				if($this->getDown(0)->isTransparent() || !$this->getSide(1) instanceof DoublePlant){ //Replace with common break method
+				if($this->getSide(0)->isTransparent() || !$this->getSide(1) instanceof DoublePlant){ //Replace with common break method
                                    $this->getLevel()->useBreakOn($this);
                                    return Level::BLOCK_UPDATE_NORMAL;
                                 }
@@ -54,7 +54,7 @@ class DoublePlant extends Flowable{
 		return 0;
 	}
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		$down = $this->getDown(0);
+		$down = $this->getSide(0);
 		$up = $this->getSide(1);
 		if($down->getId() === self::GRASS or $down->getId() === self::DIRT){
 			$this->getLevel()->setBlock($block, $this, true);
