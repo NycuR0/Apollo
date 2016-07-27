@@ -259,3 +259,4 @@ class Vector3{
 	public function __toString(){
 		return "Vector3(x=" . $this->x . ",y=" . $this->y . ",z=" . $this->z . ")";
 	}
+}
