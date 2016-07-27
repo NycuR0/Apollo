@@ -24,7 +24,7 @@ use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
 use pocketmine\utils\VectorIterator;
 use pocketmine\utils\Random;
-class BigTree extends Tree{
+class BigJungleTree extends Tree{
 	public $overridable = [
 		Block::AIR => true,
 		Block::LEAVES => true,
@@ -35,16 +35,16 @@ class BigTree extends Tree{
 	private $trunkHeightMultiplier = 0.618;
 	private $trunkHeight;
 	private $leafAmount = 1;
-	private $leafDistanceLimit = 5;
+	private $leafDistanceLimit = 4;
 	private $widthScale = 1;
-	private $branchSlope = 0.381;
-	private $leavesHeight = 3;
-	protected $radiusIncrease = 0;
+	private $branchSlope = 0.5;
+	private $leavesHeight = 2;
+	protected $radiusIncrease = -1;
 	private $addLeavesVines = false;
 	private $addLogVines = false;
 	private $addCocoaPlants = false;
 	private $totalHeight;
-	private $baseHeight = 5;
+	private $baseHeight = 30;
 	public function canPlaceObject(ChunkManager $level, $x, $y, $z, Random $random){
 		if(!parent::canPlaceObject($level, $x, $y, $z, $random) or $level->getBlockIdAt($x, $y, $z) == Block::WATER or $level->getBlockIdAt($x, $y, $z) == Block::STILL_WATER){
 			return false;
@@ -79,6 +79,28 @@ class BigTree extends Tree{
 			$trunk->next();
 			$pos = $trunk->current();
 			$level->setBlockIdAt($pos->x, $pos->y, $pos->z, Block::LOG);
+			$level->setBlockDataAt($pos->x, $pos->y, $pos->z, 3);
+		}
+		$trunk = new VectorIterator($level, new Vector3($x + 1, $y -1, $z), new Vector3($x + 1, $y + $this->trunkHeight, $z));
+		while($trunk->valid()){
+			$trunk->next();
+			$pos = $trunk->current();
+			$level->setBlockIdAt($pos->x, $pos->y, $pos->z, Block::LOG);
+			$level->setBlockDataAt($pos->x, $pos->y, $pos->z, 3);
+		}
+		$trunk = new VectorIterator($level, new Vector3($x + 1, $y -1, $z + 1), new Vector3($x + 1, $y + $this->trunkHeight, $z + 1));
+		while($trunk->valid()){
+			$trunk->next();
+			$pos = $trunk->current();
+			$level->setBlockIdAt($pos->x, $pos->y, $pos->z, Block::LOG);
+			$level->setBlockDataAt($pos->x, $pos->y, $pos->z, 3);
+		}
+		$trunk = new VectorIterator($level, new Vector3($x, $y -1, $z + 1), new Vector3($x, $y + $this->trunkHeight, $z + 1));
+		while($trunk->valid()){
+			$trunk->next();
+			$pos = $trunk->current();
+			$level->setBlockIdAt($pos->x, $pos->y, $pos->z, Block::LOG);
+			$level->setBlockDataAt($pos->x, $pos->y, $pos->z, 3);
 		}
 		$this->generateBranches($level, $x, $y, $z, $leaves);
 	}
@@ -139,6 +161,7 @@ class BigTree extends Tree{
 				if(($sizeX * $sizeX + $sizeZ * $sizeZ) <= ($size * $size)){
 					if(isset($this->overridable[$level->getBlockIdAt($xx, $y, $zz)])){
 						$level->setBlockIdAt($xx, $y, $zz, Block::LEAVES);
+						$level->setBlockDataAt($xx, $y, $zz, 3);
 					}
 				}
 			}
@@ -166,6 +189,7 @@ class BigTree extends Tree{
 					$branch->next();
 					$pos = $branch->current();
 					$level->setBlockIdAt((int) $pos->x, (int) $pos->y, (int) $pos->z, Block::LOG);
+					$level->setBlockDataAt((int) $pos->x, (int) $pos->y, (int) $pos->z, 3);
 					#$level->updateBlockLight((int) $pos->x, (int) $pos->y, (int) $pos->z);
 				}
 			}
@@ -184,3 +208,4 @@ class BigTree extends Tree{
 		}
 		return -1;
 	}
+}
