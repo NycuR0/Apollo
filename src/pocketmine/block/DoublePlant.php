@@ -69,7 +69,7 @@ class DoublePlant extends Flowable{
 		}
 	}*/
 	
-        public int[][] getDrops(Item $item) {
+        public int[][] getDrops(Item $item) : array{
         //todo
 
                 return new int[0][0];
