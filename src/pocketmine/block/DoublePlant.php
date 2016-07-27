@@ -68,7 +68,13 @@ class DoublePlant extends Flowable{
 			return [];
 		}
 	}
+	
+        public int[][] getDrops(Item $item) {
+        //todo
+
+                return new int[0][0];
+        }
 	public function getColor(){
                 return BlockColor::FOLIAGE_BLOCK_COLOR;
-    }
+        }
 }
