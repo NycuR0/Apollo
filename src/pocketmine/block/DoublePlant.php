@@ -54,7 +54,7 @@ class DoublePlant extends Flowable{
 		}
 		return false;
 	}
-	public function onUpdate(Item $item){
+	public function onUpdate(int $type){
 		$up = $this->getSide(1);
 		$down = $this->getDown(0);
 		if(($this->meta & 0x08) === 0x08){ // This is the Top part of flower
