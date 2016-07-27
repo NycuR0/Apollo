@@ -70,8 +70,6 @@ class DoublePlant extends Flowable{
 	}*/
 	
         public function getDrops(Item $item) : array{
-        //todo
-
                 return [];
         }
 	public function getColor(){
