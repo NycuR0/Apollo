@@ -70,7 +70,7 @@ class DoublePlant extends Flowable{
 			return [];
 		}
 	}
-        public function BlockColor getColor(){
+        public function getColor(){
                 return BlockColor::FOLIAGE_BLOCK_COLOR;
         }
 }
