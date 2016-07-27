@@ -471,7 +471,7 @@ namespace pocketmine {
 		$logger->debug("Stopping " . (new \ReflectionClass($thread))->getShortName() . " thread");
 		$thread->quit();
 	}
-	$killtime = 8;
+	$killtime = 3;
 	while(--$killtime) {
 		sleep(1);
 		if (count(ThreadManager::getInstance()->getAll()) == 0) {
