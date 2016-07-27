@@ -38,14 +38,14 @@ class DoublePlant extends Flowable{
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			if(($this->meta & 0x08) == 8){
-			//top
-				if(!($this->getSide(0) instanceof DoublePlant)){
+				//top
+				if($this->getSide(0)->isTransparent() || !$this->getSide(1) instanceof DoublePlant){ //Replace with common break method
                                    $this->getLevel()->setBlock($this);
                                    return Level::BLOCK_UPDATE_NORMAL;
                                 }
 			}else{
 			//botom
-				if($this->getSide(0)->isTransparent() || !$this->getSide(1) instanceof DoublePlant){ //Replace with common break method
+				if(!($this->getSide(0) instanceof DoublePlant)){
                                    $this->getLevel()->setBlock($this);
                                    return Level::BLOCK_UPDATE_NORMAL;
                                 }
