@@ -61,8 +61,4 @@ class DoublePlant extends Flowable{
 		}
 		return false;
 	}*/
-	
-	public function getColor(){
-                return BlockColor::FOLIAGE_BLOCK_COLOR;
-        }
 }
