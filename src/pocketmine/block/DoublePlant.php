@@ -62,14 +62,6 @@ class DoublePlant extends Flowable{
 		return false;
 	}*/
 	
-	public function getDrops(Item $item) : array{
-		if(($this->meta & 0x08) !== 0x08){
-			return [[Item::DOUBLE_PLANT, $this->meta, 1]];
-		}else{
-			return [];
-		}
-	}
-	
 	public function getColor(){
                 return BlockColor::FOLIAGE_BLOCK_COLOR;
         }
