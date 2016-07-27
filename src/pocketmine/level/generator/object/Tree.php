@@ -1,31 +1,9 @@
 <?php
-
-/*
- *
- *  ____            _        _   __  __ _                  __  __ ____  
- * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \ 
- * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
- * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/ 
- * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_| 
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * @author PocketMine Team
- * @link http://www.pocketmine.net/
- * 
- *
-*/
-
 namespace pocketmine\level\generator\object;
-
 use pocketmine\block\Block;
 use pocketmine\block\Sapling;
 use pocketmine\level\ChunkManager;
 use pocketmine\utils\Random;
-
 abstract class Tree{
 	public $overridable = [
 		Block::AIR => true,
@@ -36,14 +14,11 @@ abstract class Tree{
 		Block::LOG2 => true,
 		Block::LEAVES2 => true
 	];
-
 	public $type = 0;
 	public $trunkBlock = Block::LOG;
 	public $leafBlock = Block::LEAVES;
 	public $treeHeight = 7;
-	public $leafType = 0;
-
-	public static function growTree(ChunkManager $level, $x, $y, $z, Random $random, $type = 0, bool $noBigTree = true){
+	public static function growTree(ChunkManager $level, $x, $y, $z, Random $random, $type = 0){
 		switch($type){
 			case Sapling::SPRUCE:
 				$tree = new SpruceTree();
@@ -56,17 +31,15 @@ abstract class Tree{
 				}
 				break;
 			case Sapling::JUNGLE:
-				$tree = new JungleTree();
+				#$tree = new JungleTree();
+				$tree = new BigJungleTree();
 				break;
 			case Sapling::ACACIA:
-				$tree = new AcaciaTree();
-				break;
-			case Sapling::DARK_OAK:
-				$tree = new DarkOakTree();
+				$tree = new AcaciaTree2();
 				break;
 			case Sapling::OAK:
 			default:
-				if(!$noBigTree and $random->nextRange(0, 9) === 0){
+				if($random->nextRange(0, 9) === 0){
 					$tree = new BigTree();
 				}else{
 					$tree = new OakTree();
@@ -77,8 +50,6 @@ abstract class Tree{
 			$tree->placeObject($level, $x, $y, $z, $random);
 		}
 	}
-
-
 	public function canPlaceObject(ChunkManager $level, $x, $y, $z, Random $random){
 		$radiusToCheck = 0;
 		for($yy = 0; $yy < $this->treeHeight + 3; ++$yy){
@@ -93,14 +64,10 @@ abstract class Tree{
 				}
 			}
 		}
-
 		return true;
 	}
-
 	public function placeObject(ChunkManager $level, $x, $y, $z, Random $random){
-
 		$this->placeTrunk($level, $x, $y, $z, $random, $this->treeHeight - 1);
-
 		for($yy = $y - 3 + $this->treeHeight; $yy <= $y + $this->treeHeight; ++$yy){
 			$yOff = $yy - ($y + $this->treeHeight);
 			$mid = (int) (1 - $yOff / 2);
@@ -113,17 +80,15 @@ abstract class Tree{
 					}
 					if(!Block::$solid[$level->getBlockIdAt($xx, $yy, $zz)]){
 						$level->setBlockIdAt($xx, $yy, $zz, $this->leafBlock);
-						$level->setBlockDataAt($xx, $yy, $zz, $this->leafType);
+						$level->setBlockDataAt($xx, $yy, $zz, $this->type);
 					}
 				}
 			}
 		}
 	}
-
 	protected function placeTrunk(ChunkManager $level, $x, $y, $z, Random $random, $trunkHeight){
 		// The base dirt block
 		$level->setBlockIdAt($x, $y - 1, $z, Block::DIRT);
-
 		for($yy = 0; $yy < $trunkHeight; ++$yy){
 			$blockId = $level->getBlockIdAt($x, $y + $yy, $z);
 			if(isset($this->overridable[$blockId])){
