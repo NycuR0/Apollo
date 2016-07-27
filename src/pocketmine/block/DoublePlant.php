@@ -19,7 +19,7 @@ class DoublePlant extends Flowable{
 		$this->meta = $meta;
 	}
         public function DoublePlant(int $meta){
-                return super($meta);
+                super($meta);
         }
 	public function canBeReplaced(){
 		return $this->meta == 2 || $this->meta == 3;
@@ -44,6 +44,7 @@ class DoublePlant extends Flowable{
                                    return Level::BLOCK_UPDATE_NORMAL;
                                 }
 			}else{
+			//botom
 				if($this->getDown(0)->isTransparent() || !$this->getSide(1) instanceof DoublePlant){ //Replace with common break method
                                    $this->getLevel()->useBreakOn($this);
                                    return Level::BLOCK_UPDATE_NORMAL;
@@ -62,4 +63,10 @@ class DoublePlant extends Flowable{
 		}
 		return false;
 	}
+	public int[][] getDrops(Item $item){
+                return new int[0][0];
+        }
+        public BlockColor getColor(){
+                return BlockColor::FOLIAGE_BLOCK_COLOR;
+        }
 }
