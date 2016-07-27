@@ -24,8 +24,6 @@ settings:
  #Set this approximately to your number of cores.
  #If set to auto, it'll try to detect the number of cores (or use 2)
  async-workers: 1
- #Enables use of non-production, development builds. WARNING: DO NOT enable this unless you are sure you know what you are doing.
- enable-testing: false
  incompatible-plugins:
   plugin-too-new:
    #Load plugins whose major API version is too new
