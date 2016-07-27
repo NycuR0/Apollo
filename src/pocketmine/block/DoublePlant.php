@@ -43,7 +43,6 @@ class DoublePlant extends Flowable{
                                    $this->getLevel()->setBlock($this);
                                    return Level::BLOCK_UPDATE_NORMAL;
                                 }
-			}else{
 			//botom
 				if(!($this->getSide(0) instanceof DoublePlant)){
                                    $this->getLevel()->setBlock($this);
