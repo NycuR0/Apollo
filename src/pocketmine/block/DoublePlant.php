@@ -51,7 +51,7 @@ class DoublePlant extends Flowable{
 		}
 		return 0;
 	}
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	/*public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getDown(0);
 		$up = $this->getSide(1);
 		if($down->getId() === self::GRASS or $down->getId() === self::DIRT){
@@ -60,7 +60,7 @@ class DoublePlant extends Flowable{
 			return true;
 		}
 		return false;
-	}
+	}*/
 	public function getDrops(Item $item) : array{
 		if(($this->meta & 0x08) !== 0x08){
 			return [[Item::DOUBLE_PLANT, $this->meta, 1]];
