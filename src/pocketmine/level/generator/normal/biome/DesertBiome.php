@@ -30,12 +30,8 @@ class DesertBiome extends SandyBiome{
 	public function __construct(){
 	
                 $deadBush = new DeadBush();
-		$deadBush->setBaseAmount(1);
- 		$deadBush->setRandomAmount(4);
 
 		$sugarCane = new SugarCane();
-		$sugarCane->setRandomAmount(20);
-		$sugarCane->setBaseAmount(3);
 
 		$this->addPopulator($deadBush);
 		$this->addPopulator($sugarCane);
