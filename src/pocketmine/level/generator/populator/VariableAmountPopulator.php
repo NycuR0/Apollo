@@ -41,3 +41,4 @@ abstract class VariableAmountPopulator extends Populator{
 	public function getRandomAmount() : int{
 		return $this->randomAmount;
 	}
+}
