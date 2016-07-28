@@ -21,22 +21,14 @@ class PlainBiome extends GrassyBiome{
 		parent::__construct();
 
 		$sugarcane = new SugarCane();
-		$sugarcane->setBaseAmount(6);
 		$tallGrass = new TallGrass();
-		$tallGrass->setBaseAmount(25);
 		$waterPit = new WaterPit();
-		$waterPit->setBaseAmount(10);
 		$populatorTallGrass = new PopulatorTallGrass();
-		$populatorTallGrass->setBaseAmount(25);
 		
 		$pumpkin = new Pumpkin();
-		$pumpkin->setBaseAmount(0);
-		$pumpkin->setRandomAmount(1);
 		$this->addPopulator($pumpkin);
 
 		$flower = new Flower();
-		$flower->setBaseAmount(0);
-		$flower->setRandomAmount(5);
 		$flower->addType([Block::DANDELION, 0]);
 		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_POPPY]);
 		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_AZURE_BLUET]);
