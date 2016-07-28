@@ -6,8 +6,8 @@ Test
 
 namespace pocketmine\level\generator\normal\biome;
 
-use pocketmine\level\generator\normal\populator\Cactus;
-use pocketmine\level\generator\normal\populator\DeadBush;
+use pocketmine\level\generator\populator\Cactus;
+use pocketmine\level\generator\populator\DeadBush;
 
 class BeachBiome extends SandyBiome{
 
