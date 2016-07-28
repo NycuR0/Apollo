@@ -25,7 +25,7 @@ use pocketmine\level\ChunkManager;
 use pocketmine\math\VectorMath;
 use pocketmine\utils\Random;
 
-class NetherOre{
+class NetherOre extends Object{
 	private $random;
 	public $type;
 
