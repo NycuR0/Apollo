@@ -22,6 +22,7 @@
 namespace pocketmine\level\generator\object;
 
 use pocketmine\block\Block;
+use pocketmine\level\generator\object\Object;
 
 class OreType extends Object{
 	public $material, $clusterCount, $clusterSize, $maxHeight, $minHeight;
