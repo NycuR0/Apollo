@@ -32,7 +32,7 @@ class Cactus extends VariableAmountPopulator{
 
 	public function populate(ChunkManager $level, $chunkX, $chunkZ, Random $random){
 		$this->level = $level;
-		$amount = $random->nextRange(0, $this->randomAmount + 1) + $this->baseAmount;
+		$amount = $this->getAmount($random);
 		for($i = 0; $i < $amount; ++$i){
 			$x = $random->nextRange($chunkX * 16, $chunkX * 16 + 15);
 			$z = $random->nextRange($chunkZ * 16, $chunkZ * 16 + 15);
