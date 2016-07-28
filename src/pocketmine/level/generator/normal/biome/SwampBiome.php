@@ -11,8 +11,8 @@ use pocketmine\block\Flower as FlowerBlock;
 use pocketmine\level\generator\populator\Flower;
 use pocketmine\level\generator\populator\LilyPad;
 use pocketmine\level\generator\populator\Tree;
-use pocketmine\level\generator\normal\populator\SugarCane;
-use pocketmine\level\generator\normal\populator\TallGrass;
+use pocketmine\level\generator\populator\SugarCane;
+use pocketmine\level\generator\populator\TallGrass;
 
 class SwampBiome extends GrassyBiome{
 
