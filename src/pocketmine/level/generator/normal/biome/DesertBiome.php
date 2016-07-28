@@ -22,8 +22,8 @@
 namespace pocketmine\level\generator\normal\biome;
 
 use pocketmine\block\Block;
-use pocketmine\level\generator\normal\populator\DeadBush;
-use pocketmine\level\generator\normal\populator\SugarCane;
+use pocketmine\level\generator\populator\DeadBush;
+use pocketmine\level\generator\populator\SugarCane;
 
 class DesertBiome extends SandyBiome{
 
