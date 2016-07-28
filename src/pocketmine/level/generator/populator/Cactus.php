@@ -24,20 +24,11 @@ namespace pocketmine\level\generator\populator;
 use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\utils\Random;
+use pocketmine\level\generator\populator\VariableAmountPopulator;
 
-class Cactus extends Populator{
+class Cactus extends VariableAmountPopulator{
 	/** @var ChunkManager */
 	private $level;
-	private $randomAmount;
-	private $baseAmount;
-
-	public function setRandomAmount($amount){
-		$this->randomAmount = $amount;
-	}
-
-	public function setBaseAmount($amount){
-		$this->baseAmount = $amount;
-	}
 
 	public function populate(ChunkManager $level, $chunkX, $chunkZ, Random $random){
 		$this->level = $level;
