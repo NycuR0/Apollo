@@ -16,10 +16,8 @@ class IcePlainsBiome extends SnowyBiome{
 		parent::__construct();
 
 		$tallGrass = new TallGrass();
-		$tallGrass->setBaseAmount(5);
 
 		$trees = new Tree(Sapling::SPRUCE);
-		$trees->setBaseAmount(1);
 		$this->addPopulator($trees);
 
 		$this->addPopulator($tallGrass);
