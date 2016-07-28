@@ -6,14 +6,14 @@ Test
 
 namespace pocketmine\level\generator\normal\biome;
 
-use pocketmine\level\generator\populator\Sugarcane;
+use pocketmine\level\generator\populator\SugarCane;
 
 class BeachBiome extends SandyBiome{
 
 	public function __construct(){
 		parent::__construct();
 
-		$sugarcane = new Sugarcane();
+		$sugarcane = new SugarCane();
 		$sugarcane->setBaseAmount(6);
 
 		$this->addPopulator($sugarcane);
