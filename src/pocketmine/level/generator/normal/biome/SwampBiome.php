@@ -20,23 +20,17 @@ class SwampBiome extends GrassyBiome{
 		parent::__construct();
 
 		$flower = new Flower();
-		$flower->setRandomAmount(3);
 		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_BLUE_ORCHID]);
 		$this->addPopulator($flower);
 
 		$lilypad = new LilyPad();
-		$lilypad->setBaseAmount(4);
 		$this->addPopulator($lilypad);
 		
 		$tallGrass = new TallGrass();
-		$tallGrass->setBaseAmount(1);
 		
 		$sugarCane = new SugarCane();
-		$sugarCane->setBaseAmount(2);
-		$sugarCane->setRandomAmount(15);
 		
 		$trees = new Tree();
-		$trees->setBaseAmount(3);
 		$this->addPopulator($trees);
 		$this->addPopulator($sugarCane);
 		$this->addPopulator($tallGrass);
