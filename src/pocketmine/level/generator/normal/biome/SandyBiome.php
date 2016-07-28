@@ -9,7 +9,7 @@ namespace pocketmine\level\generator\normal\biome;
 use pocketmine\block\Block;
 use pocketmine\level\generator\populator\Cactus;
 use pocketmine\level\generator\populator\DeadBush;
-use pocketmine\level\generator\populator\SugarCane;
+use pocketmine\level\generator\populator\Sugarcane;
 
 class SandyBiome extends GrassyBiome{
 
