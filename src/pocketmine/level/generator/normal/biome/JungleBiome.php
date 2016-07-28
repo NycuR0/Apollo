@@ -19,20 +19,13 @@ class JungleBiome extends GrassyBiome{
 		parent::__construct();
 
 		$sugarcane = new Sugarcane();
-		$sugarcane->setBaseAmount(6);
 		$tallGrass = new TallGrass();
-		$tallGrass->setBaseAmount(5);
 		$trees = new Tree(Sapling::JUNGLE);
-		$tallGrass->setBaseAmount(10);
 		
 		$melon = new Melon();
-		$melon->setBaseAmount(0);
-		$melon->setRandomAmount(1);
 		$this->addPopulator($melon);
 		
 		$cocoaBeans = new CocoaBeans();
-		$cocoaBeans->setBaseAmount(1);
-		$cocoaBeans->setRandomAmount(1);
 		$this->addPopulator($cocoaBeans);
 
 		$this->addPopulator($sugarcane);
