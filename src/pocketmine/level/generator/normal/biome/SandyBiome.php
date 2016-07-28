@@ -9,6 +9,7 @@ namespace pocketmine\level\generator\normal\biome;
 use pocketmine\block\Block;
 use pocketmine\level\generator\populator\Cactus;
 use pocketmine\level\generator\populator\DeadBush;
+use pocketmine\level\generator\populator\SugarCane;
 
 class SandyBiome extends GrassyBiome{
 
@@ -19,7 +20,9 @@ class SandyBiome extends GrassyBiome{
 		$cactus->setBaseAmount(1);
 		$deadBush = new DeadBush();
 		$deadBush->setBaseAmount(1);
-
+		$sugarcane = new Sugarcane();
+		$sugarcane->setBaseAmount(6);
+                $this->addPopulator($sugarcane);
 		$this->addPopulator($cactus);
 		$this->addPopulator($deadBush);
 
