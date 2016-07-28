@@ -26,6 +26,7 @@ use pocketmine\level\ChunkManager;
 use pocketmine\math\Vector3 as Vector3;
 use pocketmine\utils\Random;
 use pocketmine\level\generator\object\Object;
+use pocketmine\block\DoublePlant;
 
 class TallGrass extends Object{
 	public static function growGrass(ChunkManager $level, Vector3 $pos, Random $random, $count = 15, $radius = 10){
@@ -35,7 +36,8 @@ class TallGrass extends Object{
 			[Block::TALL_GRASS, 1],
 			[Block::TALL_GRASS, 1],
 			[Block::TALL_GRASS, 1],
-			[Block::TALL_GRASS, 1]
+			[Block::TALL_GRASS, 1],
+			[Block::DOUBLE_PLANT, 0]
 		];
 		$arrC = count($arr) - 1;
 		for($c = 0; $c < $count; ++$c){
