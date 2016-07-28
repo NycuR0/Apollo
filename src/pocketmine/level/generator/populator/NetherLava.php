@@ -23,7 +23,6 @@ namespace pocketmine\level\generator\populator;
 
 use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
-use pocketmine\level\generator\populator\VariableAmountPopulator;
 use pocketmine\utils\Random;
 
 class NetherLava extends VariableAmountPopulator{
