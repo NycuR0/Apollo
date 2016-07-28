@@ -12,7 +12,6 @@ class FrozenRiverBiome extends SnowyBiome{
 		parent::__construct();
 
 		$trees = new Tree(Sapling::SPRUCE);
-		$trees->setRandomAmount(1);
 		$this->addPopulator($trees);
 		
 		$this->temperature = 0.0;
