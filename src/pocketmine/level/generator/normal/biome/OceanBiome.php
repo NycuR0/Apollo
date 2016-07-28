@@ -15,9 +15,7 @@ class OceanBiome extends WateryBiome{
 		parent::__construct();
 
 		$sugarcane = new SugarCane();
-		$sugarcane->setBaseAmount(6);
 		$tallGrass = new TallGrass();
-		$tallGrass->setBaseAmount(5);
 
 		$this->addPopulator($sugarcane);
 		$this->addPopulator($tallGrass);
