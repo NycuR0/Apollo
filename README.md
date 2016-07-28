@@ -6,6 +6,7 @@ Note: You may **not** copy our generator and updater without NycuRO's permission
 # Problems
 
 Please download phar from here : https://www.mediafire.com/?ddl6y928dh4ezk3
+
 Currently Apollo have one bug on generation and server get crash. You can use this version for evitate problem :)
 
 **TravisCI Build Status: Master Branch** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=master)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
