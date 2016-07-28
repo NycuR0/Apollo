@@ -9,6 +9,12 @@ Note: You may **not** copy our generator and updater without NycuRO's permission
 
 **CircleCI Build Status** [![Build Status](https://circleci.com/gh/NycuRO/Apollo.svg?style=shield)](https://circleci.com/gh/NycuRO/Apollo "CircleCI Build Status")
 
+
+## Thanks
+
+Thanks Genisys , ClearSky and PocketMine for code :)
+
+
 ## Features
 
 - Worlds: Generator has been improved and more biomes
