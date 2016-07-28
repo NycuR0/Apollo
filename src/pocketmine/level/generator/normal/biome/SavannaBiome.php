@@ -12,11 +12,8 @@ class SavannaBiome extends GrassyBiome{
 	public function __construct(){
 		parent::__construct();
 		$sugarcane = new Sugarcane();
-		$sugarcane->setBaseAmount(6);
 		$tallGrass = new TallGrass();
-		$tallGrass->setBaseAmount(25);
 		$trees = new Tree(Sapling::ACACIA);
-		$tallGrass->setBaseAmount(4);
 		$this->addPopulator($sugarcane);
 		$this->addPopulator($tallGrass);
 		$this->addPopulator($trees);
