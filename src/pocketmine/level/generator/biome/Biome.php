@@ -209,7 +209,16 @@ Mountains and Small Mountains is not principal biomes. Fix in future
 	}
 
 	public function addPopulator(Populator $populator){
-		$this->populators[] = $populator;
+		$class = new \ReflectionClass($populator);
+		$this->populators[$class->getShortName()] = $populator;
+	}
+
+	public function removePopulator(Populator $populator){
+		$class = new \ReflectionClass($populator);
+		$name = $class->getShortName();
+		if(isset($this->populators[$name])){
+			unset($this->populators[$name]);
+		}
 	}
 
 	public function populateChunk(ChunkManager $level, $chunkX, $chunkZ, Random $random){
