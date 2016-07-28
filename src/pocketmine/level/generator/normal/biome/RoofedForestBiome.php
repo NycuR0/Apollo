@@ -13,14 +13,9 @@ class RoofedForestBiome extends GrassyBiome{
 	public function __construct(){
 		parent::__construct();
 		$sugarcane = new Sugarcane();
-		$sugarcane->setBaseAmount(6);
-		$tallGrass = new TallGrass(9);
-		$tallGrass->setBaseAmount(1);
+		$tallGrass = new TallGrass();
 		$trees = new Tree(Sapling::DARK_OAK);
-		$tallGrass->setBaseAmount(9);
 		$flower = new Flower();
-		$flower->setBaseAmount(0);
-		$flower->setRandomAmount(5);
 		$flower->addType([Block::DANDELION, 0]);
 		$this->addPopulator($flower);
 		$this->addPopulator($sugarcane);
