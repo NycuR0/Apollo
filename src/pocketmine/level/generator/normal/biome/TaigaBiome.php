@@ -20,21 +20,15 @@ class TaigaBiome extends GrassyBiome{
 		parent::__construct();
 
 		$trees = new Tree(Sapling::SPRUCE);
-		$trees->setBaseAmount(5);
 		$this->addPopulator($trees);
 		
 		$tallGrass = new TallGrass();
-		$tallGrass->setBaseAmount(5);
 		$this->addPopulator($tallGrass);
 		
 		$pumpkin = new Pumpkin();
-		$pumpkin->setBaseAmount(0);
-		$pumpkin->setRandomAmount(1);
 		$this->addPopulator($pumpkin);
 		
 		$flower = new Flower();
-		$flower->setBaseAmount(0);
-		$flower->setRandomAmount(5);
 		$flower->addType([Block::DANDELION, 0]);
 		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_POPPY]);
 		$this->addPopulator($flower);
