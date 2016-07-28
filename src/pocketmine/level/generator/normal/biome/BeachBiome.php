@@ -17,7 +17,6 @@ class BeachBiome extends SandyBiome{
 		$this->removePopulator(new Cactus());
 		$this->removePopulator(new DeadBush());
 
-		$this->addPopulator($sugarcane);
 		$this->temperature = 0.80;
 		$this->rainfall = 0.00;
 
