@@ -12,7 +12,7 @@ use pocketmine\level\generator\populator\PopulatorTallGrass;
 use pocketmine\block\Block;
 use pocketmine\block\Flower as FlowerBlock;
 use pocketmine\level\generator\populator\Flower;
-use pocketmine\level\generator\populator\Sugarcane;
+use pocketmine\level\generator\populator\SugarCane;
 use pocketmine\level\generator\populator\Pumpkin;
 
 class PlainBiome extends GrassyBiome{
@@ -20,7 +20,7 @@ class PlainBiome extends GrassyBiome{
 	public function __construct(){
 		parent::__construct();
 
-		$sugarcane = new Sugarcane();
+		$sugarcane = new SugarCane();
 		$sugarcane->setBaseAmount(6);
 		$tallGrass = new TallGrass();
 		$tallGrass->setBaseAmount(25);
