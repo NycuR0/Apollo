@@ -43,7 +43,6 @@ class DesertBiome extends SandyBiome{
 
 		$this->temperature = 2.00;
 		$this->rainfall = 0.00;
-	}
 		$this->setGroundCover([
 			Block::get(Block::SAND, 0),
 			Block::get(Block::SAND, 0),
