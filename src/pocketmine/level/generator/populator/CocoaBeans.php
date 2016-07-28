@@ -10,12 +10,7 @@ use pocketmine\level\generator\populator\VariableAmountPopulator;
 class CocoaBeans extends VariableAmountPopulator{
 	/** @var ChunkManager */
 	private $level;
-	public function setRandomAmount($amount){
-		$this->randomAmount = $amount;
-	}
-	public function setBaseAmount($amount){
-		$this->baseAmount = $amount;
-	}
+
 	public function populate(ChunkManager $level, $chunkX, $chunkZ, Random $random){
 		$this->level = $level;
 		$amount = $this->getAmount($random);
