@@ -24,7 +24,6 @@ namespace synapse;
 use pocketmine\Server;
 use pocketmine\utils\MainLogger;
 use pocketmine\utils\Utils;
-use synapse\network\protocol\spp\BroadcastPacket;
 use synapse\network\protocol\spp\ConnectPacket;
 use synapse\network\protocol\spp\DataPacket;
 use synapse\network\protocol\spp\DisconnectPacket;
@@ -66,7 +65,6 @@ class Synapse{
 		]
 	 */
 	private $description;
-	private $connectionTime = PHP_INT_MAX;
 
 	public function __construct(Server $server, array $config){
 		self::$obj = $this;
@@ -131,7 +129,6 @@ class Synapse{
 		$pk->maxPlayers = $this->server->getMaxPlayers();
 		$pk->protocol = Info::CURRENT_PROTOCOL;
 		$this->sendDataPacket($pk);
-		$this->connectionTime = microtime(true);
 	}
 
 	public function tick(){
@@ -147,9 +144,6 @@ class Synapse{
 		if(((($time = microtime(true)) - $this->lastUpdate) >= 30) and $this->interface->isConnected()){//30 seconds timeout
 			$this->interface->reconnect();
 		}
-		if(microtime(true) - $this->connectionTime >= 15 and !$this->verified){
-			$this->interface->reconnect();
-		}
 	}
 
 	public function getServerIp() : string{
@@ -163,17 +157,6 @@ class Synapse{
 	public function isMainServer() : bool{
 		return $this->isMainServer;
 	}
-
- 	public function broadcastPacket(array $players, DataPacket $packet, $direct = false){
- 		$packet->encode();
-		$pk = new BroadcastPacket();
- 		$pk->direct = $direct;
-		$pk->payload = $packet->getBuffer();
- 		foreach($players as $player){
-			$pk->entries[] = $player->getUniqueId();
- 		}
- 		$this->sendDataPacket($pk);
- 	}
 
 	public function getLogger(){
 		return $this->logger;
@@ -232,7 +215,7 @@ class Synapse{
 						}
 					break;
 					case InformationPacket::TYPE_CLIENT_DATA:
-						$this->clientData = json_decode($pk->message, true)["clientList"];
+						$this->clientData = json_decode($pk->message, true);
 						$this->lastRecvInfo = microtime();
 						break;
 				}

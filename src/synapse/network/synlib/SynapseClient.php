@@ -4,7 +4,7 @@ namespace synapse\network\synlib;
 use pocketmine\Thread;
 
 class SynapseClient extends Thread{
-	const VERSION = "0.2.0";
+	const VERSION = "0.1.1";
 
 	/** @var \ThreadedLogger */
 	private $logger;
@@ -180,10 +180,6 @@ class SynapseClient extends Thread{
 
 	public function pushThreadToMainPacket($str){
 		$this->externalQueue[] = $str;
-	}
-
-	public function getInternalQueueSize(){
-		return count($this->internalQueue);
 	}
 
 	public function readThreadToMainPacket(){
