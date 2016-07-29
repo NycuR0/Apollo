@@ -23,22 +23,22 @@ abstract class VariableAmountPopulator extends Populator{
 	protected $baseAmount;
 	protected $randomAmount;
 	public function __construct(int $baseAmount = 0, int $randomAmount = 0){
-		$this->baseAmount = $baseAmount;
-		$this->randomAmount = $randomAmount;
+		$this->baseAmount = $baseAmount($random);
+		$this->randomAmount = $randomAmount($random);
 	}
 	public function getAmount(Random $random){
 		return $this->getAmount($random);
 	}
 	public final function setBaseAmount(int $baseAmount){
-		$this->baseAmount = $baseAmount;
+		$this->baseAmount = $baseAmount($random);
 	}
 	public final function setRandomAmount(int $randomAmount){
-		$this->randomAmount = $randomAmount;
+		$this->randomAmount = $randomAmount($random);
 	}
 	public function getBaseAmount() : int{
-		return $this->baseAmount;
+		return $this->baseAmount($random);
 	}
 	public function getRandomAmount() : int{
-		return $this->randomAmount;
+		return $this->randomAmount($random);
 	}
 }
