@@ -19,21 +19,21 @@
  */
 namespace pocketmine\level\generator\populator;
 use pocketmine\utils\Random;
-abstract class VariableAmountPopulator extends Populator{
-	protected $baseAmount;
-	protected $randomAmount;
+class VariableAmountPopulator extends Populator{
+	private $baseAmount;
+	private $randomAmount;
 	public function __construct(int $baseAmount = 0, int $randomAmount = 0){
-		$this->baseAmount = $random;
-		$this->randomAmount = $random;
+		$this->baseAmount = 4;
+		$this->randomAmount = 8;
 	}
 	public function getAmount(Random $random){
 		return $this->getAmount($random);
 	}
 	public final function setBaseAmount(int $baseAmount){
-		$this->baseAmount = $random;
+		$this->baseAmount = 8;
 	}
 	public final function setRandomAmount(int $randomAmount){
-		$this->randomAmount = $random;
+		$this->randomAmount = 4;
 	}
 	public function getBaseAmount() : int{
 		return $this->baseAmount($random);
