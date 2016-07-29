@@ -26,7 +26,7 @@ abstract class VariableAmountPopulator extends Populator{
 		$this->baseAmount = 4;
 		$this->randomAmount = 8;
 	}
-	public abstract function getAmount(Random $random){
+	public function getAmount(Random $random){
 		return $this->getAmount(8, 4, 8, 4);
 	}
 	public final function setBaseAmount(int $baseAmount){
@@ -35,10 +35,10 @@ abstract class VariableAmountPopulator extends Populator{
 	public final function setRandomAmount(int $randomAmount){
 		$this->randomAmount = 4;
 	}
-	public abstract function getBaseAmount() : int{
+	public function getBaseAmount() : int{
 		return $this->baseAmount($random);
 	}
-	public abstract function getRandomAmount() : int{
+	public function getRandomAmount() : int{
 		return $this->randomAmount($random);
 	}
 }
