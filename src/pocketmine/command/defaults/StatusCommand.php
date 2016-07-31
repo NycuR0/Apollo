@@ -74,7 +74,7 @@ class StatusCommand extends VanillaCommand{
 		$sender->sendMessage(TextFormat::GOLD . "%pocketmine.command.status.AverageTPS " . $tpsColor . $server->getTicksPerSecondAverage() . " (" . $server->getTickUsageAverage() . "%)");
 		$sender->sendMessage(TextFormat::GOLD . "%pocketmine.command.status.CurrentTPS " . $tpsColour . $server->getTicksPerSecond() . " (" . $server->getTickUsage() . "%)");
 
-		$sender->sendMessage(TextFormat::GOLD . "%pocketmine.command.status.Networkupload " . TextFormat:GREEN . \round($server->getNetwork()->getUpload() / 1024, 2) . " kB/s");
+		$sender->sendMessage(TextFormat::GOLD . "%pocketmine.command.status.Networkupload " . TextFormat::GREEN . \round($server->getNetwork()->getUpload() / 1024, 2) . " kB/s");
 		$sender->sendMessage(TextFormat::GOLD . "%pocketmine.command.status.Networkdownload " . TextFormat::GREEN . \round($server->getNetwork()->getDownload() / 1024, 2) . " kB/s");
 
 		$sender->sendMessage(TextFormat::GOLD . "%pocketmine.command.status.Threadcount " . TextFormat::RED . Utils::getThreadCount());
