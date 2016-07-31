@@ -90,9 +90,9 @@ class StatusCommand extends VanillaCommand{
 		}
 		foreach($server->getLevels() as $level){
 			$sender->sendMessage(TextFormat::GOLD . "%pocketmine.command.status.World \"" . $level->getFolderName() . "\"" . ($level->getFolderName() !== $level->getName() ? " (" . $level->getName() . ")" : "") . ": " .
-				TextFormat::GOLD . number_format(count($level->getChunks())) . TextFormat::GREEN . " %pocketmine.command.status.chunks " .
-				TextFormat::GOLD . number_format(count($level->getEntities())) . TextFormat::GREEN . " %pocketmine.command.status.entities " .
-				TextFormat::GOLD . number_format(count($level->getTiles())) . TextFormat::GREEN . " %pocketmine.command.status.tiles " .
+				TextFormat::RED . number_format(count($level->getChunks())) . TextFormat::GREEN . " %pocketmine.command.status.chunks " .
+				TextFormat::RED . number_format(count($level->getEntities())) . TextFormat::GREEN . " %pocketmine.command.status.entities " .
+				TextFormat::RED . number_format(count($level->getTiles())) . TextFormat::GREEN . " %pocketmine.command.status.tiles " .
 				"%pocketmine.command.status.Time " . (($level->getTickRate() > 1 or $level->getTickRateTime() > 40) ? TextFormat::RED : TextFormat::YELLOW) . round($level->getTickRateTime(), 2) . "%pocketmine.command.status.ms" . ($level->getTickRate() > 1 ? " (tick rate " . $level->getTickRate() . ")" : "")
 			);
 		}
