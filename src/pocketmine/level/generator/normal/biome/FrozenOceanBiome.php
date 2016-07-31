@@ -8,7 +8,7 @@ namespace pocketmine\level\generator\normal\biome;
 
 use pocketmine\block\Block;
 
-class FrozenOceanBiome extends WateryBiome{
+class FrozenOceanBiome extends OceanBiome{
 
 	public function __construct(){
 		$this->setGroundCover([
