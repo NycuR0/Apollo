@@ -24,7 +24,7 @@ class MakeServerCommand extends VanillaCommand{
 		}
 
 		$server = $sender->getServer();
-		$pharPath = Server::getInstance()->getPluginPath() . DIRECTORY_SEPARATOR . "Genisys" . DIRECTORY_SEPARATOR . $server->getName() . "_" . $server->getPocketMineVersion() . ".phar";
+		$pharPath = Server::getInstance()->getPluginPath() . DIRECTORY_SEPARATOR . "Apollo-DevTools" . DIRECTORY_SEPARATOR . $server->getName() . "_" . $server->getPocketMineVersion() . ".phar";
 		if(file_exists($pharPath)){
 			$sender->sendMessage("Phar file already exists, overwriting...");
 			@unlink($pharPath);
@@ -34,7 +34,6 @@ class MakeServerCommand extends VanillaCommand{
 			"name" => $server->getName(),
 			"version" => $server->getPocketMineVersion(),
 			"api" => $server->getApiVersion(),
-			"geniapi" => $server->getGeniApiVersion(),
 			"minecraft" => $server->getVersion(),
 			"protocol" => Info::CURRENT_PROTOCOL,
 			"creator" => "Apollo MakeServerCommand",
