@@ -38,7 +38,7 @@ class InactiveRedstoneLamp extends ActiveRedstoneLamp{
 
 	public function turnOn(){
 		//if($isLightedByAround){
-		$this->getLevel()->setBlock($this, new ActiveRedstoneLamp(), true, false);
+		$this->getLevel()->setBlock($this, new ActiveRedstoneLamp(), true, true);
 		/*}else{
 			$this->getLevel()->setBlock($this, new ActiveRedstoneLamp(), true, false);
 			//$this->lightAround();
