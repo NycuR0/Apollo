@@ -30,11 +30,11 @@ use pocketmine\nbt\tag\StringTag;
 use pocketmine\Player;
 use pocketmine\tile\Furnace as FurnaceTile;
 use pocketmine\tile\Tile;
- 
+
 class Furnace extends Solid{
 
 	protected $id = self::FURNACE;
-	
+
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
@@ -42,7 +42,6 @@ class Furnace extends Solid{
 	public function getName() : string{
 		return "Furnace";
 	}
-	
 	
 	public function canBeActivated() : bool {
 		return true;
@@ -130,6 +129,6 @@ class Furnace extends Solid{
 			$drops[] = [Item::FURNACE, 0, 1];
 		}
 
-		return $drops
+		return $drops;
 	}
 }
