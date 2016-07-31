@@ -15,7 +15,11 @@ class MesaBiome extends SandyBiome{
 		parent::__construct();
 		
 		$cactus = new Cactus();
+		$cactus->setBaseAmount(0);
+		$cactus->setRandomAmount(2);
 		$deadBush = new DeadBush();
+		$cactus->setBaseAmount(2);
+		$deadBush->setRandomAmount(5);
 
 		$this->addPopulator($cactus);
 		$this->addPopulator($deadBush);
