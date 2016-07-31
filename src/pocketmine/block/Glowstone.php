@@ -25,7 +25,7 @@ use pocketmine\item\Item;
 use pocketmine\item\Tool;
 use pocketmine\item\enchantment\enchantment;
 
-class Glowstone extends Transparent{
+class Glowstone extends Transparent implements SolidLight{
 
 	protected $id = self::GLOWSTONE_BLOCK;
 
