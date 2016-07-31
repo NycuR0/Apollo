@@ -14,8 +14,8 @@ class BeachBiome extends SandyBiome{
 	public function __construct(){
 		parent::__construct();
 
-		$this->removePopulator(new Cactus());
-		$this->removePopulator(new DeadBush());
+		$this->removePopulator(Cactus::class)
+		$this->removePopulator(DeadBush::class)
 
 		$this->temperature = 0.80;
 		$this->rainfall = 0.00;
