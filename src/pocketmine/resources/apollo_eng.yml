@@ -2,7 +2,7 @@
 
 #Version of this file
 config:
- version: 17
+ version: 18
 
 level:
  #Set if turn on the weather system
