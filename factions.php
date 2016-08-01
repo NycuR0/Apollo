@@ -26,7 +26,7 @@ class FactionListener implements Listener {
 		$this->plugin = $pg;
 	}
 	
-	public function factionChat(PlayerChatEvent $PCE) {
+	/*public function factionChat(PlayerChatEvent $PCE) {
 		
 		$player = strtolower($PCE->getPlayer()->getName());
 		//MOTD Check
@@ -101,7 +101,7 @@ class FactionListener implements Listener {
 			$player = $PCE->getPlayer()->getName();
 			$PCE->setFormat(TextFormat::ITALIC.TextFormat::GREEN."<$player> ".TextFormat::WHITE."$message");
 		}
-	}
+	}*/
 	
 	public function factionPVP(EntityDamageEvent $factionDamage) {
 		if($factionDamage instanceof EntityDamageByEntityEvent) {
