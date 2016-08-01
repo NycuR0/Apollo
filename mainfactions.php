@@ -21,7 +21,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\command\Command;
 use pocketmine\event\Listener;
 use pocketmine\event\block\BlockBreakEvent;
-use pocketmine\event\player\PlayerChatEvent;
+//use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\Player;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\utils\TextFormat;
