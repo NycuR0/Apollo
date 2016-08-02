@@ -24,7 +24,15 @@ settings:
  #Set this approximately to your number of cores.
  #If set to auto, it'll try to detect the number of cores (or use 2)
  async-workers: auto
-
+  incompatible-plugins:		
+  plugin-too-new:		
+  #Load plugins whose major API version is too new		
+  major: false		
+  #Load plugins whose minor API version is too new		
+  minor: false		
+  #Load plugins whose major API version is too old		
+  plugin-too-old: true		
+  
 memory:
  #Global soft memory limit in megabytes. Set to 0 to disable
  #This will trigger low-memory-triggers and fire an event to free memory when the usage goes over this
