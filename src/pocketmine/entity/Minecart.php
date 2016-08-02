@@ -1,4 +1,24 @@
 <?php
+
+/*
+ *
+ *  _____   _____   __   _   _   _____  __    __  _____
+ * /  ___| | ____| |  \ | | | | /  ___/ \ \  / / /  ___/
+ * | |     | |__   |   \| | | | | |___   \ \/ /  | |___
+ * | |  _  |  __|  | |\   | | | \___  \   \  /   \___  \
+ * | |_| | | |___  | | \  | | |  ___| |   / /     ___| |
+ * \_____/ |_____| |_|  \_| |_| /_____/  /_/     /_____/
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author iTX Technologies
+ * @link https://itxtech.org
+ *
+ */
+
 namespace pocketmine\entity;
 
 use pocketmine\block\Block;
@@ -12,7 +32,6 @@ use pocketmine\math\Math;
 use pocketmine\math\Vector3;
 
 class Minecart extends Vehicle{
-
 	const NETWORK_ID = 84;
 
 	const TYPE_NORMAL = 1;
@@ -32,7 +51,6 @@ class Minecart extends Vehicle{
 
 	public $isMoving = false;
 	public $moveSpeed = 0.4;
-	public $isLinked = false;
 	
 	private $onRail = Minecart::STATE_INITIAL;
 	private $direction = -1;
@@ -53,14 +71,14 @@ class Minecart extends Vehicle{
 		parent::initEntity();
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Minecart";
 	}
 
-	public function getType(){
+	public function getType() : int{
 		return self::TYPE_NORMAL;
 	}
-	
+
 	public function onUpdate($currentTick){
 		if($this->closed !== false){
 			return false;
@@ -79,10 +97,10 @@ class Minecart extends Vehicle{
 		//parent::onUpdate($currentTick);
 
 		if($this->isAlive()){
-			$movingType = $this->getLevel()->getServer()->getProperty("minecart-moving-type", 0);
+			$movingType = $this->getLevel()->getServer()->minecartMovingType;
 			if($movingType == -1) return false;
 			elseif($movingType == 0){
-				$p = $this->getlinkedTarget();
+				$p = $this->getLinkedEntity();
 				if($p instanceof Player){
 					$this->motionX = -sin($p->getYaw() / 180 * M_PI);
 					$this->motionZ = cos($p->getYaw() / 180 * M_PI);
@@ -113,7 +131,7 @@ class Minecart extends Vehicle{
 					$this->motionY *= -0.5;
 				}
 			}elseif($movingType == 1){
-				$p = $this->getlinkedTarget();
+				$p = $this->getLinkedEntity();
 				if($p instanceof Player){
 					if ($this->state == Minecart::STATE_INITIAL) {
 						$this->checkIfOnRail();
@@ -130,9 +148,10 @@ class Minecart extends Vehicle{
 		return $hasUpdate or ! $this->onGround or abs ( $this->motionX ) > 0.00001 or abs ( $this->motionY ) > 0.00001 or abs ( $this->motionZ ) > 0.00001;
 	}
 	
+	
 	/**
-	* Check if minecart is currently on a rail and if so center the cart.
-	*/
+	 * Check if minecart is currently on a rail and if so center the cart.
+	 */
 	private function checkIfOnRail() {
 		$rail = $this->level->getBlock($this->temporalVector->setComponents($this->x, $this->y - 1, $this->z));
 		if ($rail != null && in_array($rail->getId(), [Block::RAIL, Block::ACTIVATOR_RAIL, Block::DETECTOR_RAIL, Block::POWERED_RAIL])) {
@@ -145,11 +164,11 @@ class Minecart extends Vehicle{
 	}
 	
 	/**
-	* Attempt to move forward on rail given the direction the cart is already moving, or if not moving based
-	* on the direction the player is looking.
-	* @param Player $player Player riding the minecart.
-	* @return boolean True if minecart moved, false otherwise.
-	*/
+	 * Attempt to move forward on rail given the direction the cart is already moving, or if not moving based
+	 * on the direction the player is looking.
+	 * @param Player $player Player riding the minecart.
+	 * @return boolean True if minecart moved, false otherwise.
+	 */
 	private function forwardOnRail(Player $player) {
 		if ($this->direction == -1) {
 			$candidateDirection = $player->getDirection();			
@@ -169,152 +188,152 @@ class Minecart extends Vehicle{
 	}
 	
 	/**
-	* Determine the direction the minecart should move based on the candidate direction (current direction
-	* minecart is moving, or the direction the player is looking) and the type of rail that the minecart is
-	* on.
-	* @param RailType $railType Type of rail the minecart is on. 
-	* @param Direction $candidateDirection Direction minecart already moving, or direction player looking.
-	* @return Direction The direction the minecart should move.
-	*/
+	 * Determine the direction the minecart should move based on the candidate direction (current direction
+	 * minecart is moving, or the direction the player is looking) and the type of rail that the minecart is
+	 * on.
+	 * @param RailType $railType Type of rail the minecart is on. 
+	 * @param Direction $candidateDirection Direction minecart already moving, or direction player looking.
+	 * @return Direction The direction the minecart should move.
+	 */
 	private function getDirectionToMove($railType, $candidateDirection) {
 		switch ($railType) {
 			case Rail::STRAIGHT_NORTH_SOUTH :
-			switch ($candidateDirection) {
-				case Entity::NORTH :
-				case Entity::SOUTH :
-				return $candidateDirection;
-			}
-			break;
+				switch ($candidateDirection) {
+					case Entity::NORTH :
+					case Entity::SOUTH :
+						return $candidateDirection;
+				}
+				break;
 			case Rail::STRAIGHT_EAST_WEST :
-			switch ($candidateDirection) {
-				case Entity::WEST :
-				case Entity::EAST :
-				return $candidateDirection;
-			}
-			break;
+				switch ($candidateDirection) {
+					case Entity::WEST :
+					case Entity::EAST :
+						return $candidateDirection;
+				}
+				break;
 			case Rail::SLOPED_ASCENDING_EAST :
-			switch ($candidateDirection) {
-				case Entity::WEST :
-				case Entity::EAST :
-				return $candidateDirection;
-			}
-			break;
+				switch ($candidateDirection) {
+					case Entity::WEST :
+					case Entity::EAST :
+						return $candidateDirection;
+				}
+				break;
 			case Rail::SLOPED_ASCENDING_WEST :
-			switch ($candidateDirection) {
-				case Entity::WEST :
-				case Entity::EAST :
-				return $candidateDirection;
-			}
-			break;
+				switch ($candidateDirection) {
+					case Entity::WEST :
+					case Entity::EAST :
+						return $candidateDirection;
+				}
+				break;
 			case Rail::SLOPED_ASCENDING_NORTH :
-			switch ($candidateDirection) {
-				case Entity::NORTH :
-				case Entity::SOUTH :
-				return $candidateDirection;
-			}
-			break;
+				switch ($candidateDirection) {
+					case Entity::NORTH :
+					case Entity::SOUTH :
+						return $candidateDirection;
+				}
+				break;
 			case Rail::SLOPED_ASCENDING_SOUTH :
-			switch ($candidateDirection) {
-				case Entity::NORTH :
-				case Entity::SOUTH :
-				return $candidateDirection;
-			}
-			break;
+				switch ($candidateDirection) {
+					case Entity::NORTH :
+					case Entity::SOUTH :
+						return $candidateDirection;
+				}
+				break;
 			case Rail::CURVED_SOUTH_EAST :
-			switch ($candidateDirection) {
-				case Entity::SOUTH :
-				case Entity::EAST :
-				return $candidateDirection;
-				case Entity::NORTH :
-				return $this->checkForTurn($candidateDirection, Entity::EAST);
-				case Entity::WEST :
-				return $this->checkForTurn($candidateDirection, Entity::SOUTH);
-			}
-			break;
+				switch ($candidateDirection) {
+					case Entity::SOUTH :
+					case Entity::EAST :
+						return $candidateDirection;
+					case Entity::NORTH :
+						return $this->checkForTurn($candidateDirection, Entity::EAST);
+					case Entity::WEST :
+						return $this->checkForTurn($candidateDirection, Entity::SOUTH);
+				}
+				break;
 			case Rail::CURVED_SOUTH_WEST :
-			switch ($candidateDirection) {
-				case Entity::SOUTH :
-				case Entity::WEST :
-				return $candidateDirection;
-				case Entity::NORTH :
-				return $this->checkForTurn($candidateDirection, Entity::WEST);
-				case Entity::EAST :
-				return $this->checkForTurn($candidateDirection, Entity::SOUTH);
-			}
-			break;
+				switch ($candidateDirection) {
+					case Entity::SOUTH :
+					case Entity::WEST :
+						return $candidateDirection;
+					case Entity::NORTH :
+						return $this->checkForTurn($candidateDirection, Entity::WEST);
+					case Entity::EAST :
+						return $this->checkForTurn($candidateDirection, Entity::SOUTH);
+				}
+				break;
 			case Rail::CURVED_NORTH_WEST :
-			switch ($candidateDirection) {
-				case Entity::NORTH :
-				case Entity::WEST :
-				return $candidateDirection;
-				case Entity::SOUTH :
-				return $this->checkForTurn($candidateDirection, Entity::WEST);
-				case Entity::EAST :
-				return $this->checkForTurn($candidateDirection, Entity::NORTH);
+				switch ($candidateDirection) {
+					case Entity::NORTH :
+					case Entity::WEST :
+						return $candidateDirection;
+					case Entity::SOUTH :
+						return $this->checkForTurn($candidateDirection, Entity::WEST);
+					case Entity::EAST :
+						return $this->checkForTurn($candidateDirection, Entity::NORTH);
 
-			}
-			break;
+				}
+				break;
 			case Rail::CURVED_NORTH_EAST :
-			switch ($candidateDirection) {
-				case Entity::NORTH :
-				case Entity::EAST :
-				return $candidateDirection;
-				case Entity::SOUTH :
-				return $this->checkForTurn($candidateDirection, Entity::EAST);
-				case Entity::WEST :
-				return $this->checkForTurn($candidateDirection, Entity::NORTH);
-			}
-			break;
+				switch ($candidateDirection) {
+					case Entity::NORTH :
+					case Entity::EAST :
+						return $candidateDirection;
+					case Entity::SOUTH :
+						return $this->checkForTurn($candidateDirection, Entity::EAST);
+					case Entity::WEST :
+						return $this->checkForTurn($candidateDirection, Entity::NORTH);
+				}
+				break;
 		}
 		return -1;
 	}
 	
 	/**
-	* Need to alter direction on curves halfway through the turn and reset the minecart to be in the middle of
-	* the rail again so as not to collide with nearby blocks.
-	* @param Direction $currentDirection Direction minecart currently moving
-	* @param Direction $newDirection Direction minecart should turn once has hit the halfway point.
-	* @return Direction Either the current direction or the new direction depending on haw far across the rail the 
-	* minecart is.
-	*/
+	 * Need to alter direction on curves halfway through the turn and reset the minecart to be in the middle of
+	 * the rail again so as not to collide with nearby blocks.
+	 * @param Direction $currentDirection Direction minecart currently moving
+	 * @param Direction $newDirection Direction minecart should turn once has hit the halfway point.
+	 * @return Direction Either the current direction or the new direction depending on haw far across the rail the 
+	 * minecart is.
+	 */
 	private function checkForTurn($currentDirection, $newDirection) {
 		switch($currentDirection) {
 			case Entity::NORTH:
-			$diff = $this->x - $this->getFloorX();
-			if ($diff != 0 && $diff <= .5) {
-				$this->x = $this->getFloorX() + .5;
-				return $newDirection;
-			}
-			break;
+				$diff = $this->x - $this->getFloorX();
+				if ($diff != 0 && $diff <= .5) {
+					$this->x = $this->getFloorX() + .5;
+					return $newDirection;
+				}
+				break;
 			case Entity::SOUTH:
-			$diff = $this->x - $this->getFloorX();
-			if ($diff != 0 && $diff >= .5) {
-				$this->x = $this->getFloorX() + .5;
-				return $newDirection;
-			}
-			break;
+				$diff = $this->x - $this->getFloorX();
+				if ($diff != 0 && $diff >= .5) {
+					$this->x = $this->getFloorX() + .5;
+					return $newDirection;
+				}
+				break;
 			case Entity::EAST:
-			$diff = $this->z - $this->getFloorZ();
-			if ($diff != 0 && $diff <= .5) {
-				$this->z = $this->getFloorZ() + .5;
-				return $newDirection;
-			}
-			break;
+				$diff = $this->z - $this->getFloorZ();
+				if ($diff != 0 && $diff <= .5) {
+					$this->z = $this->getFloorZ() + .5;
+					return $newDirection;
+				}
+				break;
 			case Entity::WEST:
-			$diff = $this->z - $this->getFloorZ();
-			if ($diff != 0 && $diff >= .5) {
-				$this->z = $this->getFloorZ() + .5;
-				return $newDirection;
-			}
-			break;
+				$diff = $this->z - $this->getFloorZ();
+				if ($diff != 0 && $diff >= .5) {
+					$this->z = $this->getFloorZ() + .5;
+					return $newDirection;
+				}
+				break;
 		}
 		return $currentDirection; // Keep going noth until half way.
 	}
 	
 	/**
-	* Move the minecart as long as it will still be moving on to another piece of rail.
-	* @return boolean True if the minecart moved.
-	*/
+	 * Move the minecart as long as it will still be moving on to another piece of rail.
+	 * @return boolean True if the minecart moved.
+	 */
 	private function moveIfRail() {
 		$nextMoveVector = $this->moveVector[$this->direction];
 		$nextMoveVector = $nextMoveVector->multiply($this->moveSpeed);
@@ -347,27 +366,28 @@ class Minecart extends Vehicle{
 	}
 	
 	/**
-	* Invoke the normal move code, but first need to convert the desired position vector into the
-	* delta values from the current position.
-	* @param Vector3 $desiredPosition
-	*/
+	 * Invoke the normal move code, but first need to convert the desired position vector into the
+	 * delta values from the current position.
+	 * @param Vector3 $desiredPosition
+	 */
 	private function moveUsingVector(Vector3 $desiredPosition) {
 		$dx = $desiredPosition->x - $this->x;
 		$dy = $desiredPosition->y - $this->y;
 		$dz = $desiredPosition->z - $this->z;
 		if ($this->requestedPosition != null && $desiredPosition->x == $this->requestedPosition->x && $desiredPosition->y == $this->requestedPosition->y &&
-		$desiredPosition->z == $this->requestedPosition->z) {
-			// TODO Why doesn't just setting $dy to $dy + 1 work?
-			$upPosition = $this->add(0, 1, 0); // tried $dy = $dy + 1 but didn't work
-			$this->setPosition($upPosition);
-		}
-		$this->requestedPosition = $this->add($dx, $dy, $dz);
-		$this->move($dx, $dy, $dz);
+			$desiredPosition->z == $this->requestedPosition->z) {
+				// TODO Why doesn't just setting $dy to $dy + 1 work?
+				$upPosition = $this->add(0, 1, 0); // tried $dy = $dy + 1 but didn't work
+				$this->setPosition($upPosition);
+			}
+			$this->requestedPosition = $this->add($dx, $dy, $dz);
+			$this->move($dx, $dy, $dz);
 	}
 
+
 	/**
-	* @return Rail
-	*/
+	 * @return Rail
+	 */
 	public function getNearestRail(){
 		$minX = Math::floorFloat($this->boundingBox->minX);
 		$minY = Math::floorFloat($this->boundingBox->minY);
@@ -417,7 +437,21 @@ class Minecart extends Vehicle{
 		parent::spawnTo($player);
 	}
 
-	public function getDrops(){
-		return [ItemItem::get(ItemItem::MINECART, 0, 1)];
+	/*public function attack($damage, EntityDamageEvent $source){
+		parent::attack($damage, $source);
+
+		if(!$source->isCancelled()){
+			$pk = new EntityEventPacket();
+			$pk->eid = $this->id;
+			$pk->event = EntityEventPacket::HURT_ANIMATION;
+			foreach($this->getLevel()->getPlayers() as $player){
+				$player->dataPacket($pk);
+			}
+		}
 	}
+
+	public function getSaveId(){
+		$class = new \ReflectionClass(static::class);
+		return $class->getShortName();
+	}*/
 }
