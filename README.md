@@ -69,8 +69,6 @@ Attention! All version have new biomes added and more changes in biomes and more
  
 ## TODO :
 
-- Minecart
-
  If you have epic ideas, create an issue and tell us the idea!
  
 ## Information
