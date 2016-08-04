@@ -1290,7 +1290,7 @@ class Server{
 		}
 
 		if(($provider = LevelProviderManager::getProviderByName($providerName = $this->getProperty("level-settings.default-format", "mcregion"))) === null){
-			$provider = LevelProviderManager::getProviderByName($providerName = "mcregion");
+			$provider = LevelProviderManager::getProviderByName($providerName = "anvil");
 		}
 
 		try{
