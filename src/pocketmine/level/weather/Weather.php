@@ -269,5 +269,7 @@ class Weather{
 	public function sendWeatherToAll(){
 		foreach($this->level->getPlayers() as $player){
 			$this->sendWeather($player);
+		}
+	}
 
 }
