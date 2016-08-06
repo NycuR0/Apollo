@@ -5,8 +5,7 @@ php:
 
 branches:
  - master
- - biomes
- - port-pureentits
+ - improve-tnt
 
 before_script:
  - phpenv config-rm xdebug.ini
