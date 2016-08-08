@@ -9,6 +9,7 @@ use pocketmine\level\generator\populator\TallGrass;
 use pocketmine\level\generator\populator\Tree;
 use pocketmine\level\generator\populator\Flower;
 use pocketmine\level\generator\populator\Pumpkin;
+use pocketmine\level\generator\populator\Mushroom;
 class ForestBiome extends GrassyBiome{
 	const TYPE_NORMAL = 0;
 	const TYPE_BIRCH = 1;
@@ -19,7 +20,8 @@ class ForestBiome extends GrassyBiome{
 		$trees = new Tree($type === self::TYPE_BIRCH ? Sapling::BIRCH : Sapling::OAK);
 		$trees->setBaseAmount(5);
 		$this->addPopulator($trees);
-		
+		$mushroom = new Mushroom();
+		$this->addPopulator($mushroom);
 		$flower = new Flower();
 		$flower->setBaseAmount(0);
 		$flower->setRandomAmount(5);
