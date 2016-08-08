@@ -114,8 +114,8 @@ class CraftingDataPacket extends DataPacket{
 			foreach($entry->getEnchantments() as $enchantment){
 				$stream->putInt($enchantment->getId());
 				$stream->putInt($enchantment->getLevel());
+				$stream->putString($entry->getRandomName());
 			}
-			$stream->putString($entry->getRandomName());
 		}
 
 		return CraftingDataPacket::ENTRY_ENCHANT_LIST;
