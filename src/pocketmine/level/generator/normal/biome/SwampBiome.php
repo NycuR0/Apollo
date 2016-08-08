@@ -10,6 +10,7 @@ use pocketmine\level\generator\populator\LilyPad;
 use pocketmine\level\generator\populator\Tree;
 use pocketmine\level\generator\populator\SugarCane;
 use pocketmine\level\generator\populator\TallGrass;
+use pocketmine\level\generator\populator\Mushroom;
 class SwampBiome extends GrassyBiome{
 	public function __construct(){
 		parent::__construct();
@@ -20,7 +21,8 @@ class SwampBiome extends GrassyBiome{
 		$lilypad = new LilyPad();
 		$lilypad->setBaseAmount(4);
 		$this->addPopulator($lilypad);
-		
+		$mushroom = new Mushroom();
+		$this->addPopulator($mushroom);
 		$tallGrass = new TallGrass();
 		$tallGrass->setBaseAmount(1);
 		
