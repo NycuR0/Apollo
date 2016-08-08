@@ -39,7 +39,16 @@ class ChestInventory extends ContainerInventory{
 	public function getHolder(){
 		return $this->holder;
 	}
-
+	public function getContents($withAir = false){
+		if($withAir){
+			$contents = [];
+			for($i = 0; $i < $this->getSize(); ++$i){
+				$contents[$i] = $this->getItem($i);
+			}
+			return $contents;
+		}
+		return parent::getContents();
+	}
 	public function onOpen(Player $who){
 		parent::onOpen($who);
 
