@@ -57,9 +57,9 @@ class Anvil extends Fallable{
 
 	public function getName() : string{
 		$names = [
-			self::TYPE_ANVIL => "Anvil",
-			self::TYPE_SLIGHTLY_DAMAGED_ANVIL => "Slighty Damaged Anvil",
-			self::TYPE_VERY_DAMAGED_ANVIL => "Very Damaged Anvil",
+			self::TYPE_NORMAL => "Anvil",
+			self::TYPE_SLIGHTLY_DAMAGED => "Slighty Damaged Anvil",
+			self::TYPE_VERY_DAMAGED => "Very Damaged Anvil",
 			12 => "Anvil" //just in case 
 		];
 		return $names[$this->meta & 0x0c];
