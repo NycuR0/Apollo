@@ -1,18 +1,39 @@
 <?php
+
+/*
+ *
+ *  ____            _        _   __  __ _                  __  __ ____  
+ * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \ 
+ * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
+ * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/ 
+ * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_| 
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author PocketMine Team
+ * @link http://www.pocketmine.net/
+ * 
+ *
+*/
+
 namespace pocketmine\block;
 
 use pocketmine\inventory\AnvilInventory;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
-use pocketmine\Player;
 use pocketmine\level\sound\AnvilFallSound;
+use pocketmine\Player;
 
 class Anvil extends Fallable{
-	const TYPE_ANVIL = 0;
-	const TYPE_SLIGHTLY_DAMAGED_ANVIL = 4;
-	const TYPE_VERY_DAMAGED_ANVIL = 8;
-
-	protected $id = self::ANVIL_BLOCK;
+	
+	const NORMAL = 0;
+	const SLIGHTLY_DAMAGED = 4;
+	const VERY_DAMAGED = 8;
+	
+	protected $id = self::ANVIL;
 
 	public function isSolid(){
 		return false;
@@ -22,11 +43,11 @@ class Anvil extends Fallable{
 		$this->meta = $meta;
 	}
 
-	public function canBeActivated(){
+	public function canBeActivated() : bool {
 		return true;
 	}
 
-	public function getHardness(){
+	public function getHardness() {
 		return 5;
 	}
 
@@ -34,14 +55,8 @@ class Anvil extends Fallable{
 		return 6000;
 	}
 
-	public function getName(){
-		static $names = [
-			self::TYPE_ANVIL => "Anvil",
-			self::TYPE_SLIGHTLY_DAMAGED_ANVIL => "Slighty Damaged Anvil",
-			self::TYPE_VERY_DAMAGED_ANVIL => "Very Damaged Anvil",
-			12 => "Anvil" //just in case 
-		];
-		return $names[$this->meta & 0x0c];
+	public function getName() : string{
+		return "Anvil";
 	}
 
 	public function getToolType(){
@@ -49,31 +64,32 @@ class Anvil extends Fallable{
 	}
 
 	public function onActivate(Item $item, Player $player = null){
+		if(!$this->getLevel()->getServer()->anvilEnabled){
+			return true;
+		}
 		if($player instanceof Player){
+			if($player->isCreative() and $player->getServer()->limitedCreative){
+				return true;
+			}
+
 			$player->addWindow(new AnvilInventory($this));
 		}
+
 		return true;
 	}
+	
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+		parent::place($item, $block, $target, $face, $fx, $fy, $fz, $player);
+		$this->getLevel()->addSound(new AnvilFallSound($this));
+	}
 
-	public function getDrops(Item $item){
-		$damage = $this->getDamage();
-		if($item->isPickaxe() >= Tool::TIER_WOODEN){
+	public function getDrops(Item $item) : array {
+		if($item->isPickaxe() >= 1){
 			return [
-				[$this->id, $this->meta & 0x0c, 1],
+				[$this->id, 0, 1], //TODO break level
 			];
 		}else{
 			return [];
 		}
-	}
-
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		$this->getLevel()->addSound(new AnvilFallSound($this));
-		if($target->isTransparent() === false){
-			$direction = ($player !== null? $player->getDirection(): 0) & 0x03;
-			$this->meta = ($this->meta & 0x0c) | $direction;
-			$this->getLevel()->setBlock($block, $this, true, true);
-			return true;
-		}
-		return false;
 	}
 }
