@@ -12,6 +12,7 @@ use pocketmine\block\Flower as FlowerBlock;
 use pocketmine\level\generator\populator\Flower;
 use pocketmine\level\generator\populator\TallGrass;
 use pocketmine\level\generator\populator\Pumpkin;
+use pocketmine\level\generator\populator\Mushroom;
 
 class TaigaBiome extends GrassyBiome{
 
@@ -25,7 +26,8 @@ class TaigaBiome extends GrassyBiome{
 		$tallGrass = new TallGrass();
 		$tallGrass->setBaseAmount(5);
 		$this->addPopulator($tallGrass);
-		
+		$mushroom = new Mushroom();
+		$this->addPopulator($mushroom);
 		$pumpkin = new Pumpkin();
 		$pumpkin->setBaseAmount(0);
 		$pumpkin->setRandomAmount(1);
