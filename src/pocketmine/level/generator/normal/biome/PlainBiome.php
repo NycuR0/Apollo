@@ -11,6 +11,7 @@ use pocketmine\block\Flower as FlowerBlock;
 use pocketmine\level\generator\populator\Flower;
 use pocketmine\level\generator\populator\SugarCane;
 use pocketmine\level\generator\populator\Pumpkin;
+use pocketmine\level\generator\populator\Mushroom;
 class PlainBiome extends GrassyBiome{
 	public function __construct(){
 		parent::__construct();
@@ -22,7 +23,8 @@ class PlainBiome extends GrassyBiome{
 		$waterPit->setBaseAmount(10);
 		$populatorTallGrass = new PopulatorTallGrass();
 		$populatorTallGrass->setBaseAmount(25);
-		
+		$mushroom = new Mushroom();
+		$this->addPopulator($mushroom);
 		$pumpkin = new Pumpkin();
 		$pumpkin->setBaseAmount(0);
 		$pumpkin->setRandomAmount(1);
