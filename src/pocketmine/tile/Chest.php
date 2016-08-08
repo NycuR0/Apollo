@@ -185,6 +185,7 @@ class Chest extends Spawnable implements InventoryHolder, Container, Nameable{
 					}else{
 						$this->doubleInventory = new DoubleChestInventory($this, $pair);
 					}
+				}
 			}
 		}else{
 			$this->doubleInventory = null;
