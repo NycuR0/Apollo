@@ -1,6 +1,6 @@
 <?php
 /*
-Finish,without need add mushroom
+Finish
 */
 namespace pocketmine\level\generator\normal\biome;
 use pocketmine\block\Block;
