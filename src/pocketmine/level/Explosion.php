@@ -20,7 +20,7 @@ use pocketmine\network\protocol\ExplodePacket;
 use pocketmine\Server;
 use pocketmine\utils\Random;
 use pocketmine\utils\VectorIterator;
-class Explosion extends Level implements VectorIterator{
+interface class Explosion extends Level implements VectorIterator{
 	private $rays = 16;
 	public $level;
 	public $source;
