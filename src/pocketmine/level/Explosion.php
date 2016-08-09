@@ -144,7 +144,7 @@ class Explosion extends Level{ //implements vector iterator
 						new FloatTag("", 0),
 						new FloatTag("", 0)
 					]),
-					"Fuse" => new ByteTag("Fuse", (10 + (mt_rand() * 30) + 1))
+					"Fuse" => new ByteTag("Fuse", mt_rand(0, 20) + 10)
 				]));
 				$tnt->spawnToAll();
 			}elseif(mt_rand(0, 100) < $yield){
