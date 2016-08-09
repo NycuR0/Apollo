@@ -21,7 +21,7 @@ use pocketmine\Server;
 use pocketmine\utils\Random;
 use pocketmine\utils\VectorIterator;
 class Explosion extends Level implements VectorIterator{
-	private final int $rays = 16;
+	private final $rays = 16;
 	public final $level;
 	public final $source;
 	public final double $size;
@@ -57,9 +57,9 @@ class Explosion extends Level implements VectorIterator{
 						double $pointerY = $this->source->y;
 						double $pointerZ = $this->source->z;
 						for(double $blastForce = $this->size * (mt_rand(700, 1300) / 1000); $blastForce > 0; $blastForce -= $this->stepLen * 0.75){
-							$x = (int) $pointerX;
-							$y = (int) $pointerY;
-							$z = (int) $pointerZ;
+							int $x = (int) $pointerX;
+							int $y = (int) $pointerY;
+							int $z = (int) $pointerZ;
 							$vBlock->x = $pointerX >= $x ? $x : $x - 1;
 							$vBlock->y = $pointerY >= $y ? $y : $y - 1;
 							$vBlock->z = $pointerZ >= $z ? $z : $z - 1;
