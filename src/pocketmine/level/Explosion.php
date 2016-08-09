@@ -21,14 +21,14 @@ use pocketmine\Server;
 use pocketmine\utils\Random;
 use pocketmine\utils\VectorIterator;
 class Explosion extends Level implements VectorIterator{
-	private final $rays = 16;
-	public final $level;
-	public final $source;
-	public final double $size;
+	private $rays = 16;
+	public $level;
+	public $source;
+	public $size;
 	public $affectedBlocks = [];
-	public final double $stepLen = 0.3;
-	private final $what;
-	public function __construct(Position $center, double $size, $what = null){
+	public $stepLen = 0.3;
+	private $what;
+	public function __construct(Position $center, $size, $what = null){
 		$this->level = $center->getLevel();
 		$this->source = $center;
 		$this->size = max($size, 0);
