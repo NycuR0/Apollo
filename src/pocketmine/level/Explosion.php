@@ -58,9 +58,9 @@ class Explosion extends Level implements VectorIterator{
 						(double) $pointerY = $this->source->y;
 						(double) $pointerZ = $this->source->z;
 						for((double) $blastForce = $this->size * (mt_rand(700, 1300) / 1000); $blastForce > 0; $blastForce -= $this->stepLen * 0.75){
-							int $x = (int) $pointerX;
-							int $y = (int) $pointerY;
-							int $z = (int) $pointerZ;
+							(int) $x = (int) $pointerX;
+							(int) $y = (int) $pointerY;
+							(int) $z = (int) $pointerZ;
 							$vBlock->x = $pointerX >= $x ? $x : $x - 1;
 							$vBlock->y = $pointerY >= $y ? $y : $y - 1;
 							$vBlock->z = $pointerZ >= $z ? $z : $z - 1;
@@ -89,14 +89,14 @@ class Explosion extends Level implements VectorIterator{
 	public function explodeB(){
 		$send = [];
 		$source = (new Vector3($this->source->x, $this->source->y, $this->source->z))->floor();
-		double $yield = (1 / $this->size) * 100;
-		double $explosionSize = $this->size * 2;
-		double $minX = Math::floorFloat($this->source->x - $explosionSize - 1);
-		double $maxX = Math::ceilFloat($this->source->x + $explosionSize + 1);
-		double $minY = Math::floorFloat($this->source->y - $explosionSize - 1);
-		double $maxY = Math::ceilFloat($this->source->y + $explosionSize + 1);
-		double $minZ = Math::floorFloat($this->source->z - $explosionSize - 1);
-		double $maxZ = Math::ceilFloat($this->source->z + $explosionSize + 1);
+		(double) $yield = (1 / $this->size) * 100;
+		(double) $explosionSize = $this->size * 2;
+		(double) $minX = Math::floorFloat($this->source->x - $explosionSize - 1);
+		(double) $maxX = Math::ceilFloat($this->source->x + $explosionSize + 1);
+		(double) $minY = Math::floorFloat($this->source->y - $explosionSize - 1);
+		(double) $maxY = Math::ceilFloat($this->source->y + $explosionSize + 1);
+		(double) $minZ = Math::floorFloat($this->source->z - $explosionSize - 1);
+		(double) $maxZ = Math::ceilFloat($this->source->z + $explosionSize + 1);
 		$explosionBB = new AxisAlignedBB($minX, $minY, $minZ, $maxX, $maxY, $maxZ);
 		if($this->what instanceof Entity){
 			$this->level->getServer()->getPluginManager()->callEvent($ev = new EntityExplodeEvent($this->what, $this->source, $this->affectedBlocks, $yield));
@@ -109,12 +109,12 @@ class Explosion extends Level implements VectorIterator{
 		}
 		$list = $this->level->getNearbyEntities($explosionBB, $this->what instanceof Entity ? $this->what : null);
 		foreach($list as $entity){
-			double $distance = $entity->distance($this->source) / $explosionSize;
+			(double) $distance = $entity->distance($this->source) / $explosionSize;
 			if($distance <= 1){
 				$motion = $entity->subtract($this->source)->normalize();
-				double $impact = (1 - $distance) * ($exposure = 1);
-				int $exposure = 1;
-				int $damage = (int) ((($impact * $impact + $impact) / 2) * 8 * $explosionSize + 1);
+				(double) $impact = (1 - $distance) * ($exposure = 1);
+				(int) $exposure = 1;
+				(int) $damage = (int) ((($impact * $impact + $impact) / 2) * 8 * $explosionSize + 1);
 				if($this->what instanceof Entity){
 					$ev = new EntityDamageByEntityEvent($this->what, $entity, EntityDamageEvent::CAUSE_ENTITY_EXPLOSION, $damage);
 				}elseif($this->what instanceof Block){
@@ -129,7 +129,7 @@ class Explosion extends Level implements VectorIterator{
 		$air = Item::get(Item::AIR);
 		foreach($this->affectedBlocks as $block){
 			if($block->getId() === Block::TNT){
-				double $mot = (new Random())->nextSignedFloat() * M_PI * 2;
+				(double) $mot = (new Random())->nextSignedFloat() * M_PI * 2;
 				$tnt = Entity::createEntity("PrimedTNT", $this->level->getChunk((int) $block->x >> 4, (int) $block->z >> 4), new Compound("", [
 					"Pos" => new ListTag("Pos", [
 						new DoubleTag("", $block->x + 0.5),
