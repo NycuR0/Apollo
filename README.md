@@ -22,7 +22,7 @@ Apollo is a perfect software for your server with :
 
  - New better and epic world with epic chunks loaded
  - Bugs fixed
- - More TNT performance
+ - More TNT performance ( support 500 TNT without lag )
  - Redstone performance,all epic mecanism redstone work
  - New biomes and better mobs
  - Boats
