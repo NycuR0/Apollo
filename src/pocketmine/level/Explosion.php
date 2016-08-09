@@ -164,6 +164,5 @@ class Explosion extends Level{ //implements vector iterator
 		$pk->records = $send->stream()->toArray(Vector3::new);
 		$this->level->addChunkPacket($source->x >> 4, $source->z >> 4, $pk);
 		return true;
-		}
 	}
 }
