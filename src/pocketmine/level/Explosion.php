@@ -52,7 +52,7 @@ class Explosion extends Level implements VectorIterator{
 				for((int) $k = 0; $k < $this->rays; ++$k){
 					if($i == 0 || $i == $mRays || $j == 0 || $j == $mRays || $k == 0 || $k == $mRays){
 						$vector->setComponents((double) $i / (double) $mRays * 2 - 1, (double) $j / (double) $mRays * 2 - 1, (double) $k / (double) $mRays * 2 - 1);
-						$vector->setComponents(($vector->x / (double $len = $vector->length())) * $this->stepLen, ($vector->y / $len) * $this->stepLen, ($vector->z / $len) * $this->stepLen);
+						$vector->setComponents(($vector->x / double $len = $vector->length())) * $this->stepLen, ($vector->y / $len) * $this->stepLen, ($vector->z / $len) * $this->stepLen);
 						double $pointerX = $this->source->x;
 						double $pointerY = $this->source->y;
 						double $pointerZ = $this->source->z;
