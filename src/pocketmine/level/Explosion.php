@@ -19,7 +19,6 @@ use pocketmine\network\Network;
 use pocketmine\network\protocol\ExplodePacket;
 use pocketmine\Server;
 use pocketmine\utils\Random;
-use pocketmine\utils\VectorIterator;
 class Explosion extends Level{ //implements vector iterator
 	private $rays = 16;
 	public $level;
@@ -71,7 +70,7 @@ class Explosion extends Level{ //implements vector iterator
 							if($block->getId() !== 0){
 								$blastForce -= ($block->getHardness() / 5 + 0.3) * $this->stepLen;
 								if($blastForce > 0){
-									if(!isset($this->affectedBlocks[$index = PHP_INT_MAX ? ((((int) $block->x) & 0xFFFFFFF) << 35) | ((((int) $block->y) & 0x7f) << 28) | (((int) $block->z) & 0xFFFFFFF) : ((int) $block->x) . ":" . ((int) $block->y) .":". ((int) $block->z)])){
+									if(!isset($this->affectedBlocks[$index = Level::blockHash((int) $block->x, (int) $block->y, (int) $block->z)])){
 										$this->affectedBlocks[$index] = $block;
 									}
 								}
