@@ -54,10 +54,10 @@ class Explosion extends Level implements VectorIterator{
 						$vector->setComponents((double) $i / (double) $mRays * 2 - 1, (double) $j / (double) $mRays * 2 - 1, (double) $k / (double) $mRays * 2 - 1);
 						(double) $len = $vector->length();
 						$vector->setComponents(($vector->x / $len) * $this->stepLen, ($vector->y / $len) * $this->stepLen, ($vector->z / $len) * $this->stepLen);
-						double $pointerX = $this->source->x;
-						double $pointerY = $this->source->y;
-						double $pointerZ = $this->source->z;
-						for(double $blastForce = $this->size * (mt_rand(700, 1300) / 1000); $blastForce > 0; $blastForce -= $this->stepLen * 0.75){
+						(double) $pointerX = $this->source->x;
+						(double) $pointerY = $this->source->y;
+						(double) $pointerZ = $this->source->z;
+						for((double) $blastForce = $this->size * (mt_rand(700, 1300) / 1000); $blastForce > 0; $blastForce -= $this->stepLen * 0.75){
 							int $x = (int) $pointerX;
 							int $y = (int) $pointerY;
 							int $z = (int) $pointerZ;
