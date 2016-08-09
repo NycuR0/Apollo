@@ -1,26 +1,5 @@
 <?php
-
-/*
- *
- *  ____            _        _   __  __ _                  __  __ ____  
- * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \ 
- * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
- * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/ 
- * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_| 
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * @author PocketMine Team
- * @link http://www.pocketmine.net/
- * 
- *
-*/
-
 namespace pocketmine\level;
-
 use pocketmine\block\Block;
 use pocketmine\entity\Entity;
 use pocketmine\event\entity\EntityDamageByBlockEvent;
@@ -40,51 +19,32 @@ use pocketmine\network\Network;
 use pocketmine\network\protocol\ExplodePacket;
 use pocketmine\Server;
 use pocketmine\utils\Random;
-
 class Explosion extends Level{
-
-	private $rays = 16; //Rays
+	private $rays = 16;
 	public $level;
 	public $source;
 	public $size;
-	/**
-	 * @var Block[]
-	 */
 	public $affectedBlocks = [];
 	public $stepLen = 0.3;
-	/** @var Entity|Block */
 	private $what;
-
 	public function __construct(Position $center, $size, $what = null){
 		$this->level = $center->getLevel();
 		$this->source = $center;
 		$this->size = max($size, 0);
 		$this->what = $what;
 	}
-
-	/**
-	 * @deprecated
-	 * @return bool
-	 */
 	public function explode(){
 		if($this->explodeA()){
 			return $this->explodeB();
 		}
-
 		return false;
 	}
-
-	/**
-	 * @return bool
-	 */
 	public function explodeA(){
 		if($this->size < 0.1){
 			return false;
 		}
-
 		$vector = new Vector3(0, 0, 0);
 		$vBlock = new Vector3(0, 0, 0);
-
 		$mRays = intval($this->rays - 1);
 		for($i = 0; $i < $this->rays; ++$i){
 			for($j = 0; $j < $this->rays; ++$j){
@@ -95,7 +55,6 @@ class Explosion extends Level{
 						$pointerX = $this->source->x;
 						$pointerY = $this->source->y;
 						$pointerZ = $this->source->z;
-
 						for($blastForce = $this->size * (mt_rand(700, 1300) / 1000); $blastForce > 0; $blastForce -= $this->stepLen * 0.75){
 							$x = (int) $pointerX;
 							$y = (int) $pointerY;
@@ -107,7 +66,6 @@ class Explosion extends Level{
 								break;
 							}
 							$block = $this->level->getBlock($vBlock);
-
 							if($block->getId() !== 0){
 								$blastForce -= ($block->getHardness() / 5 + 0.3) * $this->stepLen;
 								if($blastForce > 0){
@@ -124,10 +82,8 @@ class Explosion extends Level{
 				}
 			}
 		}
-
 		return true;
 	}
-
 	public function explodeB(){
 		$send = [];
 		$source = (new Vector3($this->source->x, $this->source->y, $this->source->z))->floor();
@@ -139,9 +95,7 @@ class Explosion extends Level{
 		$maxY = Math::floorFloat($this->source->y + $explosionSize + 1);
 		$minZ = Math::floorFloat($this->source->z - $explosionSize - 1);
 		$maxZ = Math::floorFloat($this->source->z + $explosionSize + 1);
-
 		$explosionBB = new AxisAlignedBB($minX, $minY, $minZ, $maxX, $maxY, $maxZ);
-
 		if($this->what instanceof Entity){
 			$this->level->getServer()->getPluginManager()->callEvent($ev = new EntityExplodeEvent($this->what, $this->source, $this->affectedBlocks, $yield));
 			if($ev->isCancelled()){
@@ -151,18 +105,13 @@ class Explosion extends Level{
 				$this->affectedBlocks = $ev->getBlockList();
 			}
 		}
-
 		$list = $this->level->getNearbyEntities($explosionBB, $this->what instanceof Entity ? $this->what : null);
 		foreach($list as $entity){
 			$distance = $entity->distance($this->source) / $explosionSize;
-
 			if($distance <= 1){
 				$motion = $entity->subtract($this->source)->normalize();
-
 				$impact = (1 - $distance) * ($exposure = 1);
-
 				$damage = (int) ((($impact * $impact + $impact) / 2) * 8 * $explosionSize + 1);
-
 				if($this->what instanceof Entity){
 					$ev = new EntityDamageByEntityEvent($this->what, $entity, EntityDamageEvent::CAUSE_ENTITY_EXPLOSION, $damage);
 				}elseif($this->what instanceof Block){
@@ -170,15 +119,11 @@ class Explosion extends Level{
 				}else{
 					$ev = new EntityDamageEvent($entity, EntityDamageEvent::CAUSE_BLOCK_EXPLOSION, $damage);
 				}
-
 				$entity->attack($ev->getFinalDamage(), $ev);
 				$entity->setMotion($motion->multiply($impact));
 			}
 		}
-
-
 		$air = Item::get(Item::AIR);
-
 		foreach($this->affectedBlocks as $block){
 			if($block->getId() === Block::TNT){
 				$mot = (new Random())->nextSignedFloat() * M_PI * 2;
@@ -215,7 +160,6 @@ class Explosion extends Level{
 		$pk->radius = $this->size;
 		$pk->records = $send;
 		Server::broadcastPacket($this->level->getUsingChunk($source->x >> 4, $source->z >> 4), $pk);
-
 		return true;
 	}
 }
