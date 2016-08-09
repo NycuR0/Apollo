@@ -20,7 +20,7 @@ use pocketmine\network\protocol\ExplodePacket;
 use pocketmine\Server;
 use pocketmine\utils\Random;
 use pocketmine\utils\VectorIterator;
-class Explosion extends Level, VectorIterator{
+interface class Explosion extends Level implements VectorIterator{
 	private $rays = 16;
 	public $level;
 	public $source;
@@ -164,5 +164,6 @@ class Explosion extends Level, VectorIterator{
 		$pk->records = $send->stream()->toArray(Vector3::new);
 		$this->level->addChunkPacket($source->x >> 4, $source->z >> 4, $pk);
 		return true;
+		}
 	}
 }
