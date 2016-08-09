@@ -121,8 +121,8 @@ class Explosion extends Level{ //implements vector iterator
 					$ev = new EntityDamageByBlockEvent($this->what, $entity, EntityDamageEvent::CAUSE_BLOCK_EXPLOSION, $damage);
 				}else{
 					$ev = new EntityDamageEvent($entity, EntityDamageEvent::CAUSE_BLOCK_EXPLOSION, $damage);
-					$entity->attack($ev->getFinalDamage(), $ev);
 				}
+				$entity->attack($ev->getFinalDamage(), $ev);
 				$entity->setMotion($motion->multiply($impact));
 			}
 		}
