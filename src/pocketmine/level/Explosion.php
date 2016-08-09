@@ -161,7 +161,7 @@ class Explosion extends Level implements VectorIterator{
 		$pk->y = (float) $this->source->y;
 		$pk->z = (float) $this->source->z;
 		$pk->radius = (float) $this->size;
-		$pk->records = $send->stream()->toArray(Vector3[]::new);
+		$pk->records = $send->stream()->toArray(Vector3::new);
 		$this->level->addChunkPacket($source->x >> 4, $source->z >> 4, $pk);
 		return true;
 	}
