@@ -19,7 +19,8 @@ use pocketmine\network\Network;
 use pocketmine\network\protocol\ExplodePacket;
 use pocketmine\Server;
 use pocketmine\utils\Random;
-class Explosion extends Level{
+use pocketmine\utils\VectorIterator;
+class Explosion extends Level implements VectorIterator{
 	private final int $rays = 16;
 	public final $level;
 	public final $source;
@@ -56,9 +57,9 @@ class Explosion extends Level{
 						double $pointerY = $this->source->y;
 						double $pointerZ = $this->source->z;
 						for(double $blastForce = $this->size * (mt_rand(700, 1300) / 1000); $blastForce > 0; $blastForce -= $this->stepLen * 0.75){
-							int $x = (int) $pointerX;
-							int $y = (int) $pointerY;
-							int $z = (int) $pointerZ;
+							$x = (int) $pointerX;
+							$y = (int) $pointerY;
+							$z = (int) $pointerZ;
 							$vBlock->x = $pointerX >= $x ? $x : $x - 1;
 							$vBlock->y = $pointerY >= $y ? $y : $y - 1;
 							$vBlock->z = $pointerZ >= $z ? $z : $z - 1;
@@ -125,7 +126,6 @@ class Explosion extends Level{
 			}
 		}
 		$air = Item::get(Item::AIR);
-		//TODO: add vector iterator method
 		foreach($this->affectedBlocks as $block){
 			if($block->getId() === Block::TNT){
 				double $mot = (new Random())->nextSignedFloat() * M_PI * 2;
