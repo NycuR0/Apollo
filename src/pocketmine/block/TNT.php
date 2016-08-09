@@ -89,4 +89,7 @@ class TNT extends Solid implements ElectricalAppliance{
 		}
 		return false;
 	}
+        public function getColor(){
+                return BlockColor::TNT_BLOCK_COLOR;
+        }
 }
