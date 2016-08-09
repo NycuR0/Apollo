@@ -20,14 +20,14 @@ use pocketmine\network\protocol\ExplodePacket;
 use pocketmine\Server;
 use pocketmine\utils\Random;
 class Explosion extends Level{
-	private $rays = 16;
-	public $level;
-	public $source;
-	public $size;
+	private final int $rays = 16;
+	public final $level;
+	public final $source;
+	public final double $size;
 	public $affectedBlocks = [];
-	public $stepLen = 0.3;
-	private $what;
-	public function __construct(Position $center, $size, $what = null){
+	public final double $stepLen = 0.3;
+	private final $what;
+	public function __construct(Position $center, double $size, $what = null){
 		$this->level = $center->getLevel();
 		$this->source = $center;
 		$this->size = max($size, 0);
@@ -46,19 +46,19 @@ class Explosion extends Level{
 		$vector = new Vector3(0, 0, 0);
 		$vBlock = new Vector3(0, 0, 0);
 		$mRays = intval($this->rays - 1);
-		for($i = 0; $i < $this->rays; ++$i){
-			for($j = 0; $j < $this->rays; ++$j){
-				for($k = 0; $k < $this->rays; ++$k){
-					if($i === 0 or $i === $mRays or $j === 0 or $j === $mRays or $k === 0 or $k === $mRays){
-						$vector->setComponents($i / $mRays * 2 - 1, $j / $mRays * 2 - 1, $k / $mRays * 2 - 1);
-						$vector->setComponents(($vector->x / ($len = $vector->length())) * $this->stepLen, ($vector->y / $len) * $this->stepLen, ($vector->z / $len) * $this->stepLen);
-						$pointerX = $this->source->x;
-						$pointerY = $this->source->y;
-						$pointerZ = $this->source->z;
-						for($blastForce = $this->size * (mt_rand(700, 1300) / 1000); $blastForce > 0; $blastForce -= $this->stepLen * 0.75){
-							$x = (int) $pointerX;
-							$y = (int) $pointerY;
-							$z = (int) $pointerZ;
+		for(int $i = 0; $i < $this->rays; ++$i){
+			for(int $j = 0; $j < $this->rays; ++$j){
+				for(int $k = 0; $k < $this->rays; ++$k){
+					if($i == 0 || $i == $mRays || $j == 0 || $j == $mRays || $k == 0 || $k == $mRays){
+						$vector->setComponents((double) $i / (double) $mRays * 2 - 1, (double) $j / (double) $mRays * 2 - 1, (double) $k / (double) $mRays * 2 - 1);
+						$vector->setComponents(($vector->x / (double $len = $vector->length())) * $this->stepLen, ($vector->y / $len) * $this->stepLen, ($vector->z / $len) * $this->stepLen);
+						double $pointerX = $this->source->x;
+						double $pointerY = $this->source->y;
+						double $pointerZ = $this->source->z;
+						for(double $blastForce = $this->size * (mt_rand(700, 1300) / 1000); $blastForce > 0; $blastForce -= $this->stepLen * 0.75){
+							int $x = (int) $pointerX;
+							int $y = (int) $pointerY;
+							int $z = (int) $pointerZ;
 							$vBlock->x = $pointerX >= $x ? $x : $x - 1;
 							$vBlock->y = $pointerY >= $y ? $y : $y - 1;
 							$vBlock->z = $pointerZ >= $z ? $z : $z - 1;
@@ -69,7 +69,7 @@ class Explosion extends Level{
 							if($block->getId() !== 0){
 								$blastForce -= ($block->getHardness() / 5 + 0.3) * $this->stepLen;
 								if($blastForce > 0){
-									if(!isset($this->affectedBlocks[$index = PHP_INT_MAX ? ((($block->x) & 0xFFFFFFF) << 35) | ((( $block->y) & 0x7f) << 28) | (( $block->z) & 0xFFFFFFF) : ($block->x) . ":" . ( $block->y) .":". ( $block->z)])){
+									if(!isset($this->affectedBlocks[$index = PHP_INT_MAX ? ((((int) $block->x) & 0xFFFFFFF) << 35) | ((((int) $block->y) & 0x7f) << 28) | (((int) $block->z) & 0xFFFFFFF) : ((int) $block->x) . ":" . ((int) $block->y) .":". ((int) $block->z)])){
 										$this->affectedBlocks[$index] = $block;
 									}
 								}
@@ -87,14 +87,14 @@ class Explosion extends Level{
 	public function explodeB(){
 		$send = [];
 		$source = (new Vector3($this->source->x, $this->source->y, $this->source->z))->floor();
-		$yield = (1 / $this->size) * 100;
-		$explosionSize = $this->size * 2;
-		$minX = Math::floorFloat($this->source->x - $explosionSize - 1);
-		$maxX = Math::floorFloat($this->source->x + $explosionSize + 1);
-		$minY = Math::floorFloat($this->source->y - $explosionSize - 1);
-		$maxY = Math::floorFloat($this->source->y + $explosionSize + 1);
-		$minZ = Math::floorFloat($this->source->z - $explosionSize - 1);
-		$maxZ = Math::floorFloat($this->source->z + $explosionSize + 1);
+		double $yield = (1 / $this->size) * 100;
+		double $explosionSize = $this->size * 2;
+		double $minX = Math::floorFloat($this->source->x - $explosionSize - 1);
+		double $maxX = Math::ceilFloat($this->source->x + $explosionSize + 1);
+		double $minY = Math::floorFloat($this->source->y - $explosionSize - 1);
+		double $maxY = Math::ceilFloat($this->source->y + $explosionSize + 1);
+		double $minZ = Math::floorFloat($this->source->z - $explosionSize - 1);
+		double $maxZ = Math::ceilFloat($this->source->z + $explosionSize + 1);
 		$explosionBB = new AxisAlignedBB($minX, $minY, $minZ, $maxX, $maxY, $maxZ);
 		if($this->what instanceof Entity){
 			$this->level->getServer()->getPluginManager()->callEvent($ev = new EntityExplodeEvent($this->what, $this->source, $this->affectedBlocks, $yield));
@@ -107,27 +107,29 @@ class Explosion extends Level{
 		}
 		$list = $this->level->getNearbyEntities($explosionBB, $this->what instanceof Entity ? $this->what : null);
 		foreach($list as $entity){
-			$distance = $entity->distance($this->source) / $explosionSize;
+			double $distance = $entity->distance($this->source) / $explosionSize;
 			if($distance <= 1){
 				$motion = $entity->subtract($this->source)->normalize();
-				$impact = (1 - $distance) * ($exposure = 1);
-				$damage = (int) ((($impact * $impact + $impact) / 2) * 8 * $explosionSize + 1);
+				double $impact = (1 - $distance) * ($exposure = 1);
+				int $exposure = 1;
+				int $damage = (int) ((($impact * $impact + $impact) / 2) * 8 * $explosionSize + 1);
 				if($this->what instanceof Entity){
 					$ev = new EntityDamageByEntityEvent($this->what, $entity, EntityDamageEvent::CAUSE_ENTITY_EXPLOSION, $damage);
 				}elseif($this->what instanceof Block){
 					$ev = new EntityDamageByBlockEvent($this->what, $entity, EntityDamageEvent::CAUSE_BLOCK_EXPLOSION, $damage);
 				}else{
 					$ev = new EntityDamageEvent($entity, EntityDamageEvent::CAUSE_BLOCK_EXPLOSION, $damage);
+					$entity->attack($ev->getFinalDamage(), $ev);
 				}
-				$entity->attack($ev->getFinalDamage(), $ev);
 				$entity->setMotion($motion->multiply($impact));
 			}
 		}
 		$air = Item::get(Item::AIR);
+		//TODO: add vector iterator method
 		foreach($this->affectedBlocks as $block){
 			if($block->getId() === Block::TNT){
-				$mot = (new Random())->nextSignedFloat() * M_PI * 2;
-				$tnt = Entity::createEntity("PrimedTNT", $this->level->getChunk($block->x >> 4, $block->z >> 4), new Compound("", [
+				double $mot = (new Random())->nextSignedFloat() * M_PI * 2;
+				$tnt = Entity::createEntity("PrimedTNT", $this->level->getChunk((int) $block->x >> 4, (int) $block->z >> 4), new Compound("", [
 					"Pos" => new ListTag("Pos", [
 						new DoubleTag("", $block->x + 0.5),
 						new DoubleTag("", $block->y),
@@ -142,7 +144,7 @@ class Explosion extends Level{
 						new FloatTag("", 0),
 						new FloatTag("", 0)
 					]),
-					"Fuse" => new ByteTag("Fuse", mt_rand(10, 20) + 10)
+					"Fuse" => new ByteTag("", (byte) 10 + (mt_rand() * 30) + 1)
 				]));
 				$tnt->spawnToAll();
 			}elseif(mt_rand(0, 100) < $yield){
@@ -150,16 +152,16 @@ class Explosion extends Level{
 					$this->level->dropItem($block->add(0.5, 0.5, 0.5), Item::get(...$drop));
 				}
 			}
-			$this->level->setBlockIdAt($block->x, $block->y, $block->z, 0);
+			$this->level->setBlockIdAt((int) $block->x, (int) $block->y, (int) $block->z, 0);
 			$send[] = new Vector3($block->x - $source->x, $block->y - $source->y, $block->z - $source->z);
 		}
 		$pk = new ExplodePacket();
-		$pk->x = $this->source->x;
-		$pk->y = $this->source->y;
-		$pk->z = $this->source->z;
-		$pk->radius = $this->size;
-		$pk->records = $send;
-		Server::broadcastPacket($this->level->getUsingChunk($source->x >> 4, $source->z >> 4), $pk);
+		$pk->x = (float) $this->source->x;
+		$pk->y = (float) $this->source->y;
+		$pk->z = (float) $this->source->z;
+		$pk->radius = (float) $this->size;
+		$pk->records = $send->stream()->toArray(Vector3[]::new);
+		$this->level->addChunkPacket($source->x >> 4, $source->z >> 4, $pk);
 		return true;
 	}
 }
