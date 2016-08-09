@@ -524,4 +524,8 @@ class Minecart extends Vehicle{
 		$class = new \ReflectionClass(static::class);
 		return $class->getShortName();
 	}*/
+	public function getDrops(){
+		$drops = [ItemItem::get(ItemItem::MINECART, 0, 1)];
+		return $drops;
+	}
 }
