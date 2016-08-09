@@ -61,7 +61,7 @@ class PrimedTNT extends Entity implements Explosive{
 				$this->explode();
 			}
 		}
-		return $hasUpdate or $this->fuse >= 0 or $this->motionX != 0 or $this->motionY != 0 or $this->motionZ != 0;
+		return $hasUpdate || $this->fuse >= 0 || $this->motionX != 0 || $this->motionY != 0 || $this->motionZ != 0;
 	}
 	public function explode(){
 		$this->server->getPluginManager()->callEvent($ev = new ExplosionPrimeEvent($this, 4));
@@ -77,12 +77,12 @@ class PrimedTNT extends Entity implements Explosive{
 		$pk = new AddEntityPacket();
 		$pk->type = PrimedTNT::NETWORK_ID;
 		$pk->eid = $this->getId();
-		$pk->x = $this->x;
-		$pk->y = $this->y;
-		$pk->z = $this->z;
-		$pk->speedX = $this->motionX;
-		$pk->speedY = $this->motionY;
-		$pk->speedZ = $this->motionZ;
+		$pk->x = (float) $this->x;
+		$pk->y = (float) $this->y;
+		$pk->z = (float) $this->z;
+		$pk->speedX = (float) $this->motionX;
+		$pk->speedY = (float) $this->motionY;
+		$pk->speedZ = (float) $this->motionZ;
 		$player->dataPacket($pk);
 		parent::spawnTo($player);
 	}
