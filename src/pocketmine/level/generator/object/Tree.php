@@ -26,17 +26,34 @@ abstract class Tree extends Object{
 				break;
 			case Sapling::BIRCH:
 				if($random->nextBoundedInt(39) === 0){
-					$tree = new BirchTree(true);
+					$tree = new BirchTree(true, false);
 				}else{
-					$tree = new BirchTree();
-				}
+					$tree = new BirchTree(true, true);
+         			}
 				break;
 			case Sapling::JUNGLE:
-				#$tree = new JungleTree();
-				$tree = new BigJungleTree();
+				$tree = new JungleTree(true, 10, 20, 3, 3); // Magic values as in BlockSapling
 				break;
 			case Sapling::ACACIA:
-				$tree = new AcaciaTree2();
+				$tree = new AcaciaTree2(true);
+				break;
+			case Sapling::DARK_OAK:
+				$tree = new DarkOakTree(true);
+				break;
+			case SMALL_JUNGLE:
+				$tree = new JungleTree2(true, 4 + ($random->nextBoundedInt(0, 7) === 0), 3, 3, false);
+				break;
+			case COCOA_TREE:
+				$tree = new JungleTree2(true, 4 + ($random->nextBoundedInt(0, 7) === 0), 3, 3, false);
+				break;
+			case RED_MUSHROOM:
+				$tree = new HugeMushroom(1);
+				break;
+			case BROWN_MUSHROOM:
+				$tree = new HugeMushroom(0);
+				break;
+			case JUNGLE_BUSH:
+				$tree = new GroundBush(3, 0);
 				break;
 			case Sapling::OAK:
 			default:
