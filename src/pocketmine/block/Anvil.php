@@ -43,11 +43,11 @@ class Anvil extends Fallable{
 		$this->meta = $meta;
 	}
 
-	public function canBeActivated() : bool {
+	public function canBeActivated() : bool{
 		return true;
 	}
 
-	public function getHardness() {
+	public function getHardness(){
 		return 5;
 	}
 
@@ -56,7 +56,13 @@ class Anvil extends Fallable{
 	}
 
 	public function getName() : string{
-		return "Anvil";
+		$names = [
+			0 => "Anvil",
+			4 => "Slighty Damaged Anvil",
+			8 => "Very Damaged Anvil",
+			12 => "Anvil" //just in case 
+		];
+		return $names[$this->meta & 0x0c];
 	}
 
 	public function getToolType(){
@@ -79,14 +85,21 @@ class Anvil extends Fallable{
 	}
 	
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		parent::place($item, $block, $target, $face, $fx, $fy, $fz, $player);
 		$this->getLevel()->addSound(new AnvilFallSound($this));
+		if($target->isTransparent() === false){
+			$direction = ($player !== null? $player->getDirection(): 0) & 0x03;
+			$this->meta = ($this->meta & 0x0c) | $direction;
+			$this->getLevel()->setBlock($block, $this, true, true);
+			return true;
+		}
+		return false;
 	}
 
-	public function getDrops(Item $item) : array {
+	public function getDrops(Item $item) : array{
+		$damage = $this->getDamage();
 		if($item->isPickaxe() >= 1){
 			return [
-				[$this->id, 0, 1], //TODO break level
+				[$this->id, $this->meta & 0x0c, 1],
 			];
 		}else{
 			return [];
