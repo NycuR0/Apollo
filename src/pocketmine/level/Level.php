@@ -240,6 +240,11 @@ class Level implements ChunkManager, Metadatable{
 	private $blockStates;
 
 	public $sleepTicks = 0;
+	
+	private $monsterSpawn = -1;
+	private $animalSpawn = -1;
+	private $waterAnimalSpawn = -1;
+	private $ambientSpawn = -1;
 
 	private $chunkTickRadius;
 	private $chunkTickList = [];
