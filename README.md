@@ -5,7 +5,7 @@ Note: You may **not** copy our generator , updater without NycuRO's permission. 
 
 **TravisCI Build Status: Master Branch** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=master)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
 
-**CircleCI Build Status** [![Build Status](https://circleci.com/gh/NycuRO/Apollo.svg)](https://circleci.com/gh/NycuRO/Apollo "CircleCI Build Status")
+**CircleCI Build Status** [Build Status](https://circleci.com/gh/NycuRO/Apollo.svg)](https://circleci.com/gh/NycuRO/Apollo "CircleCI Build Status")
 
 
 ## Thanks
