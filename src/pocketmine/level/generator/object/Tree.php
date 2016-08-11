@@ -41,10 +41,10 @@ abstract class Tree extends Object{
 				$tree = new DarkOakTree(true);
 				break;
 			case SMALL_JUNGLE:
-				$tree = new JungleTree2(true, 4 + ($random->nextBoundedInt(0, 7) === 0), 3, 3, false);
+				$tree = new JungleTree(true, 4 + ($random->nextBoundedInt(0, 7) === 0), 3, 3, false);
 				break;
 			case COCOA_TREE:
-				$tree = new JungleTree2(true, 4 + ($random->nextBoundedInt(0, 7) === 0), 3, 3, false);
+				$tree = new JungleTree(true, 4 + ($random->nextBoundedInt(0, 7) === 0), 3, 3, false);
 				break;
 			case RED_MUSHROOM:
 				$tree = new HugeMushroom(1);
