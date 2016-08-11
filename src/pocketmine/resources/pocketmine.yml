@@ -9,6 +9,7 @@ settings:
  language: "eng"
  #Whether to send all strings translated to server locale or let the device handle them
  force-language: false
+ #When server shut down, the players will get kicked and this is what will show on there screen.
  shutdown-message: "Server closed"
  #Allow listing plugins via Query
  query-plugins: true
@@ -23,16 +24,15 @@ settings:
  #Set this approximately to your number of cores.
  #If set to auto, it'll try to detect the number of cores (or use 2)
  async-workers: 4
- #Load plugins with incompatible API versions
- #Enabling these options may result in the server loading plugins that are incompatible, hence crashing the server or causing other issues
- incompatible-plugins:
-  plugin-too-new:
-   #Load plugins whose major API version is too new
-   major: false
-   #Load plugins whose minor API version is too new
-   minor: false
-  #Load plugins whose major API version is too old
-  plugin-too-old: true
+
+incompatible-plugins:
+ plugin-too-new:
+ #Load plugins whose major API version is too new
+ major: false
+ #Load plugins whose minor API version is too new
+ minor: false
+ #Load plugins whose major API version is too old
+ plugin-too-old: true
 
 memory:
  #Global soft memory limit in megabytes. Set to 0 to disable
