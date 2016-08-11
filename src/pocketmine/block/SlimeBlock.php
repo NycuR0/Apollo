@@ -6,7 +6,7 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\Player;
 
-interface SlimeBlock extends Solid implements Transparent{
+class SlimeBlock extends Solid{
 
 	protected $id = self::SLIME_BLOCK;
 
