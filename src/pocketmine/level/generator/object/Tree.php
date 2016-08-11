@@ -40,21 +40,21 @@ abstract class Tree extends Object{
 			case Sapling::DARK_OAK:
 				$tree = new DarkOakTree(true);
 				break;
-			case SMALL_JUNGLE:
+			/*case SMALL_JUNGLE:
 				$tree = new JungleTree(true, 4 + ($random->nextBoundedInt(0, 7) === 0), 3, 3, false);
 				break;
 			case COCOA_TREE:
 				$tree = new JungleTree(true, 4 + ($random->nextBoundedInt(0, 7) === 0), 3, 3, false);
-				break;
+				break;*/
 			case RED_MUSHROOM:
 				$tree = new HugeMushroom(1);
 				break;
 			case BROWN_MUSHROOM:
 				$tree = new HugeMushroom(0);
 				break;
-			case JUNGLE_BUSH:
+			/*case JUNGLE_BUSH:
 				$tree = new GroundBush(3, 0);
-				break;
+				break;*/
 			case Sapling::OAK:
 			default:
 				if($random->nextRange(0, 9) === 0){
