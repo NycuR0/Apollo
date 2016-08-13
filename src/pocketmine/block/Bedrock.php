@@ -28,7 +28,7 @@ class Bedrock extends Solid{
 		return "Bedrock";
 	}
 	public function getHardness() {
-		return 0;
+		return null;
 	}
 	public function getResistance(){
 		return 18000000;
