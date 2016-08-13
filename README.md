@@ -8,6 +8,13 @@ Note: You may **not** copy our generator , updater without NycuRO's permission. 
 **CircleCI Build Status** [![Build Status](https://circleci.com/gh/NycuRO/Apollo.svg?style=shield)](https://circleci.com/gh/NycuRO/Apollo "CircleCI Build Status")
 
 
+## Information
+
+- Need to communicate with us? Join our [Telegram](https://telegram.me/joinchat/Ca8L9T9P01PtR1bOEwtxuw) group!
+- We are a edited version of Genisys. We have edited their generators to our version and have improved the performance
+- You can download .phar from Circle CI. Tab to latest build,tap to artifacts selection and download Apollo1.0dev.phar
+
+
 ## Thanks
 
 Thanks Genisys , ClearSky and PocketMine for code :)
@@ -71,8 +78,4 @@ Attention! All version have new biomes added and more changes in biomes and more
 ## TODO :
 
  If you have epic ideas, create an issue and tell us the idea!
- 
-## Information
 
-- Need to communicate with us? Join our [Telegram](https://telegram.me/joinchat/Ca8L9T9P01PtR1bOEwtxuw) group!
-- We are a edited version of Genisys. We have edited their generators to our version and have improved the performance
