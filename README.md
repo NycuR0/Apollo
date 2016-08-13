@@ -12,7 +12,7 @@ Note: You may **not** copy our generator , updater without NycuRO's permission. 
 
 - Need to communicate with us? Join our [Telegram](https://telegram.me/joinchat/Ca8L9T9P01PtR1bOEwtxuw) group!
 - We are a edited version of Genisys. We have edited their generators to our version and have improved the performance
-- You can download .phar from Circle CI. Tab to latest build,tap to artifacts selection and download Apollo1.0dev.phar
+- You can download .phar from Circle CI. Tab to latest build,tap to artifacts selection,tap to DevTools and download Apollo1.0dev.phar
 
 
 ## Thanks
