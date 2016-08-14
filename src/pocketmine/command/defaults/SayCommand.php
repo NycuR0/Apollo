@@ -33,7 +33,7 @@ class SayCommand extends VanillaCommand{
 		parent::__construct(
 			$name,
 			"%pocketmine.command.say.description",
-			"%commands.say.usage",
+			"%commands.say.usage"
 		);
 		$this->setPermission("pocketmine.command.say");
 	}
@@ -49,7 +49,7 @@ class SayCommand extends VanillaCommand{
 			return false;
 		}
 
-		$sender->getServer()->broadcastMessage(new TranslationContainer(TextFormat::YELLOW . "%chat.type.announcement", $sender instanceof Player ? $sender->getDisplayName() : ($sender instanceof ConsoleCommandSender ? "Server" : $sender->getName()), TextFormat::GRAY . implode(" ", $args)));
+		$sender->getServer()->broadcastMessage(new TranslationContainer(TextFormat::YELLOW . "%chat.type.announcement", $sender instanceof Player ? $sender->getDisplayName() : ($sender instanceof ConsoleCommandSender ? "Server" & TextFormat::GRAY . " »" : $sender->getName()), TextFormat::GRAY . implode(" ", $args)));
 		return true;
 	}
 }
