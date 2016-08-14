@@ -38,7 +38,7 @@ class SayCommand extends VanillaCommand{
 		$this->setPermission("pocketmine.command.say");
 	}
 
-	public function execute(CommandSender $sender, $currentAlias, array $args){c
+	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
 			return true;
 		}
