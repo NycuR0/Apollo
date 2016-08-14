@@ -5,7 +5,7 @@ php:
 
 branches:
  - master
- - colors
+ - more-say-command
 
 before_script:
  - phpenv config-rm xdebug.ini
