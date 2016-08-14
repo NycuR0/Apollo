@@ -5,7 +5,7 @@ php:
 
 branches:
  - master
- - improve-tnt-again
+ - colors
 
 before_script:
  - phpenv config-rm xdebug.ini
