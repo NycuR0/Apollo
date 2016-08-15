@@ -45,6 +45,7 @@ use pocketmine\block\Sapling;
 use pocketmine\block\SnowLayer;
 use pocketmine\block\Sugarcane;
 use pocketmine\block\Wheat;
+use pocketmine\block\Vine;
 use pocketmine\block\CocoaBlock;
 use pocketmine\entity\Arrow;
 use pocketmine\entity\Entity;
