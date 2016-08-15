@@ -52,6 +52,9 @@ abstract class Tree extends Object{
 			case BROWN_MUSHROOM:
 				$tree = new HugeMushroom(0);
 				break;
+			case PUMPKIN:
+				$tree = new Pumpkin(0);
+				break;
 			case JUNGLE_BUSH:
 				$tree = new GroundBush(3, 0);
 				break;*/
