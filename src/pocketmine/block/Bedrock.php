@@ -28,10 +28,10 @@ class Bedrock extends Solid{
 		return "Bedrock";
 	}
 	public function getHardness() {
-		return null;
+		return -1;
 	}
 	public function getResistance(){
-		return 18000000;
+		return 99999999;
 	}
 	public function isBreakable(Item $item){
 		return false;
