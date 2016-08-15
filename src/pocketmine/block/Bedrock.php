@@ -31,7 +31,7 @@ class Bedrock extends Solid{
 		return -1;
 	}
 	public function getResistance(){
-		return 99999999;
+		return 18000000;
 	}
 	public function isBreakable(Item $item){
 		return false;
