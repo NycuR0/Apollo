@@ -9,6 +9,7 @@ use pocketmine\event\entity\EntityExplodeEvent;
 use pocketmine\item\Item;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Math;
+se pocketmine\event\block\BlockUpdateEvent;
 use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\ByteTag;
 use pocketmine\nbt\tag\CompoundTag;
