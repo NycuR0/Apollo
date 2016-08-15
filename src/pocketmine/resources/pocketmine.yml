@@ -9,12 +9,13 @@ settings:
  language: "eng"
  #Whether to send all strings translated to server locale or let the device handle them
  force-language: false
- #When server shut down, the players will get kicked and this is what will show on there screen.
- shutdown-message: "Server closed"
+ shutdown-message: "Server closed. Thanks for playing on an Apollo server!"
  #Allow listing plugins via Query
  query-plugins: true
  #Show a console message when a plugin uses deprecated API methods
- deprecated-verbose: true
+ deprecated-verbose: false
+ #Enable plugin with incompatible API 
+ incompatible-plugins: true
  #Enable plugin and core profiling by default
  enable-profiling: false
  #Will only add results when tick measurement is below or equal to given value (default 20)
@@ -24,7 +25,7 @@ settings:
  #Set this approximately to your number of cores.
  #If set to auto, it'll try to detect the number of cores (or use 2)
  async-workers: 4
-
+ 
 memory:
  #Global soft memory limit in megabytes. Set to 0 to disable
  #This will trigger low-memory-triggers and fire an event to free memory when the usage goes over this
