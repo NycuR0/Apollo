@@ -17,7 +17,7 @@ Note: You may **not** copy our generator , updater without NycuRO's permission. 
 
 ## Thanks
 
-Thanks Genisys , ClearSky and PocketMine for code :)
+Thanks Genisys , ClearSky and PocketMine and ImagicalMine for code :)
 
 
 ## Features
