@@ -129,8 +129,8 @@ class Explosion extends Level{ //implements vector iterator
 		$air = Item::get(Item::AIR);
 		foreach($this->affectedBlocks as $block){
 			if($block->getId() === Block::TNT){
-				$mot = (new Random())->nextSignedFloat() * M_PI * 2;
-				$tnt = Entity::createEntity("PrimedTNT", $this->level->getChunk($block->x >> 4, $block->z >> 4), new CompoundTag("", [
+				(double) $mot = (new Random())->nextSignedFloat() * M_PI * 2;
+				$tnt = Entity::createEntity("PrimedTNT", $this->level->getChunk((int) $block->x >> 4, (int) $block->z >> 4), new CompoundTag("", [
 					"Pos" => new ListTag("Pos", [
 						new DoubleTag("", $block->x + 0.5),
 						new DoubleTag("", $block->y),
@@ -154,6 +154,19 @@ class Explosion extends Level{ //implements vector iterator
 				}
 			}
 			$this->level->setBlockIdAt((int) $block->x, (int) $block->y, (int) $block->z, 0);
+			
+			$pos = new Vector3($block->x, $block->y, $block->z);
+
+			for($side = 0; $side < 5; $side++){
+				$sideBlock = $pos->getSide($side);
+				if(!isset($this->affectedBlocks[$index = Level::blockHash($sideBlock->x, $sideBlock->y, $sideBlock->z)]) and !isset($updateBlocks[$index])){
+					$this->level->getServer()->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->level->getBlock($sideBlock)));
+					if(!$ev->isCancelled()){
+						$ev->getBlock()->onUpdate(Level::BLOCK_UPDATE_NORMAL);
+					}
+					$updateBlocks[$index] = true;
+				}
+			}
 			$send[] = new Vector3($block->x - $source->x, $block->y - $source->y, $block->z - $source->z);
 		}
 		$pk = new ExplodePacket();
