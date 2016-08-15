@@ -28,6 +28,7 @@ Thanks Genisys , ClearSky and PocketMine and ImagicalMine for code :)
 Apollo is a perfect software for your server with :
 
  - New better and epic world with epic chunks loaded
+ - XBOX support
  - Bugs fixed
  - More TNT performance ( support 500 TNT without lag with official configurations : apollo.yml, pocketmine.yml )
  - Redstone performance,all epic mecanism redstone work
