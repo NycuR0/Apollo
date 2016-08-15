@@ -69,7 +69,7 @@ class Explosion extends Level{ //implements vector iterator
 							}
 							$block = $this->level->getBlock($vBlock);
 							if($block->getId() !== 0){
-								$blastForce -= ($block->getHardness() / 5 + 0.3) * $this->stepLen;
+								$blastForce -= ($block->getResistance() / 5 + 0.3) * $this->stepLen;
 								if($blastForce > 0){
 									if(!isset($this->affectedBlocks[$index = Level::blockHash((int) $block->x, (int) $block->y, (int) $block->z)])){
 										$this->affectedBlocks[$index] = $block;
