@@ -153,6 +153,19 @@ class Explosion extends Level{ //implements vector iterator
 				}
 			}
 			$this->level->setBlockIdAt((int) $block->x, (int) $block->y, (int) $block->z, 0);
+			
+			$pos = new Vector3($block->x, $block->y, $block->z);
+
+			for($side = 0; $side < 5; $side++){
+				$sideBlock = $pos->getSide($side);
+				if(!isset($this->affectedBlocks[$index = Level::blockHash($sideBlock->x, $sideBlock->y, $sideBlock->z)]) and !isset($updateBlocks[$index])){
+					$this->level->getServer()->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->level->getBlock($sideBlock)));
+					if(!$ev->isCancelled()){
+						$ev->getBlock()->onUpdate(Level::BLOCK_UPDATE_NORMAL);
+					}
+					$updateBlocks[$index] = true;
+				}
+			}
 			$send[] = new Vector3($block->x - $source->x, $block->y - $source->y, $block->z - $source->z);
 		}
 		$pk = new ExplodePacket();
