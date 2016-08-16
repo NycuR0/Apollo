@@ -1,6 +1,6 @@
 <?php
 /*
-Finish
+Need add cocoa beans variable populator
 */
 namespace pocketmine\level\generator\normal\biome;
 use pocketmine\level\generator\populator\Sugarcane;
@@ -20,8 +20,6 @@ class JungleBiome extends GrassyBiome{
 		$tallGrass->setBaseAmount(10);
 		
 		$melon = new Melon();
-		$melon->setBaseAmount(0);
-		$melon->setRandomAmount(1);
 		$this->addPopulator($melon);
 		
 		$cocoaBeans = new CocoaBeans();
