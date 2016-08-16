@@ -22,7 +22,7 @@ Thanks Genisys , ClearSky and PocketMine and ImagicalMine for code :)
 
 ## Features
 
-- Worlds: Generator has been improved and more biomes
+- Worlds: Generator has been improved and more biomes!
 - Little to no lag at all!
 
 Apollo is a perfect software for your server with :
