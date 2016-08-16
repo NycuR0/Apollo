@@ -69,6 +69,8 @@ class BiomeSelector{
 				return Biome::TAIGA;
 			}elseif($temperature < 0.75){
 				return Biome::FOREST;
+			}elseif($temperature < 0.95){
+				return Biome::JUNGLE;
 			}else{
 				return Biome::BIRCH_FOREST;
 			}
@@ -79,10 +81,6 @@ class BiomeSelector{
 		}elseif($rainfall < 0.70){
 			if($temperature < 0.90){
 				return Biome::ROOFED_FOREST;
-			}elseif($temperature < 0.95){
-				return Biome::JUNGLE;
-			}else{
-				return Biome::MESA;
 			}
 		}else{
 			if($temperature < 0.25){
