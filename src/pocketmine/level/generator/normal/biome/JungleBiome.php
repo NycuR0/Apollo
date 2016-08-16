@@ -8,6 +8,7 @@ use pocketmine\level\generator\populator\TallGrass;
 use pocketmine\level\generator\populator\Tree;
 use pocketmine\level\generator\populator\Melon;
 use pocketmine\level\generator\populator\CocoaBeans;
+use pocketmine\level\generator\populator\Leaves;
 use pocketmine\block\Sapling;
 class JungleBiome extends GrassyBiome{
 	public function __construct(){
@@ -19,6 +20,9 @@ class JungleBiome extends GrassyBiome{
 		$trees = new Tree(Sapling::JUNGLE);
 		$tallGrass->setBaseAmount(10);
 		
+		$leaves = new Leaves();
+		$leaves->setBaseAmount(6);
+		$leaves->setRandomAmount(10);
 		$melon = new Melon();
 		$this->addPopulator($melon);
 		
@@ -28,6 +32,7 @@ class JungleBiome extends GrassyBiome{
 		$this->addPopulator($cocoaBeans);
 		$this->addPopulator($sugarcane);
 		$this->addPopulator($tallGrass);
+		$this->addPopulator($leaves);
 		$this->addPopulator($trees);
 		$this->setElevation(64, 90);
 		
