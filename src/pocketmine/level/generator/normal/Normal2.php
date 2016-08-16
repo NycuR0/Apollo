@@ -80,53 +80,8 @@ class Normal2 extends Normal{
 		$this->noiseBaseGround = new Simplex($this->random, 4, 1 / 4, 1 / 64);
 		$this->noiseRiver = new Simplex($this->random, 2, 1, 1 / 512);
 		$this->random->setSeed($this->level->getSeed());
-		$this->selector = new BiomeSelector($this->random, function($temperature, $rainfall){
-                        if($rainfall < 0.25){
-				if($temperature < 0.7){
-					return Biome::OCEAN;
-				}elseif($temperature < 0.85){
-					return Biome::RIVER;
-				}elseif($temperature < 0.90){
-					return Biome::MUSHROOM_ISLAND;
-				}else{
-					return Biome::SWAMP;
-				}
-			}elseif($rainfall < 0.60){
-				if($temperature < 0.25){
-					return Biome::ICE_PLAINS;
-				}elseif($temperature < 0.75){
-					return Biome::PLAINS;
-				}else{
-					return Biome::DESERT;
-				}
-			}elseif($rainfall < 0.80){
-				if($temperature < 0.25){
-					return Biome::TAIGA;
-				}elseif($temperature < 0.75){
-					return Biome::FOREST;
-				}else{
-					return Biome::BIRCH_FOREST;
-				}
-			}elseif($rainfall < 0.70){
-				if($temperature < 0.90){
-					return Biome::ROOFED_FOREST;
-				}elseif($temperature < 0.95){
-					return Biome::JUNGLE;
-				}else{
-					return Biome::MESA;
-				}
-			}else{
-				if($temperature < 0.25){
-					return Biome::FROZEN_RIVER;
-				}elseif($temperature <= 0.00){
-					return Biome::FROZEN_OCEAN;
-				}elseif($temperature <= 2.0){
-					return Biome::MESA;
-				}else{
-					return Biome::SAVANNA;
-				}
-			}
-		}, Biome::getBiome(Biome::OCEAN));
+		
+		$this->selector = new BiomeSelector($this->random, Biome::getBiome(Biome::OCEAN));
 
 		$this->heightOffset = $random->nextRange(-5, 3);
 
