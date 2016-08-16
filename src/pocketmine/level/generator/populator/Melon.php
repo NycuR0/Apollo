@@ -26,7 +26,7 @@ class Melon extends VariableAmountPopulator{
 				$zz = $z - 7 + $random->nextRange(0, 15);
 				$yy = $this->getHighestWorkableBlock($xx, $zz);
 				if($yy !== -1 and $this->canMelonStay($xx, $yy, $zz)){
-					$this->level->setBlockIdAt($xx, $yy, $zz, (($random->nextRange(0, 4)) == 0 ? Block::MELON_BLOCK : Block::LEAVES));
+					$this->level->setBlockIdAt($xx, $yy, $zz, (($random->nextRange(0, 4)) == 0 ? Block::MELON_BLOCK : Block::LOG));
 				}
 			}
 		}
