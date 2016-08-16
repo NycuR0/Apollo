@@ -34,7 +34,7 @@ class Pumpkin extends VariableAmountPopulator{
 	private function canPumpkinStay($x, $y, $z){
 		$c = $this->level->getBlockIdAt($x, $y, $z);
 		$b = $this->level->getBlockIdAt($x, $y - 1, $z);
-		return ($c === Block::AIR or $c === Block::SNOW_LAYER) and ($b === Block::GRASS or (!Block::$transparent[$b]));
+		return ($c === Block::AIR or $c === Block::SNOW_LAYER) and ($b === Block::MYCELIUM or (!Block::$transparent[$b]));
 	}
 	private function getHighestWorkableBlock($x, $z){
 		for($y = 127; $y >= 0; --$y){
