@@ -99,7 +99,7 @@ class BiomeSelector{
 
 		for($i = 0; $i < 64; ++$i){
 			for($j = 0; $j < 64; ++$j){
-				$this->map[$i + ($j << 6)] = call_user_func($this->lookup, $i / 63, $j / 63);
+				$this->map[$i + ($j << 6)] = $this->lookup($i / 63, $j / 63);
 			}
 		}
 	}
