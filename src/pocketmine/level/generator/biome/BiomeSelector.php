@@ -76,11 +76,11 @@ class BiomeSelector{
 				return Biome::ICE_PLAINS;
                         }
                 }
-                if($rainfall <= 0.80){
+                /*if($rainfall <= 0.80){
                         if($temperature <= 0.95){
 				return Biome::JUNGLE;
                         }
-                }
+                }*/
                 if($rainfall <= 0.80){
                         if($temperature <= 2.00){
 				return Biome::MESA;
