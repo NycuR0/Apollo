@@ -26,7 +26,7 @@ class CocoaBeans extends VariableAmountPopulator{
 	}
 	private function canCocoaBeansStay($x, $y, $z){
 		$b = $this->level->getBlockIdAt($x, $y, $z);
-		return ($b === Block::AIR or $b === Block::SNOW_LAYER) and $this->level->getBlockIdAt($x, $y - 1, $z) === Block::LOG(3);
+		return ($b === Block::AIR or $b === Block::SNOW_LAYER) and $this->level->getBlockIdAt($x, $y - 1, $z) === Block::WOOD(3);
 	}
 	private function getHighestWorkableBlock($x, $z){
 		for($y = 127; $y >= 0; --$y){
