@@ -13,8 +13,8 @@ class FrozenRiverBiome extends RiverBiome{
 		$trees->setRandomAmount(1);
 		$this->addPopulator($trees);
 		
-		$this->temperature = 0.0;
-		$this->rainfall = 2.0;
+		$this->temperature = 0.00;
+		$this->rainfall = 2.00;
 		$this->setElevation(56, 74);
 		$this->setGroundCover([
 			Block::get(Block::SNOW_LAYER, 0),
