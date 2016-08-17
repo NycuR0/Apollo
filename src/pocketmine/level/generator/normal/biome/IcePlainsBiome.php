@@ -6,7 +6,7 @@ namespace pocketmine\level\generator\normal\biome;
 use pocketmine\level\generator\populator\TallGrass;
 use pocketmine\level\generator\populator\Tree;
 use pocketmine\block\Sapling;
-class IcePlainsBiome extends SnowyBiome{
+class IcePlainsBiome extends PlainBiome{
 	public function __construct(){
 		parent::__construct();
 		$tallGrass = new TallGrass();
