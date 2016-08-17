@@ -82,6 +82,10 @@ class BiomeSelector{
 			if($temperature < 0.90){
 				return Biome::ROOFED_FOREST;
 			}
+		}elseif($rainfall < 0.20){
+			if($temperature < 1.20){
+				return Biome::SAVANNA;
+			}
 		}else{
 			if($temperature < 0.25){
 				return Biome::FROZEN_RIVER;
