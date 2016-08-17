@@ -12,7 +12,6 @@ use pocketmine\level\generator\normal\biome\IcePlainsBiome;
 use pocketmine\level\generator\normal\biome\MushroomIslandBiome;
 use pocketmine\level\generator\normal\biome\MountainsBiome;
 use pocketmine\level\generator\normal\biome\OceanBiome;
-use pocketmine\level\generator\normal\biome\FrozenOceanBiome;
 use pocketmine\level\generator\normal\biome\PlainBiome;
 use pocketmine\level\generator\normal\biome\RiverBiome;
 use pocketmine\level\generator\normal\biome\FrozenRiverBiome;
@@ -36,7 +35,6 @@ abstract class Biome{
 	const RIVER = 7;
 	const HELL = 8;
 	const END = 9;
-	const FROZEN_OCEAN = 10;
 	const FROZEN_RIVER = 11;
 	const ICE_PLAINS = 12;
 	const ICE_MOUNTAINS = 13;
@@ -174,7 +172,6 @@ Mountains and Small Mountains is not principal biomes. Fix in future
 */
 	public static function init(){
 		self::register(self::OCEAN, new OceanBiome());
-		self::register(self::FROZEN_OCEAN, new FrozenOceanBiome());
 		self::register(self::PLAINS, new PlainBiome());
 		self::register(self::DESERT, new DesertBiome());
 		self::register(self::MOUNTAINS, new MountainsBiome()); 
