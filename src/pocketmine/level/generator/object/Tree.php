@@ -26,9 +26,9 @@ abstract class Tree extends Object{
 				break;
 			case Sapling::BIRCH:
 				if($random->nextBoundedInt(39) === 0){
-					$tree = new BirchTree(true, false);
-				}else{
 					$tree = new BirchTree(true, true);
+				}else{
+					$tree = new BirchTree(false);
          			}
 				break;
 			case Sapling::JUNGLE:
