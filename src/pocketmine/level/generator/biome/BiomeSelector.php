@@ -57,8 +57,10 @@ class BiomeSelector{
                         	return Biome::DESERT;
                         }
                 }elseif($rainfall <= 2.00){
-                        if($temperature >= 0.00){
+                        if($temperature == 0.00){
 				return Biome::FROZEN_RIVER;
+                        }else{
+                        	return Biome::RIVER;
                         }
                 }elseif($rainfall < 0.80){
 			if($temperature < 0.95){
@@ -75,6 +77,8 @@ class BiomeSelector{
                 }elseif($rainfall < 0.70){
                         if($temperature < 0.50){
 				return Biome::RIVER;
+                        }else{
+                        	return Biome::TAIGA;
                         }
                 }elseif($rainfall < 0.90){
                         if($temperature < 0.70){
@@ -87,10 +91,14 @@ class BiomeSelector{
                 }elseif($rainfall < 0.20){
                         if($temperature < 1.20){
 				return Biome::SAVANNA;
+                        }else{
+                        	return Biome::MESA;
                         }
                 }else{
                         if($temperature <= 2.00){
 				return Biome::MESA;
+                        }else{
+                        	return Biome::BIRCH_FOREST;
                         }
                 }
 	}
