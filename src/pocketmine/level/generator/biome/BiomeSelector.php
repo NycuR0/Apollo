@@ -54,71 +54,59 @@ class BiomeSelector{
                 if($rainfall >= 0.00){
                         if($temperature < 2.00){
 				return Biome::DESERT;
+                        }elseif($temperature < 0.80){
+                        	return Biome::BEACH;
+                        }else{
+                        	return Biome::MESA;
                         }
-                }
-                if($rainfall < 0.50){
+                }elseif($rainfall < 0.50){
                         if($temperature < 0.60){
 				return Biome::BIRCH_FOREST;
-                        }
-                }
-                if($rainfall < 0.50){
-                        if($temperature < 0.70){
+                        }elseif($temperature < 0.50){
+				return Biome::OCEAN;
+                        }elseif($temperature < 0.70){
 				return Biome::FOREST;
+                        }else{
+                        	return Biome::DESERT;
                         }
-                }
-                if($rainfall < 2.00){
+                }elseif($rainfall <= 2.00){
                         if($temperature >= 0.00){
 				return Biome::FROZEN_RIVER;
                         }
-                }
-                if($rainfall < 0.80){
-                        if($temperature < 0.05){
-				return Biome::ICE_PLAINS;
-                        }
-                }
-                /*if($rainfall <= 0.80){
-                        if($temperature <= 0.95){
+                }elseif($rainfall < 0.80){
+			if($temperature < 0.95){
 				return Biome::JUNGLE;
-                        }
-                }*/
-                if($rainfall < 0.80){
-                        if($temperature < 2.00){
+			}elseif($temperature <= 2.00){
 				return Biome::MESA;
+			}elseif($temperature < 0.05){
+				return Biome::TAIGA;
+                        }else{
+                        	return Biome::ICE_PLAINS;
                         }
-                }
-                if($rainfall < 0.50){
-                        if($temperature < 0.50){
-				return Biome::OCEAN;
-                        }
-                }
-                if($rainfall < 0.40){
+                }elseif($rainfall < 0.40){
                         if($temperature < 0.80){
 				return Biome::PLAINS;
                         }
-                }
-                if($rainfall < 0.70){
+                }elseif($rainfall < 0.70){
                         if($temperature < 0.50){
 				return Biome::RIVER;
                         }
-                }
-                if($rainfall < 0.90){
+                }elseif($rainfall < 0.90){
                         if($temperature < 0.70){
 				return Biome::ROOFED_FOREST;
                         }
-                }
-                if($rainfall < 0.20){
+                        }elseif($temperature < 0.80){
+				return Biome::SWAMP;
+                        }else{
+                        	return Biome::OCEAN;
+                        }
+                }elseif($rainfall < 0.20){
                         if($temperature < 1.20){
 				return Biome::SAVANNA;
                         }
-                }
-                if($rainfall < 0.90){
-                        if($temperature < 0.80){
-				return Biome::SWAMP;
-                        }
-                }
-                if($rainfall < 0.80){
-                        if($temperature < 0.05){
-				return Biome::TAIGA;
+                }else{
+                        if($temperature <= 2.00){
+				return Biome::MESA;
                         }
                 }
 	}
