@@ -34,8 +34,8 @@ class JungleBiome extends GrassyBiome{
 		$this->addPopulator($tallGrass);
 		$this->addPopulator($leaves);
 		$this->addPopulator($trees);
-		$this->setElevation(64, 90);
-		
+		//$this->setElevation(64, 90);
+		$this->setElevation(63, 68);
 		$this->temperature = 0.95;
 		$this->rainfall = 0.80;
 	}
