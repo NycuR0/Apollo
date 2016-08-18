@@ -46,12 +46,12 @@ class BiomeSelector{
 	}
 	
 	public function lookup($temperature, $rainfall){
-                if($rainfall <= 0.00){
+                if($rainfall >= 0.00){
                         if($temperature < 0.80){
 				return Biome::BEACH;
                         }
                 }
-                if($rainfall <= 0.00){
+                if($rainfall >= 0.00){
                         if($temperature < 2.00){
 				return Biome::DESERT;
                         }
@@ -67,12 +67,12 @@ class BiomeSelector{
                         }
                 }
                 if($rainfall < 2.00){
-                        if($temperature <= 0.00){
+                        if($temperature => 0.00){
 				return Biome::FROZEN_RIVER;
                         }
                 }
                 if($rainfall < 0.80){
-                        if($temperature <= 0.05){
+                        if($temperature < 0.05){
 				return Biome::ICE_PLAINS;
                         }
                 }
@@ -82,7 +82,7 @@ class BiomeSelector{
                         }
                 }*/
                 if($rainfall < 0.80){
-                        if($temperature <= 2.00){
+                        if($temperature < 2.00){
 				return Biome::MESA;
                         }
                 }
