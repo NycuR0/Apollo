@@ -49,8 +49,6 @@ class BiomeSelector{
                 if($rainfall < 0.25){ //corect is 0.50,buggy for 0.50
                         if($temperature < 0.60){
 				return Biome::BIRCH_FOREST;
-                        }elseif($temperature < 0.50){
-				return Biome::OCEAN;
                         }elseif($temperature < 0.70){
 				return Biome::FOREST;
                         }else{
