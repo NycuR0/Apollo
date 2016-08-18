@@ -5,8 +5,7 @@ Note: You may **not** copy our generator , updater without NycuRO's permission. 
 
 **TravisCI Build Status: Master Branch** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=master)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
 
-**CircleCI Build Status** [![BuildStatus](https://circleci.com/gh/NycuRO/Apollo.svg?style=shield)](https://circleci.com/gh/NycuRO/Apollo "CircleCI Build Status")
-
+**CircleCI Build Status** [![CircleCI](https://circleci.com/gh/NycuRO/Apollo.svg?style=svg)](https://circleci.com/gh/NycuRO/Apollo)
 
 ## Information
 
@@ -14,11 +13,9 @@ Note: You may **not** copy our generator , updater without NycuRO's permission. 
 - We are a edited version of Genisys. We have edited their generators to our version and have improved the performance
 - You can download .phar from Circle CI. Tab to latest build,tap to artifacts selection,tap to DevTools and download Apollo1.0dev.phar
 
-
 ## Thanks
 
 Thanks Genisys , ClearSky and PocketMine and ImagicalMine for code :)
-
 
 ## Features
 
