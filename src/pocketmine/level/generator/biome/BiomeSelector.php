@@ -46,11 +46,11 @@ class BiomeSelector{
 	}
 	
 	public function lookup($temperature, $rainfall){
-                if($rainfall >= 0.00){
+                /*if($rainfall >= 0.00){
                         if($temperature < 0.80){
 				return Biome::BEACH;
                         }
-                }
+                }*/
                 if($rainfall >= 0.00){
                         if($temperature < 2.00){
 				return Biome::DESERT;
