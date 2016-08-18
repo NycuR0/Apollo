@@ -26,7 +26,8 @@ class RoofedForestBiome extends GrassyBiome{
 		$this->addPopulator($sugarcane);
 		$this->addPopulator($tallGrass);
 		$this->addPopulator($trees);
-		$this->setElevation(66, 84);
+		//$this->setElevation(66, 84); this is correct,but trees is not generated with that,need fix
+		$this->setElevation(63, 68);
 		$this->temperature = 0.70;
 		$this->rainfall = 0.90;
 	}
