@@ -94,7 +94,6 @@ class BiomeSelector{
                 }elseif($rainfall < 0.90){
                         if($temperature < 0.70){
 				return Biome::ROOFED_FOREST;
-                        }
                         }elseif($temperature < 0.80){
 				return Biome::SWAMP;
                         }else{
