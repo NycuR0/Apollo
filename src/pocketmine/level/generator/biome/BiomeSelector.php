@@ -67,7 +67,7 @@ class BiomeSelector{
                         }
                 }
                 if($rainfall < 2.00){
-                        if($temperature => 0.00){
+                        if($temperature >= 0.00){
 				return Biome::FROZEN_RIVER;
                         }
                 }
