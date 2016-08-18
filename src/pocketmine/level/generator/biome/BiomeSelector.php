@@ -46,20 +46,7 @@ class BiomeSelector{
 	}
 	
 	public function lookup($temperature, $rainfall){
-                /*if($rainfall >= 0.00){
-                        if($temperature < 0.80){
-				return Biome::BEACH;
-                        }
-                }*/
-                if($rainfall >= 0.00){
-                        if($temperature < 2.00){
-				return Biome::DESERT;
-                        }elseif($temperature < 0.80){
-                        	return Biome::BEACH;
-                        }else{
-                        	return Biome::MESA;
-                        }
-                }elseif($rainfall < 0.50){
+                if($rainfall < 0.25){ //corect is 0.50,buggy for 0.50
                         if($temperature < 0.60){
 				return Biome::BIRCH_FOREST;
                         }elseif($temperature < 0.50){
@@ -76,8 +63,6 @@ class BiomeSelector{
                 }elseif($rainfall < 0.80){
 			if($temperature < 0.95){
 				return Biome::JUNGLE;
-			}elseif($temperature <= 2.00){
-				return Biome::MESA;
 			}elseif($temperature < 0.05){
 				return Biome::TAIGA;
                         }else{
