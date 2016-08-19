@@ -1,13 +1,14 @@
 language: php
 
 php:
- - 7.1
+ - 7.0.10
 
 branches:
  - master
  - more-say-command
 
 before_script:
+ - phpenv config-rm xdebug.ini
  - mkdir plugins
  - wget -O plugins/DevTools.phar https://github.com/PocketMine/DevTools/releases/download/v1.11.0/DevTools_v1.11.0.phar
  - pecl install channel://pecl.php.net/pthreads-3.1.6
