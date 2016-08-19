@@ -269,6 +269,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	protected $autoJump = true;
 
 	protected $allowFlight = false;
+	
+	protected $noClip = false;
 
 	private $needACK = [];
 
@@ -529,6 +531,15 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		return $this->playedBefore;
 	}
 
+	public function setAutoJump($value){
+		$this->autoJump = $value;
+		$this->sendSettings();
+	}
+	
+	public function hasAutoJump() : bool{
+		return $this->autoJump;
+	}
+
 	public function setAllowFlight($value){
 		$this->allowFlight = (bool) $value;
 		$this->sendSettings();
@@ -538,13 +549,13 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		return $this->allowFlight;
 	}
 
-	public function setAutoJump($value){
-		$this->autoJump = $value;
+	public function setNoClip($value){
+		$this->noClip = $value;
 		$this->sendSettings();
 	}
 
-	public function hasAutoJump() : bool{
-		return $this->autoJump;
+	public function getNoClip() : bool{
+		return $this->noClip;
 	}
 
 	/**
@@ -1355,6 +1366,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$this->gamemode = $gm;
 
 		$this->allowFlight = $this->isCreative();
+		$this->noClip = $this->isSpectator();
 
 		if($this->isSpectator()){
 			$this->despawnFromAll();
@@ -1455,7 +1467,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$flags |= 0x80;
 		}
 
-		if($this->isSpectator()){
+		if($this->noClip){
 			$flags |= 0x100;
 		}
 
