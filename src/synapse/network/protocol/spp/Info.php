@@ -32,4 +32,5 @@ class Info{
 	const PLAYER_LOGOUT_PACKET = 0x06;
 	const INFORMATION_PACKET = 0x07;
 	const TRANSFER_PACKET = 0x08;
+	const FAST_PLAYER_LIST_PACKET = 0x0a;
 }
