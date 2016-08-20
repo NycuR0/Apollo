@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  *  _____   _____   __   _   _   _____  __    __  _____
@@ -18,21 +17,16 @@
  * @link https://itxtech.org
  *
  */
-
 namespace synapse\network\protocol\spp;
-
 use pocketmine\utils\UUID;
-
 class PlayerLoginPacket extends DataPacket{
 	const NETWORK_ID = Info::PLAYER_LOGIN_PACKET;
-
 	/** @var UUID */
 	public $uuid;
 	public $address;
 	public $port;
 	public $isFirstTime;
 	public $cachedLoginPacket;
-
 	public function encode(){
 		$this->reset();
 		$this->putUUID($this->uuid);
@@ -41,7 +35,6 @@ class PlayerLoginPacket extends DataPacket{
 		$this->putByte($this->isFirstTime ? 1 : 0);
 		$this->putString($this->cachedLoginPacket);
 	}
-
 	public function decode(){
 		$this->uuid = $this->getUUID();
 		$this->address = $this->getString();
