@@ -26,6 +26,7 @@ use synapse\network\protocol\spp\DataPacket;
 use synapse\network\protocol\spp\DisconnectPacket;
 use synapse\network\protocol\spp\HeartbeatPacket;
 use synapse\network\protocol\spp\Info;
+use synapse\network\protocol\spp\FastPlayerListPacket;
 use synapse\network\protocol\spp\InformationPacket;
 use synapse\network\protocol\spp\PlayerLoginPacket;
 use synapse\network\protocol\spp\PlayerLogoutPacket;
@@ -130,5 +131,6 @@ class SynapseInterface{
 		$this->registerPacket(Info::PLAYER_LOGOUT_PACKET, PlayerLogoutPacket::class);
 		$this->registerPacket(Info::INFORMATION_PACKET, InformationPacket::class);
 		$this->registerPacket(Info::TRANSFER_PACKET, TransferPacket::class);
+		$this->registerPacket(Info::FAST_PLAYER_LIST_PACKET, FastPlayerListPacket::class);
 	}
 }
