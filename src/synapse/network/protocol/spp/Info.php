@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  *  _____   _____   __   _   _   _____  __    __  _____
@@ -18,12 +17,9 @@
  * @link https://itxtech.org
  *
  */
-
 namespace synapse\network\protocol\spp;
-
 class Info{
 	const CURRENT_PROTOCOL = 6;
-
 	const HEARTBEAT_PACKET = 0x01;
 	const CONNECT_PACKET = 0x02;
 	const DISCONNECT_PACKET = 0x03;
