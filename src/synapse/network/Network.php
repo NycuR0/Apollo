@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  *  _____   _____   __   _   _   _____  __    __  _____
@@ -20,7 +19,5 @@
  */
  
 namespace synapse\network;
-
 class Network{
-
 }
