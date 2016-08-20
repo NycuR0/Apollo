@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  *  _____   _____   __   _   _   _____  __    __  _____
@@ -20,13 +19,13 @@
  */
  
 namespace synapse\network;
-
+use synapse\network\protocol\spp\BroadcastPacket;
 use synapse\network\protocol\spp\ConnectPacket;
 use synapse\network\protocol\spp\DataPacket;
 use synapse\network\protocol\spp\DisconnectPacket;
+use synapse\network\protocol\spp\FastPlayerListPacket;
 use synapse\network\protocol\spp\HeartbeatPacket;
 use synapse\network\protocol\spp\Info;
-use synapse\network\protocol\spp\FastPlayerListPacket;
 use synapse\network\protocol\spp\InformationPacket;
 use synapse\network\protocol\spp\PlayerLoginPacket;
 use synapse\network\protocol\spp\PlayerLogoutPacket;
@@ -34,7 +33,6 @@ use synapse\network\protocol\spp\RedirectPacket;
 use synapse\network\protocol\spp\TransferPacket;
 use synapse\network\synlib\SynapseClient;
 use synapse\Synapse;
-
 class SynapseInterface{
 	private $synapse;
 	private $ip;
@@ -52,30 +50,24 @@ class SynapseInterface{
 		$this->registerPackets();
 		$this->client = new SynapseClient($server->getLogger(), $server->getGenisysServer()->getLoader(), $port, $ip);
 	}
-
 	public function getSynapse(){
 		return $this->synapse;
 	}
-
 	public function reconnect(){
 		$this->client->reconnect();
 	}
-
 	public function shutdown(){
 		$this->client->shutdown();
 	}
-
 	public function putPacket(DataPacket $pk){
 		if(!$pk->isEncoded){
 			$pk->encode();
 		}
 		$this->client->pushMainToThreadPacket($pk->buffer);
 	}
-
 	public function isConnected() : bool{
 		return $this->connected;
 	}
-
 	public function process(){
 		while(strlen($buffer = $this->client->readThreadToMainPacket()) > 0){
 			$this->handlePacket($buffer);
@@ -86,7 +78,6 @@ class SynapseInterface{
 			$this->client->setNeedAuth(false);
 		}
 	}
-
 	/**
 	 * @param $buffer
 	 *
@@ -103,14 +94,12 @@ class SynapseInterface{
 		}
 		return null;
 	}
-
 	public function handlePacket($buffer){
 		if(($pk = $this->getPacket($buffer)) != null){
 			$pk->decode();
 			$this->synapse->handleDataPacket($pk);
 		}
 	}
-
 	/**
 	 * @param int        $id 0-255
 	 * @param DataPacket $class
@@ -118,11 +107,8 @@ class SynapseInterface{
 	public function registerPacket($id, $class) {
 		$this->packetPool[$id] = new $class;
 	}
-
-
 	private function registerPackets() {
 		$this->packetPool = new \SplFixedArray(256);
-
 		$this->registerPacket(Info::HEARTBEAT_PACKET, HeartbeatPacket::class);
 		$this->registerPacket(Info::CONNECT_PACKET, ConnectPacket::class);
 		$this->registerPacket(Info::DISCONNECT_PACKET, DisconnectPacket::class);
@@ -131,6 +117,7 @@ class SynapseInterface{
 		$this->registerPacket(Info::PLAYER_LOGOUT_PACKET, PlayerLogoutPacket::class);
 		$this->registerPacket(Info::INFORMATION_PACKET, InformationPacket::class);
 		$this->registerPacket(Info::TRANSFER_PACKET, TransferPacket::class);
+		$this->registerPacket(Info::BROADCAST_PACKET, BroadcastPacket::class);
 		$this->registerPacket(Info::FAST_PLAYER_LIST_PACKET, FastPlayerListPacket::class);
 	}
 }
