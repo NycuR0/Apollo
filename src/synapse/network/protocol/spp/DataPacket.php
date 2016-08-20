@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  *  _____   _____   __   _   _   _____  __    __  _____
@@ -20,9 +19,7 @@
  */
  
 namespace synapse\network\protocol\spp;
-
 use pocketmine\network\protocol\DataPacket as MCPEDataPacket;
-
 abstract class DataPacket extends MCPEDataPacket{
 	
 }
