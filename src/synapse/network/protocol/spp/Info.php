@@ -22,7 +22,7 @@
 namespace synapse\network\protocol\spp;
 
 class Info{
-	const CURRENT_PROTOCOL = 3;
+	const CURRENT_PROTOCOL = 6;
 
 	const HEARTBEAT_PACKET = 0x01;
 	const CONNECT_PACKET = 0x02;
@@ -32,5 +32,6 @@ class Info{
 	const PLAYER_LOGOUT_PACKET = 0x06;
 	const INFORMATION_PACKET = 0x07;
 	const TRANSFER_PACKET = 0x08;
+	const BROADCAST_PACKET = 0x09;
 	const FAST_PLAYER_LIST_PACKET = 0x0a;
 }
