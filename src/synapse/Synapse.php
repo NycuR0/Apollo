@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  *  _____   _____   __   _   _   _____  __    __  _____
@@ -18,12 +17,11 @@
  * @link https://itxtech.org
  *
  */
-
 namespace synapse;
-
 use pocketmine\Server;
 use pocketmine\utils\MainLogger;
 use pocketmine\utils\Utils;
+use synapse\network\protocol\spp\BroadcastPacket;
 use synapse\network\protocol\spp\ConnectPacket;
 use synapse\network\protocol\spp\DataPacket;
 use synapse\network\protocol\spp\DisconnectPacket;
@@ -35,7 +33,6 @@ use synapse\network\protocol\spp\PlayerLogoutPacket;
 use synapse\network\protocol\spp\RedirectPacket;
 use synapse\network\SynapseInterface;
 use synapse\network\SynLibInterface;
-
 class Synapse{
 	private static $obj = null;
 	/** @var Server */
@@ -65,7 +62,7 @@ class Synapse{
 		]
 	 */
 	private $description;
-
+	private $connectionTime = PHP_INT_MAX;
 	public function __construct(Server $server, array $config){
 		self::$obj = $this;
 		$this->server = $server;
@@ -81,23 +78,18 @@ class Synapse{
 		$this->lastRecvInfo = microtime(true);
 		$this->connect();
 	}
-
 	public function getClientData(){
 		return $this->clientData;
 	}
-
 	public function getGenisysServer(){
 		return $this->server;
 	}
-
 	public function getInterface(){
 		return $this->interface;
 	}
-
 	public static function getInstance(){
 		return self::$obj;
 	}
-
 	public function shutdown(){
 		if($this->verified){
 			$pk = new DisconnectPacket();
@@ -107,19 +99,15 @@ class Synapse{
 			$this->getLogger()->debug("Synapse client has disconnected from Synapse server");
 		}
 	}
-
 	public function getDescription() : string{
 		return $this->description;
 	}
-
 	public function setDescription(string $description){
 		$this->description = $description;
 	}
-
 	public function sendDataPacket(DataPacket $pk){
 		$this->interface->putPacket($pk);
 	}
-
 	public function connect(){
 		$this->verified = false;
 		$pk = new ConnectPacket();
@@ -129,8 +117,8 @@ class Synapse{
 		$pk->maxPlayers = $this->server->getMaxPlayers();
 		$pk->protocol = Info::CURRENT_PROTOCOL;
 		$this->sendDataPacket($pk);
+		$this->connectionTime = microtime(true);
 	}
-
 	public function tick(){
 		$this->interface->process();
 		if((($time = microtime(true)) - $this->lastUpdate) >= 5){//Heartbeat!
@@ -144,28 +132,35 @@ class Synapse{
 		if(((($time = microtime(true)) - $this->lastUpdate) >= 30) and $this->interface->isConnected()){//30 seconds timeout
 			$this->interface->reconnect();
 		}
+		if(microtime(true) - $this->connectionTime >= 15 and !$this->verified){
+			$this->interface->reconnect();
+		}
 	}
-
 	public function getServerIp() : string{
 		return $this->serverIp;
 	}
-
 	public function getPort() : int{
 		return $this->port;
 	}
-
 	public function isMainServer() : bool{
 		return $this->isMainServer;
 	}
-
+ 	public function broadcastPacket(array $players, DataPacket $packet, $direct = false){
+ 		$packet->encode();
+		$pk = new BroadcastPacket();
+ 		$pk->direct = $direct;
+		$pk->payload = $packet->getBuffer();
+ 		foreach($players as $player){
+			$pk->entries[] = $player->getUniqueId();
+ 		}
+ 		$this->sendDataPacket($pk);
+ 	}
 	public function getLogger(){
 		return $this->logger;
 	}
-
 	public function getHash() : string{
 		return $this->serverIp . ":" . $this->port;
 	}
-
 	public function getPacket($buffer){
 		$pid = ord($buffer{0});
 		$start = 1;
@@ -177,16 +172,13 @@ class Synapse{
 			return null;
 		}
 		$data->setBuffer($buffer, $start);
-
 		return $data;
 	}
-
 	public function removePlayer(Player $player){
 		if(isset($this->players[$uuid = $player->getUniqueId()->toBinary()])){
 			unset($this->players[$uuid]);
 		}
 	}
-
 	public function handleDataPacket(DataPacket $pk){
 		$this->logger->debug("Received packet " . $pk::NETWORK_ID . " from {$this->serverIp}:{$this->port}");
 		switch($pk::NETWORK_ID){
@@ -215,7 +207,7 @@ class Synapse{
 						}
 					break;
 					case InformationPacket::TYPE_CLIENT_DATA:
-						$this->clientData = json_decode($pk->message, true);
+						$this->clientData = json_decode($pk->message, true)["clientList"];
 						$this->lastRecvInfo = microtime();
 						break;
 				}
