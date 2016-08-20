@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  *  _____   _____   __   _   _   _____  __    __  _____
@@ -18,18 +17,14 @@
  * @link https://itxtech.org
  *
  */
-
 namespace synapse\network\protocol\spp;
-
 class ConnectPacket extends DataPacket{
 	const NETWORK_ID = Info::CONNECT_PACKET;
-
 	public $protocol = Info::CURRENT_PROTOCOL;
 	public $maxPlayers;
 	public $isMainServer;
 	public $description;
 	public $password;
-
 	public function encode(){
 		$this->reset();
 		$this->putInt($this->protocol);
@@ -38,7 +33,6 @@ class ConnectPacket extends DataPacket{
 		$this->putString($this->description);
 		$this->putString($this->password);
 	}
-
 	public function decode(){
 		$this->protocol = $this->getInt();
 		$this->maxPlayers = $this->getInt();
@@ -46,5 +40,4 @@ class ConnectPacket extends DataPacket{
 		$this->description = $this->getString();
 		$this->password = $this->getString();
 	}
-
 }
