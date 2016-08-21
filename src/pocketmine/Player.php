@@ -1210,7 +1210,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			return false;
 		}
 
-		$identifier = $this->interface->putPacket($this, $packet, $needACK, $immediate);
+		$identifier = $this->interface->putPacket($this, $packet, $needACK, false);
 
 		if($needACK and $identifier !== null){
 			$this->needACK[$identifier] = false;
