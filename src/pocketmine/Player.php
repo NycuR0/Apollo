@@ -485,7 +485,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		/*
 		TODO:check the keys in the login function and return  if they are valid or not.
 		*/
-	}
+	
 	/**
 	 * This contains data recieved in the LoginPacket
 	 * Hint: We do not know what all the data really means.
