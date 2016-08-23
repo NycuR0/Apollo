@@ -473,18 +473,9 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	/**
 	 * Returns yet very unknown stuff. TODO:use this for authentication!
 	*/
-	public function isXboxAuthenticated(){
-		return $this->isXbox && $this->isXboxValid();
+	public function getXboxData(){
+		return $this->xboxData;
 	}
-	
-	/**
-	 * @deprecated THIS FUNCTION MAY CHANGE ITS NAME DISAPPEAR AT ANY TIME.
-	*/
-	public function isXboxValid(){
-		return true;
-		/*
-		TODO:check the keys in the login function and return  if they are valid or not.
-		*/
 	
 	/**
 	 * This contains data recieved in the LoginPacket
