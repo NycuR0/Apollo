@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  *  ____            _        _   __  __ _                  __  __ ____
@@ -18,28 +17,21 @@
  *
  *
 */
-
 namespace pocketmine\inventory;
-
 use pocketmine\item\Item;
 use pocketmine\Server;
 use pocketmine\utils\UUID;
 use pocketmine\math\Vector2;
-
 class ShapedRecipe implements Recipe{
 	/** @var Item */
 	private $output;
-
 	private $id = null;
-
 	/** @var string[] */
 	private $shape = [];
-
 	/** @var Item[][] */
 	private $ingredients = [];
 	/** @var Vector2[][] */
 	private $shapeItems = [];
-
 	/**
 	 * @param Item     $result
 	 * @param string[] $shape
@@ -61,7 +53,6 @@ class ShapedRecipe implements Recipe{
 			$len = strlen($row);
 			for($i = 0; $i < $len; ++$i){
 				$this->shape[$row{$i}] = null;
-
 				if(!isset($this->shapeItems[$row{$i}])){
 					$this->shapeItems[$row{$i}] = [new Vector2($i, $y)];
 				}else{
@@ -69,34 +60,26 @@ class ShapedRecipe implements Recipe{
 				}
 			}
 		}
-
 		$this->output = clone $result;
 	}
-
 	public function getWidth(){
 		return count($this->ingredients[0]);
 	}
-
 	public function getHeight(){
 		return count($this->ingredients);
 	}
-
 	public function getResult(){
 		return $this->output;
 	}
-
 	public function getId(){
 		return $this->id;
 	}
-
 	public function setId(UUID $id){
 		if($this->id !== null){
 			throw new \InvalidStateException("Id is already set");
 		}
-
 		$this->id = $id;
 	}
-
 	/**
 	 * @param string $key
 	 * @param Item   $item
@@ -108,18 +91,16 @@ class ShapedRecipe implements Recipe{
 		if(!array_key_exists($key, $this->shape)){
 			throw new \Exception("Symbol does not appear in the shape: " . $key);
 		}
-
+		//Quick hack to fix W10 bugs. Whose dumb idea was it to make this happen -_-
+		$item->setCount(1);
 		$this->fixRecipe($key, $item);
-
 		return $this;
 	}
-
 	protected function fixRecipe($key, $item){
 		foreach($this->shapeItems[$key] as $entry){
 			$this->ingredients[$entry->y][$entry->x] = clone $item;
 		}
 	}
-
 	/**
 	 * @return Item[][]
 	 */
@@ -135,10 +116,25 @@ class ShapedRecipe implements Recipe{
 				}
 			}
 		}
-
 		return $ingredients;
 	}
-
+	
+	/**
+ 	 * @return Item[]
+ 	 */
+ 	public function getIngredientList(){
+ 		$ingredients = [];
+ 		for ($x = 0; $x < 3; ++$x){
+ 			for ($y = 0; $y < 3; ++$y){
+ 				if (!empty($this->ingredients[$x][$y])){
+ 					if ($this->ingredients[$x][$y]->getId() !== Item::AIR){
+ 						$ingredients[] = clone $this->ingredients[$x][$y];
+ 					}
+ 				}
+ 			}
+ 		}
+ 		return $ingredients;
+ 	}
 	/**
 	 * @param $x
 	 * @param $y
@@ -147,14 +143,12 @@ class ShapedRecipe implements Recipe{
 	public function getIngredient($x, $y){
 		return isset($this->ingredients[$y][$x]) ? $this->ingredients[$y][$x] : Item::get(Item::AIR);
 	}
-
 	/**
 	 * @return string[]
 	 */
 	public function getShape(){
 		return $this->shape;
 	}
-
 	public function registerToCraftingManager(){
 		Server::getInstance()->getCraftingManager()->registerShapedRecipe($this);
 	}
