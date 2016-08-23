@@ -139,4 +139,7 @@ abstract class Armor extends Item{
 	public function isBoots(){
 		return false;
 	}
+	public function canBeDamaged(){
+		return true;
+	}
 }
