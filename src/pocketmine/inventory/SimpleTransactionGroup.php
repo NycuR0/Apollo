@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  *  ____            _        _   __  __ _                  __  __ ____
@@ -18,14 +17,11 @@
  *
  *
 */
-
 namespace pocketmine\inventory;
-
 use pocketmine\event\inventory\InventoryTransactionEvent;
 use pocketmine\item\Item;
 use pocketmine\Player;
 use pocketmine\Server;
-
 /**
  * This TransactionGroup only allows doing Transaction between one / two inventories
  */
@@ -34,13 +30,10 @@ class SimpleTransactionGroup implements TransactionGroup{
 	protected $hasExecuted = false;
 	/** @var Player */
 	protected $source = null;
-
 	/** @var Inventory[] */
 	protected $inventories = [];
-
 	/** @var Transaction[] */
 	protected $transactions = [];
-
 	/**
 	 * @param Player $source
 	 */
@@ -48,26 +41,21 @@ class SimpleTransactionGroup implements TransactionGroup{
 		$this->creationTime = microtime(true);
 		$this->source = $source;
 	}
-
 	/**
 	 * @return Player
 	 */
 	public function getSource(){
 		return $this->source;
 	}
-
 	public function getCreationTime(){
 		return $this->creationTime;
 	}
-
 	public function getInventories(){
 		return $this->inventories;
 	}
-
 	public function getTransactions(){
 		return $this->transactions;
 	}
-
 	public function addTransaction(Transaction $transaction){
 		if(isset($this->transactions[spl_object_hash($transaction)])){
 			return;
@@ -84,7 +72,6 @@ class SimpleTransactionGroup implements TransactionGroup{
 		$this->transactions[spl_object_hash($transaction)] = $transaction;
 		$this->inventories[spl_object_hash($transaction->getInventory())] = $transaction->getInventory();
 	}
-
 	/**
 	 * @param Item[] $needItems
 	 * @param Item[] $haveItems
@@ -105,7 +92,6 @@ class SimpleTransactionGroup implements TransactionGroup{
 				$haveItems[] = $sourceItem;
 			}
 		}
-
 		foreach($needItems as $i => $needItem){
 			foreach($haveItems as $j => $haveItem){
 				if($needItem->deepEquals($haveItem, true, false)){
@@ -122,22 +108,17 @@ class SimpleTransactionGroup implements TransactionGroup{
 				}
 			}
 		}
-
 		return true;
 	}
-
 	public function canExecute(){
 		$haveItems = [];
 		$needItems = [];
-
 		return $this->matchItems($haveItems, $needItems) and count($haveItems) === 0 and count($needItems) === 0 and count($this->transactions) > 0;
 	}
-
 	public function execute(){
-		if($this->hasExecuted() or !$this->canExecute()){
+		if($this->hasExecuted() or (!$this->canExecute() and !$this->source->isDesktop())){
 			return false;
 		}
-
 		Server::getInstance()->getPluginManager()->callEvent($ev = new InventoryTransactionEvent($this));
 		if($ev->isCancelled()){
 			foreach($this->inventories as $inventory){
@@ -146,19 +127,21 @@ class SimpleTransactionGroup implements TransactionGroup{
 				}
 				$inventory->sendContents($this->getSource());
 			}
-
 			return false;
 		}
-
 		foreach($this->transactions as $transaction){
-			$transaction->getInventory()->setItem($transaction->getSlot(), $transaction->getTargetItem());
+			if($this->source->isDesktop()){
+				echo "Handling desktop inventory change\n";
+				$this->source->handleInventoryChange($transaction->getInventory(), $transaction->getSlot(), $transaction->getTargetItem(), $transaction->getSourceItem());
+			}else{
+				echo "Handling PE inventory change\n";
+				$transaction->getInventory()->setItem($transaction->getSlot(), $transaction->getTargetItem());
+			}
+			
 		}
-
 		$this->hasExecuted = true;
-
 		return true;
 	}
-
 	public function hasExecuted(){
 		return $this->hasExecuted;
 	}
