@@ -18,7 +18,6 @@
  *
 */
 namespace pocketmine\inventory;
-
 use pocketmine\block\Planks;
 use pocketmine\block\Quartz;
 use pocketmine\block\Sandstone;
@@ -34,28 +33,21 @@ use pocketmine\utils\UUID;
 use pocketmine\Server;
 use pocketmine\utils\MainLogger;
 use pocketmine\utils\Config;
-
 class CraftingManager{
 	/** @var Recipe[] */
 	public $recipes = [];
-
 	/** @var Recipe[][] */
 	protected $recipeLookup = [];
-
 	/** @var FurnaceRecipe[] */
 	public $furnaceRecipes = [];
-
 	/** @var BrewingRecipe[] */
 	public $brewingRecipes = [];
-
 	private static $RECIPE_COUNT = 0;
-
 	public function __construct(bool $useJson = false){
 		$this->registerBrewingStand();
 		if($useJson){
 			// load recipes from src/pocketmine/recipes.json
 			$recipes = new Config(Server::getInstance()->getFilePath() . "src/pocketmine/resources/recipes.json", Config::JSON, []);
-
 			MainLogger::getLogger()->info("Loading recipes...");
 			foreach($recipes->getAll() as $recipe){
 				switch($recipe["Type"]){
@@ -64,7 +56,6 @@ class CraftingManager{
 						if(count($recipe["Result"]) == 1){
 							$first = $recipe["Result"][0];
 							$result = new ShapelessRecipe(Item::get($first["ID"], $first["Damage"], $first["Count"]));
-
 							foreach($recipe["Ingredients"] as $ingredient){
 								$result->addIngredient(Item::get($ingredient["ID"], $ingredient["Damage"], $ingredient["Count"]));
 							}
@@ -76,7 +67,6 @@ class CraftingManager{
 						if(count($recipe["Result"]) == 1){
 							$first = $recipe["Result"][0];
 							$result = new ShapedRecipeFromJson(Item::get($first["ID"], $first["Damage"], $first["Count"]), $recipe["Height"], $recipe["Width"]);
-
 							$shape = array_chunk($recipe["Ingredients"], $recipe["Width"]);
 							foreach($shape as $y => $row){
 								foreach($row as $x => $ingredient){
@@ -505,69 +495,58 @@ class CraftingManager{
 				"PP ",
 				"PPP"
 			))->setIngredient("P", Item::get(Item::COBBLESTONE, 0, 6)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::STONE_BRICK_STAIRS, 0, 4),
 				"P  ",
 				"PP ",
 				"PPP"
 			))->setIngredient("P", Item::get(Item::STONE_BRICK, 0, 6)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::SLAB, 0, 6),
 				"   ",
 				"PPP",
 				"   "
 			))->setIngredient("P", Item::get(Item::STONE, '', 3)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::SLAB, 5, 6),
 				"   ",
 				"PPP",
 				"   "
 			))->setIngredient("P", Item::get(Item::STONE_BRICK, '', 3)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::STONE_BRICK, 3, 1),
 				"   ",
 				"PP "
 			))->setIngredient("P", Item::get(Item::SLAB, 5, 2)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::SLAB, 1, 6),
 				"PPP",
 				"   ",
 				"   "
 			))->setIngredient("P", Item::get(Item::SANDSTONE, null, 3)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::RED_SANDSTONE_SLAB, 0, 6),
 				"PPP",
 				"   ",
 				"   "
 			))->setIngredient("P", Item::get(Item::RED_SANDSTONE, null, 3)));
-
 			$this->registerRecipe((new ShapedRecipe(Item::get(Item::SANDSTONE, 1, 1),
 				"P ",
 				"P "
 			))->setIngredient("P", Item::get(Item::SLAB, 1, 2)));
-
 			$this->registerRecipe((new ShapedRecipe(Item::get(Item::RED_SANDSTONE, 1, 1),
 				"P ",
 				"P "
 			))->setIngredient("P", Item::get(Item::RED_SANDSTONE_SLAB, 0, 2)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::STONE_BRICK, 0, 4),
 				"XX ",
-				"XX "
+				"XX ",
+				"   "
 			))->setIngredient("X", Item::get(Item::STONE, '', 4)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::QUARTZ_BLOCK, 0, 1),
 				"XX ",
 				"XX ",
 				"   "
 			))->setIngredient("X", Item::get(Item::QUARTZ, 0, 4)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::BRICK_STAIRS, 0, 4),
 				"P  ",
 				"PP ",
 				"PPP"
 			))->setIngredient("P", Item::get(Item::BRICKS_BLOCK, 0, 6)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::BRICKS_BLOCK, 0, 1),
 				"XX ",
 				"XX "
@@ -578,158 +557,130 @@ class CraftingManager{
 				" X ",
 				"   "
 			))->setIngredient("X", Item::get(Item::BRICK, 0, 3)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::SLAB, 4, 6),
 				"   ",
 				"PPP",
 				"   "
 			))->setIngredient("P", Item::get(Item::BRICKS_BLOCK, 0, 3)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::QUARTZ_BLOCK, 1, 1),
 				"   ",
 				"PP "
 			))->setIngredient("P", Item::get(Item::SLAB, 6, 2)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::SLAB, 3, 6),
 				"   ",
 				"PPP",
 				"   "
 			))->setIngredient("P", Item::get(Item::COBBLESTONE, 0, 3)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::COBBLESTONE, 0, 1),
 				"   ",
 				"PP "
 			))->setIngredient("P", Item::get(Item::SLAB, 3, 2)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::COBBLESTONE_WALL, 0, 6),
 				"PPP",
 				"PPP",
 				"   "
 			))->setIngredient("P", Item::get(Item::COBBLESTONE, 0, 6)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::COBBLESTONE_WALL, 1, 6),
 				"PPP",
 				"PPP",
 				"   "
 			))->setIngredient("P", Item::get(Item::MOSS_STONE, 0, 6)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::NETHER_BRICKS, 0, 1),
 				"XX ",
 				"XX "
 			))->setIngredient("X", Item::get(Item::NETHER_BRICK, 0, 4)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::NETHER_BRICKS_STAIRS, 0, 4),
 				"XXX",
 				"XXX"
 			))->setIngredient("X", Item::get(Item::NETHER_BRICKS, 0, 6)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::QUARTZ_BLOCK, 2, 2),
 				"P  ",
 				"P  ",
 				"   "
 			))->setIngredient("P", Item::get(Item::QUARTZ_BLOCK, 0, 2)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::SLAB, 6, 6),
 				"   ",
 				"PPP",
 				"   "
 			))->setIngredient("P", Item::get(Item::QUARTZ_BLOCK, 0, 3)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::SANDSTONE_STAIRS, 0, 4),
 				"P  ",
 				"PP ",
 				"PPP"
 			))->setIngredient("P", Item::get(Item::SANDSTONE, 0, 6)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::RED_SANDSTONE_STAIRS, 0, 4),
 				"P  ",
 				"PP ",
 				"PPP"
 			))->setIngredient("P", Item::get(Item::RED_SANDSTONE, 0, 6)));
-
 			$this->registerRecipe((new ShapedRecipe(Item::get(Item::SANDSTONE, 0, 1),
 				"XX",
 				"XX"
 			))->setIngredient("X", Item::get(Item::SAND, 0, 4)));
-
 			$this->registerRecipe((new ShapedRecipe(Item::get(Item::RED_SANDSTONE, 0, 1),
 				"XX",
 				"XX"
 			))->setIngredient("X", Item::get(Item::SAND, 1, 4)));
-
 			$this->registerRecipe((new ShapedRecipe(Item::get(Item::SANDSTONE, 2, 4),
 				"XX",
 				"XX"
 			))->setIngredient("X", Item::get(Item::SANDSTONE, 0, 4)));
-
 			$this->registerRecipe((new ShapedRecipe(Item::get(Item::RED_SANDSTONE, 2, 4),
 				"XX",
 				"XX"
 			))->setIngredient("X", Item::get(Item::RED_SANDSTONE, 0, 4)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::STONE, Stone::POLISHED_GRANITE, 4),
 				"XX ",
 				"XX "
 			))->setIngredient("X", Item::get(Item::STONE, Stone::GRANITE, 4)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::STONE, Stone::POLISHED_DIORITE, 4),
 				"XX ",
 				"XX "
 			))->setIngredient("X", Item::get(Item::STONE, Stone::DIORITE, 4)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::STONE, Stone::POLISHED_ANDESITE, 4),
 				"XX ",
 				"XX "
 			))->setIngredient("X", Item::get(Item::STONE, Stone::ANDESITE, 4)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::STONE_BRICK, 1, 1),
 				"   ",
 				" Y ",
 				" X "
 			))->setIngredient("X", Item::get(Item::STONE_BRICK, 0, 1))->setIngredient("Y", Item::get(Item::VINES, 0, 1)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::STONE, Stone::GRANITE, 1),
 				"   ",
 				" Y ",
 				" X "
 			))->setIngredient("X", Item::get(Item::STONE, Stone::DIORITE, 1))->setIngredient("Y", Item::get(Item::QUARTZ, 0, 1)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::STONE, Stone::DIORITE, 2),
 				"YY ",
 				"XX ",
 				"   "
 			))->setIngredient("X", Item::get(Item::COBBLESTONE, 0, 2))->setIngredient("Y", Item::get(Item::QUARTZ, 0, 2)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::STONE, Stone::ANDESITE, 2),
 				"   ",
 				" Y ",
 				" X "
 			))->setIngredient("X", Item::get(Item::COBBLESTONE, 0, 1))->setIngredient("Y", Item::get(Item::STONE, Stone::DIORITE, 1)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::FLOWER_POT, 0, 1),
 				"B B",
 				" B ",
 				"   "
 			))->setIngredient("B", Item::get(Item::BRICK, null, 1)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::NOTEBLOCK, 0, 1),
 				"PPP",
 				"PRP",
 				"PPP"
 			))->setIngredient("P", Item::get(Item::PLANK, null, 1))->setIngredient("R", Item::get(Item::REDSTONE, null, 1)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::ITEM_FRAME, 0, 1),
 				"SSS",
 				"SLS",
 				"SSS"
 			))->setIngredient("S", Item::get(Item::STICK, null, 1))->setIngredient("L", Item::get(Item::LEATHER, null, 1)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::CAULDRON, 0, 1),
 				"I I",
 				"I I",
 				"III"
 			))->setIngredient("I", Item::get(Item::IRON_INGOT, null, 1)));
-
 			$this->registerRecipe((new BigShapedRecipe(Item::get(Item::ANVIL, 0 ,1),
 				"III",
 				" G ",
@@ -737,21 +688,13 @@ class CraftingManager{
 			))->setIngredient("I", Item::get(Item::IRON_BLOCK, 0, 1))->setIngredient("G", Item::get(Item::IRON_INGOT, null, 1)));
 		}
 	}
-
 	protected function registerBrewingStand(){
-		/*$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::AWKWARD, 1), Item::get(Item::NETHER_WART, 0, 1), Item::get(Item::POTION, Potion::WATER_BOTTLE, 1))); //Akward
-		// Potion
-		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::SWIFTNESS, 1), Item::get(Item::SUGAR, 0, 1), Item::get(Item::POTION, Potion::AWKWARD, 1))); //Swiftness
-		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::SWIFTNESS_T, 1), Item::get(Item::REDSTONE, 0, 1), Item::get(Item::POTION, Potion::SWIFTNESS, 1))); //Swiftness Extended
-		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::SWIFTNESS_TWO, 1), Item::get(Item::GLOWSTONE_DUST, 0, 1), Item::get(Item::POTION, Potion::SWIFTNESS, 1))); //Swiftness II
-*/
 		//Potion
 		//WATER_BOTTLE
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::AWKWARD, 1), Item::get(Item::NETHER_WART, 0, 1), Item::get(Item::POTION, Potion::WATER_BOTTLE, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::THICK, 1), Item::get(Item::GLOWSTONE_DUST, 0, 1), Item::get(Item::POTION, Potion::WATER_BOTTLE, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::MUNDANE_EXTENDED, 1), Item::get(Item::REDSTONE_DUST, 0, 1), Item::get(Item::POTION, Potion::WATER_BOTTLE, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::WEAKNESS, 1), Item::get(Item::FERMENTED_SPIDER_EYE, 0, 1), Item::get(Item::POTION, Potion::WATER_BOTTLE, 1)));
-
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::MUNDANE, 1), Item::get(Item::GHAST_TEAR, 0, 1), Item::get(Item::POTION, Potion::WATER_BOTTLE, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::MUNDANE, 1), Item::get(Item::GLISTERING_MELON, 0, 1), Item::get(Item::POTION, Potion::WATER_BOTTLE, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::MUNDANE, 1), Item::get(Item::BLAZE_POWDER, 0, 1), Item::get(Item::POTION, Potion::WATER_BOTTLE, 1)));
@@ -768,7 +711,6 @@ class CraftingManager{
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::REGENERATION, 1), Item::get(Item::GHAST_TEAR, 0, 1), Item::get(Item::POTION, Potion::AWKWARD, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::REGENERATION_T, 1), Item::get(Item::REDSTONE_DUST, 0, 1), Item::get(Item::POTION, Potion::REGENERATION, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::REGENERATION_TWO, 1), Item::get(Item::GLOWSTONE_DUST, 0, 1), Item::get(Item::POTION, Potion::REGENERATION, 1)));
-
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::STRENGTH, 1), Item::get(Item::BLAZE_POWDER, 0, 1), Item::get(Item::POTION, Potion::AWKWARD, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::STRENGTH_T, 1), Item::get(Item::REDSTONE_DUST, 0, 1), Item::get(Item::POTION, Potion::STRENGTH, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::STRENGTH_TWO, 1), Item::get(Item::GLOWSTONE_DUST, 0, 1), Item::get(Item::POTION, Potion::STRENGTH, 1)));
@@ -780,7 +722,6 @@ class CraftingManager{
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::HEALING_TWO, 1), Item::get(Item::GLOWSTONE_DUST, 0, 1), Item::get(Item::POTION, Potion::HEALING, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::WATER_BREATHING, 1), Item::get(Item::PUFFER_FISH, 0, 1), Item::get(Item::POTION, Potion::AWKWARD, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::WATER_BREATHING_T, 1), Item::get(Item::REDSTONE_DUST, 0, 1), Item::get(Item::POTION, Potion::WATER_BREATHING, 1)));
-
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::HARMING, 1), Item::get(Item::FERMENTED_SPIDER_EYE, 0, 1), Item::get(Item::POTION, Potion::WATER_BREATHING, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::HARMING, 1), Item::get(Item::FERMENTED_SPIDER_EYE, 0, 1), Item::get(Item::POTION, Potion::HEALING, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::HARMING, 1), Item::get(Item::FERMENTED_SPIDER_EYE, 0, 1), Item::get(Item::POTION, Potion::POISON, 1)));
@@ -796,7 +737,6 @@ class CraftingManager{
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::LEAPING, 1), Item::get(Item::RABBIT_FOOT, 0, 1), Item::get(Item::POTION, Potion::AWKWARD, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::LEAPING_T, 1), Item::get(Item::REDSTONE_DUST, 0, 1), Item::get(Item::POTION, Potion::LEAPING, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::LEAPING_TWO, 1), Item::get(Item::GLOWSTONE_DUST, 0, 1), Item::get(Item::POTION, Potion::LEAPING, 1)));
-
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::SLOWNESS, 1), Item::get(Item::FERMENTED_SPIDER_EYE, 0, 1), Item::get(Item::POTION, Potion::FIRE_RESISTANCE, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::SLOWNESS, 1), Item::get(Item::FERMENTED_SPIDER_EYE, 0, 1), Item::get(Item::POTION, Potion::SWIFTNESS, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::POTION, Potion::SLOWNESS, 1), Item::get(Item::FERMENTED_SPIDER_EYE, 0, 1), Item::get(Item::POTION, Potion::LEAPING, 1)));
@@ -817,7 +757,6 @@ class CraftingManager{
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::THICK, 1), Item::get(Item::GLOWSTONE_DUST, 0, 1), Item::get(Item::SPLASH_POTION, Potion::WATER_BOTTLE, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::MUNDANE_EXTENDED, 1), Item::get(Item::REDSTONE_DUST, 0, 1), Item::get(Item::SPLASH_POTION, Potion::WATER_BOTTLE, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::WEAKNESS, 1), Item::get(Item::FERMENTED_SPIDER_EYE, 0, 1), Item::get(Item::SPLASH_POTION, Potion::WATER_BOTTLE, 1)));
-
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::MUNDANE, 1), Item::get(Item::GHAST_TEAR, 0, 1), Item::get(Item::SPLASH_POTION, Potion::WATER_BOTTLE, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::MUNDANE, 1), Item::get(Item::GLISTERING_MELON, 0, 1), Item::get(Item::SPLASH_POTION, Potion::WATER_BOTTLE, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::MUNDANE, 1), Item::get(Item::BLAZE_POWDER, 0, 1), Item::get(Item::SPLASH_POTION, Potion::WATER_BOTTLE, 1)));
@@ -834,7 +773,6 @@ class CraftingManager{
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::REGENERATION, 1), Item::get(Item::GHAST_TEAR, 0, 1), Item::get(Item::SPLASH_POTION, Potion::AWKWARD, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::REGENERATION_T, 1), Item::get(Item::REDSTONE_DUST, 0, 1), Item::get(Item::SPLASH_POTION, Potion::REGENERATION, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::REGENERATION_TWO, 1), Item::get(Item::GLOWSTONE_DUST, 0, 1), Item::get(Item::SPLASH_POTION, Potion::REGENERATION, 1)));
-
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::STRENGTH, 1), Item::get(Item::BLAZE_POWDER, 0, 1), Item::get(Item::SPLASH_POTION, Potion::AWKWARD, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::STRENGTH_T, 1), Item::get(Item::REDSTONE_DUST, 0, 1), Item::get(Item::SPLASH_POTION, Potion::STRENGTH, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::STRENGTH_TWO, 1), Item::get(Item::GLOWSTONE_DUST, 0, 1), Item::get(Item::SPLASH_POTION, Potion::STRENGTH, 1)));
@@ -846,7 +784,6 @@ class CraftingManager{
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::HEALING_TWO, 1), Item::get(Item::GLOWSTONE_DUST, 0, 1), Item::get(Item::SPLASH_POTION, Potion::HEALING, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::WATER_BREATHING, 1), Item::get(Item::PUFFER_FISH, 0, 1), Item::get(Item::SPLASH_POTION, Potion::AWKWARD, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::WATER_BREATHING_T, 1), Item::get(Item::REDSTONE_DUST, 0, 1), Item::get(Item::SPLASH_POTION, Potion::WATER_BREATHING, 1)));
-
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::HARMING, 1), Item::get(Item::FERMENTED_SPIDER_EYE, 0, 1), Item::get(Item::SPLASH_POTION, Potion::WATER_BREATHING, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::HARMING, 1), Item::get(Item::FERMENTED_SPIDER_EYE, 0, 1), Item::get(Item::SPLASH_POTION, Potion::HEALING, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::HARMING, 1), Item::get(Item::FERMENTED_SPIDER_EYE, 0, 1), Item::get(Item::SPLASH_POTION, Potion::POISON, 1)));
@@ -862,7 +799,6 @@ class CraftingManager{
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::LEAPING, 1), Item::get(Item::RABBIT_FOOT, 0, 1), Item::get(Item::SPLASH_POTION, Potion::AWKWARD, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::LEAPING_T, 1), Item::get(Item::REDSTONE_DUST, 0, 1), Item::get(Item::SPLASH_POTION, Potion::LEAPING, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::LEAPING_TWO, 1), Item::get(Item::GLOWSTONE_DUST, 0, 1), Item::get(Item::SPLASH_POTION, Potion::LEAPING, 1)));
-
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::SLOWNESS, 1), Item::get(Item::FERMENTED_SPIDER_EYE, 0, 1), Item::get(Item::SPLASH_POTION, Potion::FIRE_RESISTANCE, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::SLOWNESS, 1), Item::get(Item::FERMENTED_SPIDER_EYE, 0, 1), Item::get(Item::SPLASH_POTION, Potion::SWIFTNESS, 1)));
 		$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, Potion::SLOWNESS, 1), Item::get(Item::FERMENTED_SPIDER_EYE, 0, 1), Item::get(Item::SPLASH_POTION, Potion::LEAPING, 1)));
@@ -882,9 +818,7 @@ class CraftingManager{
 			$this->registerBrewingRecipe(new BrewingRecipe(Item::get(Item::SPLASH_POTION, $potion, 1), Item::get(Item::GUNPOWDER, 0, 1), Item::get(Item::POTION, $potion, 1)));
 		}
 	}
-
 	protected function registerFurnace(){
-		//TODO 修复unll机制   Fix a bug that "NULL" do not working properly
 		$this->registerRecipe(new FurnaceRecipe(Item::get(Item::STONE, 0, 1), Item::get(Item::COBBLESTONE, 0, 1)));
 		$this->registerRecipe(new FurnaceRecipe(Item::get(Item::STONE_BRICK, 2, 1), Item::get(Item::STONE_BRICK, 0, 1)));
 		$this->registerRecipe(new FurnaceRecipe(Item::get(Item::GLASS, 0, 1), Item::get(Item::SAND, null, 1)));
@@ -910,7 +844,6 @@ class CraftingManager{
 		
 		
 	}
-
 	private function sortAndAddRecipesArray(&$recipes){
 		// Sort the recipes based on the result item name with the bubblesort algoritm.
 		for($i = 0; $i < count($recipes); ++$i){
@@ -927,7 +860,6 @@ class CraftingManager{
 			$this->registerRecipe($current);
 		}
 	}
-
 	private function createOneIngedientRecipe($recipeshape, $resultitem, $resultitemmeta, $resultitemamound, $ingedienttype, $ingredientmeta, $ingredientname, $inventoryType = ""){
 		$ingredientamount = 0;
 		$height = 0;
@@ -953,73 +885,60 @@ class CraftingManager{
 		}
 		return $recipe;
 	}
-
 	protected function registerFood(){
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::MELON_BLOCK, 0, 1),
 			"XXX",
 			"XXX",
 			"XXX"
 		))->setIngredient("X", Item::get(Item::MELON_SLICE, 0, 9)));
-
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::BEETROOT_SOUP, 0, 1),
 			"XXX",
 			"XXX",
 			" Y "
 		))->setIngredient("X", Item::get(Item::BEETROOT, 0, 6))->setIngredient("Y", Item::get(Item::BOWL, 0, 1)));
-
-
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::BREAD, 0, 1),
 			"   ",
 			"   ",
 			"XXX"
 		))->setIngredient("X", Item::get(Item::WHEAT, 0, 3)));
-
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::CAKE, 0, 1),
 			"XXX",
 			"YZY",
 			"AAA"
 		))->setIngredient("X", Item::get(Item::BUCKET, 1, 3))->setIngredient("Y", Item::get(Item::SUGAR, 0, 2))->setIngredient("Z", Item::get(Item::EGG, 0, 1))->setIngredient("A", Item::get(Item::WHEAT, 0, 3)));
-
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::COOKIE, 0, 1),
 			"   ",
 			"   ",
 			"XYX"
 		))->setIngredient("X", Item::get(Item::WHEAT, 0, 2))->setIngredient("Y", Item::get(Item::DYE, 3, 1)));
-
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::GOLDEN_APPLE, 0, 1),
 			"XXX",
 			"XYX",
 			"XXX"
 		))->setIngredient("X", Item::get(Item::GOLD_INGOT, 0, 9))->setIngredient("Y", Item::get(Item::APPLE, 0, 1)));
-
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::ENCHANTED_GOLDEN_APPLE, 1, 1),
 			"XXX",
 			"XYX",
 			"XXX"
 		))->setIngredient("X", Item::get(Item::GOLD_BLOCK, 0, 9))->setIngredient("Y", Item::get(Item::APPLE, 0, 1)));
-
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::MUSHROOM_STEW, 0, 1),
 			" X ",
 			" Y ",
 			" Z "
 		))->setIngredient("X", Item::get(Item::RED_MUSHROOM, 0, 1))->setIngredient("Y", Item::get(Item::BROWN_MUSHROOM, 0, 1))->setIngredient("Z", Item::get(Item::BOWL, 0, 1)));
-
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::PUMPKIN_PIE, 0, 1),
 			"   ",
 			"XY ",
 			"Z  "
 		))->setIngredient("X", Item::get(Item::PUMPKIN, 0, 1))->setIngredient("Y", Item::get(Item::EGG, 0, 1))->setIngredient("Z", Item::get(Item::SUGAR, 0, 1)));
-
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::MELON_SEEDS, 0, 1),
 			"X ",
 			"  "
 		))->setIngredient("X", Item::get(Item::MELON_SLICE, 0, 1)));
-
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::PUMPKIN_SEEDS, 0, 4),
 			"X ",
 			"  "
 		))->setIngredient("X", Item::get(Item::PUMPKIN, 0, 1)));
-
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::RABBIT_STEW, 0, 1),
 			" A ",
 			"BCD",
@@ -1030,7 +949,6 @@ class CraftingManager{
 		  ->setIngredient("D", Item::get(Item::BROWN_MUSHROOM, 0, 1))
 		  ->setIngredient("E", Item::get(Item::BOWL, 0, 1))
 		);
-
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::RABBIT_STEW, 0, 1),
 			" A ",
 			"BCD",
@@ -1042,7 +960,6 @@ class CraftingManager{
 			->setIngredient("E", Item::get(Item::BOWL, 0, 1))
 		);
 	}
-
 	protected function registerArmor(){
 		$types = [
 			[Item::LEATHER, Item::FIRE, Item::IRON_INGOT, Item::DIAMOND, Item::GOLD_INGOT],
@@ -1091,7 +1008,6 @@ class CraftingManager{
 			}
 		}
 	}
-
 	protected function registerWeapons(){
 		$types = [
 			[Item::WOODEN_PLANK, Item::COBBLESTONE, Item::IRON_INGOT, Item::DIAMOND, Item::GOLD_INGOT],
@@ -1117,7 +1033,6 @@ class CraftingManager{
 			" X~"
 		))->setIngredient("~", Item::get(Item::STRING))->setIngredient("X", Item::get(Item::STICK)));
 	}
-
 	protected function registerTools(){
 		$types = [
 			[Item::WOODEN_PLANK, Item::COBBLESTONE, Item::IRON_INGOT, Item::DIAMOND, Item::GOLD_INGOT],
@@ -1162,7 +1077,6 @@ class CraftingManager{
 			"X "
 		))->setIngredient("X", Item::get(Item::IRON_INGOT)));
 	}
-
 	protected function registerDyes(){
 		/*$this->registerRecipe((new BigShapedRecipe(Item::get(Item::POTION, Potion::SWIFTNESS_TWO, 1),
 			"XXX",
@@ -1265,7 +1179,6 @@ class CraftingManager{
 			"Y "
 		))->setIngredient("X", Item::get(Item::DYE, 0, 1))->setIngredient("Y", Item::get(Item::DYE, 8, 1)));
 	}
-
 	protected function registerIngots(){
 		$ingots = [
 			Item::GOLD_BLOCK => Item::GOLD_INGOT,
@@ -1300,7 +1213,6 @@ class CraftingManager{
 			"   "
 		))->setIngredient("L", Item::get(Item::LAPIS_BLOCK, 0, 1)));
 	}
-
 	protected function registerPotions(){
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::BREWING_STAND, 0, 1),
 			"   ",
@@ -1330,7 +1242,6 @@ class CraftingManager{
 			"YYY"
 		))->setIngredient("X", Item::get(Item::CARROT, 0, 1))->setIngredient("Y", Item::get(Item::GOLD_NUGGET, 0, 8)));
 	}
-
 	public function sort(Item $i1, Item $i2){
 		if($i1->getId() > $i2->getId()){
 			return 1;
@@ -1348,7 +1259,6 @@ class CraftingManager{
 			return 0;
 		}
 	}
-
 	/**
 	 * @param UUID $id
 	 * @return Recipe
@@ -1357,21 +1267,21 @@ class CraftingManager{
 		$index = $id->toBinary();
 		return isset($this->recipes[$index]) ? $this->recipes[$index] : null;
 	}
-
 	/**
 	 * @return Recipe[]
 	 */
 	public function getRecipes(){
 		return $this->recipes;
 	}
-
+	public function getRecipesByResult(Item $item){
+		return @array_values($this->recipeLookup[$item->getId() . ":" . $item->getDamage()]) ?? [];
+	}
 	/**
 	 * @return FurnaceRecipe[]
 	 */
 	public function getFurnaceRecipes(){
 		return $this->furnaceRecipes;
 	}
-
 	/**
 	 * @param Item $input
 	 *
@@ -1385,8 +1295,6 @@ class CraftingManager{
 		}
 		return null;
 	}
-
-
 	/**
 	 * @param Item $input
 	 * @param Item $potion
@@ -1400,7 +1308,6 @@ class CraftingManager{
 		}
 		return null;
 	}
-
 	/**
 	 * @param ShapedRecipe $recipe
 	 */
@@ -1420,7 +1327,6 @@ class CraftingManager{
 		}
 		$this->recipeLookup[$result->getId() . ":" . $result->getDamage()][$hash] = $recipe;
 	}
-
 	/**
 	 * @param ShapelessRecipe $recipe
 	 */
@@ -1435,7 +1341,6 @@ class CraftingManager{
 		}
 		$this->recipeLookup[$result->getId() . ":" . $result->getDamage()][$hash] = $recipe;
 	}
-
 	/**
 	 * @param FurnaceRecipe $recipe
 	 */
@@ -1443,7 +1348,6 @@ class CraftingManager{
 		$input = $recipe->getInput();
 		$this->furnaceRecipes[$input->getId() . ":" . ($input->getDamage() === null ? "?" : $input->getDamage())] = $recipe;
 	}
-
 	/**
 	 * @param BrewingRecipe $recipe
 	 */
@@ -1452,7 +1356,6 @@ class CraftingManager{
 		$potion = $recipe->getPotion();
 		$this->brewingRecipes[$input->getId() . ":" . ($input->getDamage() === null ? "0" : $input->getDamage()) . ":" . $potion->getId() . ":" .($potion->getDamage() === null ? "0" : $potion->getDamage())] = $recipe;
 	}
-
 	/**
 	 * @param ShapelessRecipe $recipe
 	 * @return bool
@@ -1504,7 +1407,6 @@ class CraftingManager{
 		}
 		return $hasRecipe !== null;
 	}
-
 	/**
 	 * @param Recipe $recipe
 	 */
