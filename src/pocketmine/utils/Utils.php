@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  *  ____            _        _   __  __ _                  __  __ ____  
@@ -17,11 +18,13 @@
  * 
  *
 */
+
 /**
  * Various Utilities used around the code
  */
 namespace pocketmine\utils;
 use pocketmine\ThreadManager;
+
 /**
  * Big collection of functions
  */
@@ -30,6 +33,7 @@ class Utils{
 	public static $ip = false;
 	public static $os;
 	private static $serverUniqueId = null;
+
 	/**
 	 * Generates an unique identifier to a callable
 	 *
@@ -44,18 +48,21 @@ class Utils{
 			return sha1(strtolower($variable));
 		}
 	}
+
 	/**
 	 * @deprecated
 	 */
 	public static function randomUUID(){
 		return Utils::toUUID(Binary::writeInt(time()) . Binary::writeShort(getmypid()) . Binary::writeShort(getmyuid()) . Binary::writeInt(mt_rand(-0x7fffffff, 0x7fffffff)) . Binary::writeInt(mt_rand(-0x7fffffff, 0x7fffffff)), 2);
 	}
+
 	/**
 	 * @deprecated
 	 */
 	public static function dataToUUID(...$params){
 		return Utils::toUUID(hash("md5", implode($params), true), 3);
 	}
+
 	/**
 	 * @deprecated
 	 */
@@ -63,10 +70,13 @@ class Utils{
 		if(strlen($data) !== 16){
 			throw new \InvalidArgumentException("Data must be 16 bytes");
 		}
+
 		$hex = bin2hex($data);
+
 		//xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx 8-4-4-12
 		return substr($hex, 0, 8) . "-" . substr($hex, 8, 4) . "-" . hexdec($version) . substr($hex, 13, 3) . "-" . $fixed{0} . substr($hex, 17, 3) . "-" . substr($hex, 20, 12);
 	}
+
 	/**
 	 * Gets this machine / server instance unique ID
 	 * Returns a hash, the first 32 characters (or 16 if raw)
@@ -81,6 +91,7 @@ class Utils{
 		if(self::$serverUniqueId !== null and $extra === ""){
 			return self::$serverUniqueId;
 		}
+
 		$machine = php_uname("a");
 		$machine .= file_exists("/proc/cpuinfo") ? implode(preg_grep("/(model name|Processor|Serial)/", file("/proc/cpuinfo"))) : "";
 		$machine .= sys_get_temp_dir();
@@ -124,12 +135,16 @@ class Utils{
 		foreach(get_loaded_extensions() as $ext){
 			$data .= $ext . ":" . phpversion($ext);
 		}
+
 		$uuid = UUID::fromData($machine, $data);
+
 		if($extra === ""){
 			self::$serverUniqueId = $uuid;
 		}
+
 		return $uuid;
 	}
+
 	/**
 	 * Gets the External IP using an external service, it is cached
 	 *
@@ -137,15 +152,16 @@ class Utils{
 	 *
 	 * @return string
 	 */
+
 	public static function getIP($force = false){
 		if(Utils::$online === false){
 			return false;
 		}elseif(Utils::$ip !== false and $force !== true){
 			return Utils::$ip;
 		}
-		$ip = trim(strip_tags(Utils::getURL("https://api.ipify.org")));
-		if($ip){
-			Utils::$ip = $ip;
+		$ip = trim(strip_tags(Utils::getURL("http://checkip.dyndns.org/")));
+		if(preg_match('#Current IP Address\: ([0-9a-fA-F\:\.]*)#', $ip, $matches) > 0){
+			Utils::$ip = $matches[1];
 		}else{
 			$ip = Utils::getURL("http://www.checkip.org/");
 			if(preg_match('#">([0-9a-fA-F\:\.]*)</span>#', $ip, $matches) > 0){
@@ -164,8 +180,11 @@ class Utils{
 				}
 			}
 		}
+
 		return Utils::$ip;
+
 	}
+
 	/**
 	 * Returns the current Operating System
 	 * Windows => win
@@ -204,9 +223,12 @@ class Utils{
 		
 		return self::$os;
 	}
+
+
 	public static function getRealMemoryUsage(){
 		$stack = 0;
 		$heap = 0;
+
 		if(Utils::getOS() === "linux" or Utils::getOS() === "android"){
 			$mappings = file("/proc/self/maps");
 			foreach($mappings as $line){
@@ -219,8 +241,10 @@ class Utils{
 				}
 			}
 		}
+
 		return [$heap, $stack];
 	}
+
 	public static function getMemoryUsage($advanced = false){
 		$reserved = memory_get_usage();
 		$VmSize = null;
@@ -230,22 +254,29 @@ class Utils{
 			if(preg_match("/VmRSS:[ \t]+([0-9]+) kB/", $status, $matches) > 0){
 				$VmRSS = $matches[1] * 1024;
 			}
+
 			if(preg_match("/VmSize:[ \t]+([0-9]+) kB/", $status, $matches) > 0){
 				$VmSize = $matches[1] * 1024;
 			}
 		}
+
 		//TODO: more OS
+
 		if($VmRSS === null){
 			$VmRSS = memory_get_usage();
 		}
+
 		if(!$advanced){
 			return $VmRSS;
 		}
+
 		if($VmSize === null){
 			$VmSize = memory_get_usage(true);
 		}
+
 		return [$reserved, $VmRSS, $VmSize];
 	}
+
 	public static function getThreadCount(){
 		if(Utils::getOS() === "linux" or Utils::getOS() === "android"){
 			if(preg_match("/Threads:[ \t]+([0-9]+)/", file_get_contents("/proc/self/status"), $matches) > 0){
@@ -253,15 +284,19 @@ class Utils{
 			}
 		}
 		//TODO: more OS
+
 		return count(ThreadManager::getInstance()->getAll()) + 3; //RakLib + MainLogger + Main Thread
 	}
+
 	public static function getCoreCount($recalculate = false){
 		static $processors = 0;
+
 		if($processors > 0 and !$recalculate){
 			return $processors;
 		}else{
 			$processors = 0;
 		}
+
 		switch(Utils::getOS()){
 			case "linux":
 			case "android":
@@ -288,6 +323,7 @@ class Utils{
 		}
 		return $processors;
 	}
+
 	/**
 	 * Returns a prettified hexdump
 	 *
@@ -303,8 +339,11 @@ class Utils{
 			$ascii = preg_replace('#([^\x20-\x7E])#', ".", $line);
 			$output .= str_pad(dechex($counter << 4), 4, "0", STR_PAD_LEFT) . "  " . $hex . " " . $ascii . PHP_EOL;
 		}
+
 		return $output;
 	}
+
+
 	/**
 	 * Returns a string that can be printed, replaces non-printable characters
 	 *
@@ -316,11 +355,14 @@ class Utils{
 		if(!is_string($str)){
 			return gettype($str);
 		}
+
 		return preg_replace('#([^\x20-\x7E])#', '.', $str);
 	}
+
 	/**
 	 * This function tries to get all the entropy available in PHP, and distills it to get a good RNG.
 	 *
+	 * This function simply forwards to the PHP random_bytes function.
 	 *
 	 * @param int    $length       default 16, Number of bytes to generate
 	 * @param bool   $secure       default true, Generate secure distilled bytes, slower
@@ -329,104 +371,18 @@ class Utils{
 	 * @param int    &$rounds      Will be set to the number of rounds taken
 	 * @param int    &$drop        Will be set to the amount of dropped bytes
 	 *
+	 * @deprecated prefer PHP 7 random_bytes()
 	 * @return string
 	 */
 	public static function getRandomBytes($length = 16, $secure = true, $raw = true, $startEntropy = "", &$rounds = 0, &$drop = 0){
-		static $lastRandom = "";
-		$output = "";
-		$length = abs((int) $length);
-		$secureValue = "";
-		$rounds = 0;
-		$drop = 0;
-		while(!isset($output{$length - 1})){
-			//some entropy, but works ^^
-			$weakEntropy = [
-				is_array($startEntropy) ? implode($startEntropy) : $startEntropy,
-				__DIR__,
-				PHP_OS,
-				microtime(),
-				(string) lcg_value(),
-				(string) PHP_MAXPATHLEN,
-				PHP_SAPI,
-				(string) PHP_INT_MAX . "." . PHP_INT_SIZE,
-				serialize($_SERVER),
-				get_current_user(),
-				(string) memory_get_usage() . "." . memory_get_peak_usage(),
-				php_uname(),
-				phpversion(),
-				zend_version(),
-				(string) getmypid(),
-				(string) getmyuid(),
-				(string) mt_rand(),
-				(string) getmyinode(),
-				(string) getmygid(),
-				(string) rand(),
-				function_exists("zend_thread_id") ? ((string) zend_thread_id()) : microtime(),
-				function_exists("getrusage") ? implode(getrusage()) : microtime(),
-				function_exists("sys_getloadavg") ? implode(sys_getloadavg()) : microtime(),
-				serialize(get_loaded_extensions()),
-				sys_get_temp_dir(),
-				(string) disk_free_space("."),
-				(string) disk_total_space("."),
-				uniqid(microtime(), true),
-				file_exists("/proc/cpuinfo") ? file_get_contents("/proc/cpuinfo") : microtime(),
-			];
-			shuffle($weakEntropy);
-			$value = hash("sha512", implode($weakEntropy), true);
-			$lastRandom .= $value;
-			foreach($weakEntropy as $k => $c){ //mixing entropy values with XOR and hash randomness extractor
-				$value ^= hash("sha256", $c . microtime() . $k, true) . hash("sha256", mt_rand() . microtime() . $k . $c, true);
-				$value ^= hash("sha512", ((string) lcg_value()) . $c . microtime() . $k, true);
-			}
-			unset($weakEntropy);
-			if($secure === true){
-				if(file_exists("/dev/urandom")){
-					$fp = fopen("/dev/urandom", "rb");
-					$systemRandom = fread($fp, 64);
-					fclose($fp);
-				}else{
-					$systemRandom = str_repeat("\x00", 64);
-				}
-				$strongEntropyValues = [
-					is_array($startEntropy) ? hash("sha512", $startEntropy[($rounds + $drop) % count($startEntropy)], true) : hash("sha512", $startEntropy, true), //Get a random index of the startEntropy, or just read it
-					$systemRandom,
-					openssl_random_pseudo_bytes(64),
-					$value,
-				];
-				$strongEntropy = array_pop($strongEntropyValues);
-				foreach($strongEntropyValues as $value){
-					$strongEntropy = $strongEntropy ^ $value;
-				}
-				$value = "";
-				//Von Neumann randomness extractor, increases entropy
-				$bitcnt = 0;
-				for($j = 0; $j < 64; ++$j){
-					$a = ord($strongEntropy{$j});
-					for($i = 0; $i < 8; $i += 2){
-						$b = ($a & (1 << $i)) > 0 ? 1 : 0;
-						if($b != (($a & (1 << ($i + 1))) > 0 ? 1 : 0)){
-							$secureValue |= $b << $bitcnt;
-							if($bitcnt == 7){
-								$value .= chr($secureValue);
-								$secureValue = 0;
-								$bitcnt = 0;
-							}else{
-								++$bitcnt;
-							}
-							++$drop;
-						}else{
-							$drop += 2;
-						}
-					}
-				}
-			}
-			$output .= substr($value, 0, min($length - strlen($output), $length));
-			unset($value);
-			++$rounds;
+		$raw_output = random_bytes($length);
+		if ($raw) {
+			return $raw_output;
+		} else {
+			return bin2hex($raw_output);
 		}
-		$lastRandom = hash("sha512", $lastRandom, true);
-		return $raw === false ? bin2hex($output) : $output;
 	}
+
 	/*
 	public static function angle3D($pos1, $pos2){
 		$X = $pos1["x"] - $pos2["x"];
@@ -435,8 +391,10 @@ class Utils{
 		$Y = $pos1["y"] - $pos2["y"];
 		$hAngle = rad2deg(atan2($Z, $X) - M_PI_2);
 		$vAngle = rad2deg(-atan2($Y, $dXZ));
+
 		return array("yaw" => $hAngle, "pitch" => $vAngle);
 	}*/
+
 	/**
 	 * GETs an URL using cURL
 	 *
@@ -450,6 +408,7 @@ class Utils{
 		if(Utils::$online === false){
 			return false;
 		}
+
 		$ch = curl_init($page);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array_merge(["User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20100101 Firefox/12.0 PocketMine-MP"], $extraHeaders));
 		curl_setopt($ch, CURLOPT_AUTOREFERER, true);
@@ -463,8 +422,10 @@ class Utils{
 		curl_setopt($ch, CURLOPT_TIMEOUT, (int) $timeout);
 		$ret = curl_exec($ch);
 		curl_close($ch);
+
 		return $ret;
 	}
+
 	/**
 	 * POSTs data to an URL
 	 *
@@ -479,6 +440,7 @@ class Utils{
 		if(Utils::$online === false){
 			return false;
 		}
+
 		$ch = curl_init($page);
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -494,8 +456,10 @@ class Utils{
 		curl_setopt($ch, CURLOPT_TIMEOUT, (int) $timeout);
 		$ret = curl_exec($ch);
 		curl_close($ch);
+
 		return $ret;
 	}
+
 	public static function javaStringHash($string){
 		$hash = 0;
 		for($i = 0; $i < strlen($string); $i++){
@@ -514,4 +478,5 @@ class Utils{
 		}
 		return $hash;
 	}
+
 }
