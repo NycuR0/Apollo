@@ -238,9 +238,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	/** @var Vector3 */
 	protected $sleeping = null;
 	protected $clientID = null;
-	private $isXbox = null;
-	private $xboxData = null;
-	private $webtokens = [];
 
 	private $loaderId = null;
 
@@ -461,28 +458,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 	public function isBanned(){
 		return $this->server->getNameBans()->isBanned(strtolower($this->getName()));
-	}
-	
-	/**
-	 * Returns if the player is Xbox authenticated.
-	*/
-	public function isLoggedInToXbox(){
-		return $this->isXbox;
-	}
-	
-	/**
-	 * Returns yet very unknown stuff. TODO:use this for authentication!
-	*/
-	public function getXboxData(){
-		return $this->xboxData;
-	}
-	
-	/**
-	 * This contains data recieved in the LoginPacket
-	 * Hint: We do not know what all the data really means.
-	*/
-	public function getWebtokens(){
-		return $this->webtokens;
 	}
 
 	public function setBanned($value){
@@ -2089,7 +2064,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	}
 
 	public function onPlayerPreLogin(){
-		//TODO: implement XBOX auth
+		//TODO: implement auth
 		$this->tryAuthenticate();
 	}
 
@@ -2438,12 +2413,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 				$this->uuid = UUID::fromString($packet->clientUUID);
 				$this->rawUUID = $this->uuid->toBinary();
-
-				
-				$this->isXbox = $packet->isXbox;
-				$this->xboxData = $packet->xboxData;
-				
-				$this->webtokens = $packet->webtokens;
 
 				$valid = true;
 				$len = strlen($packet->username);
