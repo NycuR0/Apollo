@@ -37,6 +37,10 @@ class LoginPacket extends DataPacket{
 
 	public $skinId = null;
 	public $skin = null;
+	
+	public $webtokens = [];
+	public $isXbox = false;
+	public $xboxData = null;
 
 	public function decode(){
 		//$this->username = $this->getString();
@@ -54,12 +58,20 @@ class LoginPacket extends DataPacket{
 		$chainData = json_decode($this->get($this->getLInt()));
 		foreach($chainData->{"chain"} as $chain){
 			$webtoken = $this->decodeToken($chain);
+			$this->webtokens[] = $webtoken;
+			if(isset($webtoken["iss"])){
+				$this->isXbox = true;
+				$this->xboxData["iss"] = $webtoken["iss"];
+			}
 			if(isset($webtoken["extraData"])){
 				if(isset($webtoken["extraData"]["displayName"])){
 					$this->username = $webtoken["extraData"]["displayName"];
 				}
 				if(isset($webtoken["extraData"]["identity"])){
 					$this->clientUUID = $webtoken["extraData"]["identity"];
+				}
+				if(isset($webtoken["extraData"]["xuid"]) && $this->isXbox){
+					$this->xboxData["xuid"] = $webtoken["extraData"]["xuid"];
 				}
 				if(isset($webtoken["identityPublicKey"])){
 					$this->identityPublicKey = $webtoken["identityPublicKey"];
