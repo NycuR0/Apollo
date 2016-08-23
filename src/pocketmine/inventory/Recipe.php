@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  *  ____            _        _   __  __ _                  __  __ ____
@@ -18,20 +17,15 @@
  *
  *
 */
-
 namespace pocketmine\inventory;
-
 use pocketmine\utils\UUID;
-
 interface Recipe{
-
 	/**
 	 * @return \pocketmine\item\Item
 	 */
 	public function getResult();
-
 	public function registerToCraftingManager();
-
+	
 	/**
 	 * @return UUID
 	 */
