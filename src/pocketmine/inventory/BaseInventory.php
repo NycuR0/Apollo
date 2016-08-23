@@ -176,6 +176,9 @@ abstract class BaseInventory implements Inventory{
 
 		return false;
 	}
+	public function slotContains($slot, Item $item){
+		return $this->getItem($slot)->deepEquals($item) and $this->getItem($slot)->getCount() >= $item->getCount();
+	}
 
 	public function all(Item $item){
 		$slots = [];
