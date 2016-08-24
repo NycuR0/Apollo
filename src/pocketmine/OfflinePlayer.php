@@ -24,9 +24,10 @@ namespace pocketmine;
 
 use pocketmine\metadata\MetadataValue;
 use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\metadata\Metadatable;
 use pocketmine\plugin\Plugin;
 
-class OfflinePlayer implements IPlayer{
+class OfflinePlayer implements IPlayer, Metadatable{
 
 	private $name;
 	private $server;
