@@ -72,11 +72,12 @@ namespace pocketmine {
 	use pocketmine\utils\Utils;
 	use pocketmine\wizard\Installer;
 
-	const VERSION = "1.0dev";
+	const VERSION = ""; //will be set by CI to a git hash
 	const API_VERSION = "2.0.0";
-	const CODENAME = "NycuRO";
-	const MINECRAFT_VERSION = "v0.15.x.x alpha";
-	const MINECRAFT_VERSION_NETWORK = "0.15.x";
+	const CODENAME = "Kyrios";
+	const MINECRAFT_VERSION = "v0.15.4 alpha";
+	const MINECRAFT_VERSION_NETWORK = "0.15.4";
+	const GENISYS_API_VERSION = '1.9.0';
 
 	/*
 	 * Startup code. Do not look at it, it may harm you.
@@ -436,7 +437,7 @@ namespace pocketmine {
 	}
 
 	if($errors > 0){
-		$logger->critical("Please use the installer provided on the homepage, or recompile PHP again.");
+		$logger->critical("Please update your PHP from itxtech.org/download, or recompile PHP again.");
 		$logger->shutdown();
 		$logger->join();
 		exit(1); //Exit with error
@@ -471,17 +472,15 @@ namespace pocketmine {
 		$logger->debug("Stopping " . (new \ReflectionClass($thread))->getShortName() . " thread");
 		$thread->quit();
 	}
-	$killtime = 3;
-	while(--$killtime) {
-		sleep(1);
-		if (count(ThreadManager::getInstance()->getAll()) == 0) {
-			$logger->shutdown();
-			$logger->join();
-			echo Terminal::$FORMAT_RESET . "\n";
-			exit(0);			
-		};
-	}
-	echo "\nTook too long to stop, server was killed forcefully!\n";
-	@\pocketmine\kill(getmypid());
+
+	$killer = new ServerKiller(8);
+	$killer->start();
+
+	$logger->shutdown();
+	$logger->join();
+
+	echo "Server has stopped" . Terminal::$FORMAT_RESET . "\n";
+
+	exit(0);
 
 }
