@@ -1,5 +1,24 @@
 <?php
 
+/*
+ *
+ *  ____            _        _   __  __ _                  __  __ ____
+ * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \
+ * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
+ * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/
+ * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_|
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author PocketMine Team
+ * @link http://www.pocketmine.net/
+ *
+ *
+*/
+
 /**
  * All the entity classes
  */
@@ -13,6 +32,8 @@ use pocketmine\block\Water;
 use pocketmine\block\SlimeBlock;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\entity\EntityDespawnEvent;
+use pocketmine\event\entity\EntityEffectAddEvent;
+use pocketmine\event\entity\EntityEffectRemoveEvent;
 use pocketmine\event\entity\EntityLevelChangeEvent;
 use pocketmine\event\entity\EntityMotionEvent;
 use pocketmine\event\entity\EntityRegainHealthEvent;
@@ -44,8 +65,6 @@ use pocketmine\network\protocol\RemoveEntityPacket;
 use pocketmine\network\protocol\SetEntityDataPacket;
 use pocketmine\network\protocol\SetEntityLinkPacket;
 use pocketmine\Player;
-use pocketmine\event\entity\EntityEffectAddEvent;
-use pocketmine\event\entity\EntityEffectRemoveEvent;
 use pocketmine\plugin\Plugin;
 use pocketmine\Server;
 use pocketmine\utils\ChunkException;
@@ -63,9 +82,10 @@ abstract class Entity extends Location implements Metadatable{
 	const DATA_TYPE_STRING = 4;
 	const DATA_TYPE_SLOT = 5;
 	const DATA_TYPE_POS = 6;
-        const DATA_TYPE_ROTATION = 8;
+	//const DATA_TYPE_ROTATION = 8;
+	//const DATA_TYPE_LONG = 8;
 	const DATA_TYPE_LONG = 7;
-	
+
 	const DATA_FLAGS = 0;
 	const DATA_AIR = 1;
 	const DATA_NAMETAG = 2;
@@ -86,10 +106,6 @@ abstract class Entity extends Location implements Metadatable{
 	const DATA_FLAG_ACTION = 4;
 	const DATA_FLAG_INVISIBLE = 5;
 
-	const SOUTH = 0;
-	const WEST = 1;
-	const NORTH = 2;
-	const EAST = 3;
 
 	public static $entityCount = 1;
 	/** @var Entity[] */
@@ -217,7 +233,9 @@ abstract class Entity extends Location implements Metadatable{
 
 
 	public function __construct(FullChunk $chunk, CompoundTag $nbt){
-		assert($chunk !== null and $chunk->getProvider() !== null);
+		if($chunk === null or $chunk->getProvider() === null){
+ 			throw new ChunkException("Invalid garbage Chunk given to Entity");
+		}
 
 		$this->timings = Timings::getEntityTimings($this);
 
@@ -249,7 +267,9 @@ abstract class Entity extends Location implements Metadatable{
 		);
 		$this->setMotion($this->temporalVector->setComponents($this->namedtag["Motion"][0], $this->namedtag["Motion"][1], $this->namedtag["Motion"][2]));
 
-		assert(!is_nan($this->x) and !is_infinite($this->x) and !is_nan($this->y) and !is_infinite($this->y) and !is_nan($this->z) and !is_infinite($this->z));
+		if(is_nan($this->x) or is_infinite($this->x) or is_nan($this->y) or is_infinite($this->y) or is_nan($this->z) or is_infinite($this->z)){
+			throw new \InvalidStateException("Invalid entity coordinates");
+		}
 
 		if(!isset($this->namedtag->FallDistance)){
 			$this->namedtag->FallDistance = new FloatTag("FallDistance", 0);
@@ -335,7 +355,7 @@ abstract class Entity extends Location implements Metadatable{
 	}
 
 	public function setSneaking($value = true){
-		$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_SNEAKING, (bool)$value);
+		$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_SNEAKING, (bool) $value);
 	}
 
 	public function isSprinting(){
@@ -448,10 +468,10 @@ abstract class Entity extends Location implements Metadatable{
 	}
 
 	/**
-	 * @param int|string $type
-	 * @param FullChunk  $chunk
-	 * @param CompoundTag   $nbt
-	 * @param            $args
+	 * @param int|string  $type
+	 * @param FullChunk   $chunk
+	 * @param CompoundTag $nbt
+	 * @param             $args
 	 *
 	 * @return Entity|Projectile
 	 */
@@ -544,7 +564,9 @@ abstract class Entity extends Location implements Metadatable{
 	}
 
 	protected function initEntity(){
-		assert($this->namedtag instanceof CompoundTag);
+		if(!($this->namedtag instanceof CompoundTag)){
+			throw new \InvalidArgumentException("Expecting CompoundTag, received " . get_class($this->namedtag));
+		}
 
 		if(isset($this->namedtag->CustomName)){
 			$this->setNameTag($this->namedtag["CustomName"]);
@@ -707,7 +729,7 @@ abstract class Entity extends Location implements Metadatable{
 	 * @param int $amount
 	 */
 	public function setHealth($amount){
-		$amount = (int)$amount;
+		$amount = (int) $amount;
 		if($amount === $this->health){
 			return;
 		}
@@ -717,7 +739,7 @@ abstract class Entity extends Location implements Metadatable{
 				$this->kill();
 			}
 		}elseif($amount <= $this->getMaxHealth() or $amount < $this->health){
-			$this->health = (int)$amount;
+			$this->health = (int) $amount;
 		}else{
 			$this->health = $this->getMaxHealth();
 		}
@@ -752,7 +774,7 @@ abstract class Entity extends Location implements Metadatable{
 	 * @param int $amount
 	 */
 	public function setMaxHealth($amount){
-		$this->maxHealth = (int)$amount;
+		$this->maxHealth = (int) $amount;
 	}
 
 	public function canCollideWith(Entity $entity){
@@ -954,6 +976,10 @@ abstract class Entity extends Location implements Metadatable{
 		}
 	}
 
+	public function addMovement($x, $y, $z, $yaw, $pitch, $headYaw = null){
+		$this->level->addEntityMovement($this->chunk->getX(), $this->chunk->getZ(), $this->id, $x, $y, $z, $yaw, $pitch, $headYaw === null ? $yaw : $headYaw);
+	}
+
 	/**
 	 * @return Vector3
 	 */
@@ -1080,7 +1106,7 @@ abstract class Entity extends Location implements Metadatable{
 			return;
 		}
 		$damage = floor($fallDistance - 3 - ($this->hasEffect(Effect::JUMP) ? $this->getEffect(Effect::JUMP)->getAmplifier() + 1 : 0));
-		
+
 		//Get the block directly beneath the player's feet, check if it is a slime block
 		if($this->getLevel()->getBlock($this->floor()->subtract(0, 1, 0)) instanceof SlimeBlock){
 			$damage = 0;
@@ -1428,7 +1454,7 @@ abstract class Entity extends Location implements Metadatable{
 		}
 
 		if($this->getLevel()->getServer()->redstoneEnabled and !$this->isPlayer){
-			/** @var \pocketmine\block\PressurePlate $block **/
+			/** @var \pocketmine\block\PressurePlate $block * */
 			foreach($this->activatedPressurePlates as $key => $block){
 				if(!isset($blocksaround[$key])) $block->checkActivation();
 			}
@@ -1553,7 +1579,7 @@ abstract class Entity extends Location implements Metadatable{
 		$this->removeAllEffects();
 		$this->scheduleUpdate();
 
-		if($this->getLevel()->getServer()->expEnabled) {
+		if($this->getLevel()->getServer()->expEnabled){
 			$exp = mt_rand($this->getDropExpMin(), $this->getDropExpMax());
 			if($exp > 0) $this->getLevel()->spawnXPOrb($this, $exp);
 		}
@@ -1646,7 +1672,7 @@ abstract class Entity extends Location implements Metadatable{
 		}
 
 		if($this->getLevel()->getServer()->redstoneEnabled){
-			/** @var \pocketmine\block\PressurePlate $block **/
+			/** @var \pocketmine\block\PressurePlate $block * */
 			foreach($this->activatedPressurePlates as $key => $block){
 				$block->checkActivation();
 			}
@@ -1654,7 +1680,7 @@ abstract class Entity extends Location implements Metadatable{
 
 		$this->activatedPressurePlates = [];
 
-		if($this->attributeMap != null) {
+		if($this->attributeMap != null){
 			$this->attributeMap = null;
 		}
 	}
@@ -1788,7 +1814,7 @@ abstract class Entity extends Location implements Metadatable{
 	 */
 	public function setDataFlag($propertyId, $id, $value = true, $type = self::DATA_TYPE_BYTE){
 		if($this->getDataFlag($propertyId, $id) !== $value){
-			$flags = (int)$this->getDataProperty($propertyId);
+			$flags = (int) $this->getDataProperty($propertyId);
 			$flags ^= 1 << $id;
 			$this->setDataProperty($propertyId, $type, $flags);
 		}
@@ -1801,7 +1827,7 @@ abstract class Entity extends Location implements Metadatable{
 	 * @return bool
 	 */
 	public function getDataFlag($propertyId, $id){
-		return (((int)$this->getDataProperty($propertyId)) & (1 << $id)) > 0;
+		return (((int) $this->getDataProperty($propertyId)) & (1 << $id)) > 0;
 	}
 
 	public function __destruct(){
