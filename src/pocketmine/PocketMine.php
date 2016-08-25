@@ -75,9 +75,8 @@ namespace pocketmine {
 	const VERSION = ""; //will be set by CI to a git hash
 	const API_VERSION = "2.0.0";
 	const CODENAME = "NucuRO";
-	const MINECRAFT_VERSION = "v0.15.X alpha";
-	const MINECRAFT_VERSION_NETWORK = "0.15.x";
-	const GENISYS_API_VERSION = '1.9.0';
+	const MINECRAFT_VERSION = "v0.15.x alpha";
+	const MINECRAFT_VERSION_NETWORK = "0.15.x.x";
 
 	/*
 	 * Startup code. Do not look at it, it may harm you.
