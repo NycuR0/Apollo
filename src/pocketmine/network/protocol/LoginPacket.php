@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  *  ____            _        _   __  __ _                  __  __ ____  
@@ -17,25 +18,36 @@
  * 
  *
 */
+
 namespace pocketmine\network\protocol;
+
 #include <rules/DataPacket.h>
+
+
 class LoginPacket extends DataPacket{
 	const NETWORK_ID = Info::LOGIN_PACKET;
+
 	const MOJANG_PUBKEY = "MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAE8ELkixyLcwlZryUQcu1TvPOmI2B7vX83ndnWRUaXm74wFfa5f/lwQNTfrLVHa2PmenpGI6JhIMUJaWZrjmMj90NoKNFSNBuKdm8rYiXsfaz3K36x/1U26HpG0ZxK/V1V";
+
 	public $username;
 	public $protocol;
+
 	public $clientUUID;
 	public $clientId;
 	public $identityPublicKey;
 	public $serverAddress;
+
 	public $skinId = null;
 	public $skin = null;
+
 	public function decode(){
 		$this->protocol = $this->getInt();
 		
 		$str = zlib_decode($this->get($this->getInt()), 1024 * 1024 * 64);
 		$this->setBuffer($str, 0);
+
 		$time = time();
+
 		$chainData = json_decode($this->get($this->getLInt()))->{"chain"};
 		// Start with the trusted one
 		$chainKey = self::MOJANG_PUBKEY;
@@ -85,13 +97,16 @@ class LoginPacket extends DataPacket{
 			$this->identityPublicKey = $chainKey;
 		}
 	}
+
 	public function encode(){
+
 	}
 	
 	public function decodeToken($token, $key){
 		$tokens = explode(".", $token);
 		list($headB64, $payloadB64, $sigB64) = $tokens;
-		if($key !== null){
+
+		if($key !== null and extension_loaded("openssl")){
 			$sig = base64_decode(strtr($sigB64, '-_', '+/'), true);
 			$rawLen = 48; // ES384
 			for($i = $rawLen; $i > 0 and $sig[$rawLen - $i] == chr(0); $i--) {}
@@ -109,10 +124,13 @@ class LoginPacket extends DataPacket{
 			$derSig .= str_repeat(chr(0), $j - $i) . substr($sig, $rawLen - $i, $i);
 			$derSig .= chr(2) . chr($l);
 			$derSig .= str_repeat(chr(0), $l - $k) . substr($sig, 2 * $rawLen - $k, $k);
+
 			$verified = openssl_verify($headB64 . "." . $payloadB64, $derSig, "-----BEGIN PUBLIC KEY-----\n" . wordwrap($key, 64, "\n", true) . "\n-----END PUBLIC KEY-----\n", OPENSSL_ALGO_SHA384) === 1;
 		}else{
 			$verified = false;
 		}
+
 		return array($verified, json_decode(base64_decode($payloadB64), true));
 	}
+
 }
