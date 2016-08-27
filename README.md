@@ -5,7 +5,7 @@ Note:
 
 Apollo is for all. Anyone can copy-paste generator and other features. 
 Apollo is more abandonate,but have epic generator in creations :)
-Thanks all and : @caspervanneck @salmonger @aericio
+Thanks all and more special: @caspervanneck @salmonger @aericio
 
 **TravisCI Build Status: Master Branch** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=master)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
 
