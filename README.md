@@ -1,7 +1,11 @@
 # Apollo - Stable (PHP7)
 Apollo is a Minecraft: PE Server Software with an improved Generator and a lot more features. 
 
-Note: You may **not** copy our generator , updater without NycuRO's permission. Other than that, everything is open-source and may be edited.
+Note: 
+
+Apollo is for all. Anyone can copy-paste generator and other features. 
+Apollo is more abandonate,but have epic generator in creations :)
+Thanks all and : @caspervanneck @salmonger @aericio
 
 **TravisCI Build Status: Master Branch** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=master)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
 
