@@ -9,7 +9,7 @@ Thanks all and more special: @caspervanneck @salmonger @aericio
 Project created by NycuRO and forced by Genisys.
 and its pickt upp bij caspervanneck
 
-**TravisCI Build Status: Master Branch** [![TravisCI](https://travis-ci.org/apollo-team/Apollo.svg?branch=master)](https://travis-ci.org/apollo-team/Apollo "TravisCI Build Status")
+**TravisCI Build Status: Master Branch** [![TravisCI](https://travis-ci.org/apollo-team/Apollo.svg?branch=master)](https://travis-ci.org/apollo-team/Apollo"TravisCI Build Status")
 
 **CircleCI Build Status** [![CircleCI](https://circleci.com/gh/apollo-team/Apollo.svg?style=svg)](https://circleci.com/gh/apollo-team/Apollo)
 
