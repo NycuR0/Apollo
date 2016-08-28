@@ -4,8 +4,9 @@ Apollo is a Minecraft: PE Server Software with an improved Generator and a lot m
 Note: 
 
 Apollo is for all. Anyone can copy-paste generator and other features. 
-Apollo is more abandonate,but have epic generator in creations :)
-Thanks all and more special: @caspervanneck @salmonger @aericio
+Apollo is one open source and have epic generator in creations :)
+Thanks all and more special: @caspervanneck @salmonger @aericio 
+Project created by NycuRO and forced by Genisys.
 
 **TravisCI Build Status: Master Branch** [![TravisCI](https://travis-ci.org/NycuRO/Apollo.svg?branch=master)](https://travis-ci.org/NycuRO/Apollo "TravisCI Build Status")
 
