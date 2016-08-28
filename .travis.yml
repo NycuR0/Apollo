@@ -5,7 +5,7 @@ php:
 
 branches:
  - master
- - more-say-command
+ - win10-support
 
 before_script:
  - phpenv config-rm xdebug.ini
